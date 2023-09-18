@@ -9,7 +9,6 @@ void main() {
       initialRoute: '/',
       routes: {
         '/': (context) => const Home(),
-        '/homepage': (context) => const Home(),
         '/timesheet': (context) => const TimeSheet(),
       },
       theme: ThemeData(useMaterial3: true),

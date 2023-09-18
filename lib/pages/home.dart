@@ -34,7 +34,7 @@ class Home extends StatelessWidget {
               ),
             ],
           )),
-      drawer: const MainDrawer(),
+      drawer: const MainDrawer(selectedIndex: 0),
     );
   }
 }

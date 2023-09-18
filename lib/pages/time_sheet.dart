@@ -31,7 +31,7 @@ class _TimeSheetState extends State<TimeSheet> {
             ),
           ],
         ),
-        drawer: const MainDrawer(),
+        drawer: const MainDrawer(selectedIndex: 2),
       ),
     );
   }

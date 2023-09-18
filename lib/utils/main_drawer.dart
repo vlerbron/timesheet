@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
 
-class MainDrawer extends StatefulWidget {
-  const MainDrawer({super.key});
+class MainDrawer extends StatelessWidget {
+  const MainDrawer({super.key, required this.selectedIndex});
 
-  @override
-  State<MainDrawer> createState() => _MainDrawerState();
-}
-
-class _MainDrawerState extends State<MainDrawer> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  final int selectedIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -34,32 +23,30 @@ class _MainDrawerState extends State<MainDrawer> {
           ),
           ListTile(
             title: const Text('Home'),
-            selected: _selectedIndex == 0,
+            selected: selectedIndex == 0,
             onTap: () {
-              // Update the state of the app
-              _onItemTapped(0);
-              // Then close the drawer
-              Navigator.popAndPushNamed(context, '/');
+              Navigator.pop(context);
+              if (selectedIndex != 0) {
+                Navigator.pushNamed(context, '/');
+              }
             },
           ),
           ListTile(
             title: const Text('Leave'),
-            selected: _selectedIndex == 1,
+            selected: selectedIndex == 1,
             onTap: () {
-              // Update the state of the app
-              _onItemTapped(1);
-              // Then close the drawer
-              //Navigator.pop(context);
+              Navigator.pop(context);
             },
           ),
           ListTile(
             title: const Text('Timesheet'),
-            selected: _selectedIndex == 2,
+            selected: selectedIndex == 2,
             onTap: () {
-              // Update the state of the app
-              _onItemTapped(2);
               // Then close the drawer
-              Navigator.popAndPushNamed(context, '/timesheet');
+              Navigator.pop(context);
+              if (selectedIndex != 2) {
+                Navigator.popAndPushNamed(context, '/timesheet');
+              }
             },
           ),
         ],
