@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:timesheet/main.dart';
 import 'package:timesheet/widgets/user_image_picker.dart';
 
 final _firebase = FirebaseAuth.instance;
@@ -22,6 +22,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final _form = GlobalKey<FormState>();
 
   var _isLogin = true;
+  var passwordVisible = false;
   var _enteredEmail = '';
   var _enteredPassword = '';
   var _enteredUsername = '';
@@ -87,90 +88,100 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      appBar: AppBar(
+        title: Center(
+            child: Text(
+          "Login",
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+        )),
+        backgroundColor: theme.appBarTheme.backgroundColor,
+      ),
       body: Center(
-        child: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/bg-login.png"),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(
-                    top: 30,
-                    bottom: 2,
-                    left: 20,
-                    right: 20,
+                SingleChildScrollView(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromARGB(255, 249, 253, 255),
+                          Color.fromARGB(0, 220, 251, 253),
+                        ],
+                        begin: Alignment.topRight,
+                        end: Alignment.topLeft,
+                      ),
+                    ),
+                    height: MediaQuery.of(context).size.height *
+                        (_isLogin ? 5 : 3) /
+                        10,
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.only(bottom: 30.0),
+                    child: const Image(
+                      image: AssetImage('assets/images/tbn_login.png'),
+                      alignment: Alignment.bottomCenter,
+                    ),
                   ),
-                  width: 200,
-                  child: Image.asset('assets/images/logo.png'),
                 ),
-                Card(
-                  margin:
-                      const EdgeInsets.only(left: 20, bottom: 20, right: 20),
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Form(
-                        key: _form,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  'Welcome to ',
-                                  style: GoogleFonts.lato(
-                                      color: const Color.fromARGB(255, 0, 0, 0),
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  'TBN PM',
-                                  style: GoogleFonts.lato(
-                                      color: const Color.fromARGB(
-                                          255, 54, 25, 196),
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Form(
+                      key: _form,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (!_isLogin)
+                            UserImagePicker(
+                              onPickImage: (pickedImage) {
+                                _selectedImage = pickedImage;
+                              },
                             ),
-                            if (!_isLogin)
-                              UserImagePicker(
-                                onPickImage: (pickedImage) {
-                                  _selectedImage = pickedImage;
-                                },
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Email Address',
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 219, 219, 219),
+                                  width: 2,
+                                ),
                               ),
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                  labelText: 'Email Address'),
-                              keyboardType: TextInputType.emailAddress,
-                              autocorrect: false,
-                              textCapitalization: TextCapitalization.none,
-                              validator: (value) {
-                                if (value == null ||
-                                    value.trim().isEmpty ||
-                                    !value.contains('@')) {
-                                  return 'Please enter a valid email address.';
-                                }
-
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _enteredEmail = value!;
-                              },
                             ),
-                            if (!_isLogin)
-                              TextFormField(
-                                decoration: const InputDecoration(
-                                    labelText: 'Username'),
+                            keyboardType: TextInputType.emailAddress,
+                            autocorrect: false,
+                            textCapitalization: TextCapitalization.none,
+                            validator: (value) {
+                              if (value == null ||
+                                  value.trim().isEmpty ||
+                                  !value.contains('@')) {
+                                return 'Please enter a valid email address.';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _enteredEmail = value!;
+                            },
+                          ),
+                          if (!_isLogin)
+                            Container(
+                              padding: const EdgeInsets.only(top: 30.0),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'Username',
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 219, 219, 219),
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
                                 enableSuggestions: false,
                                 validator: (value) {
                                   if (value == null ||
@@ -184,50 +195,82 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _enteredUsername = value!;
                                 },
                               ),
-                            TextFormField(
-                              decoration:
-                                  const InputDecoration(labelText: 'Password'),
-                              obscureText: true,
-                              validator: (value) {
-                                if (value == null || value.trim().length < 6) {
-                                  return 'Password must be at least 6 characters long.';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _enteredPassword = value!;
-                              },
                             ),
-                            const SizedBox(height: 12),
-                            if (_isAuthenticating)
-                              const CircularProgressIndicator(),
-                            if (!_isAuthenticating)
-                              ElevatedButton(
-                                onPressed: _submit,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer,
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 219, 219, 219),
+                                  width: 2,
                                 ),
-                                child: Text(_isLogin ? 'Login' : 'Signup'),
                               ),
-                            if (!_isAuthenticating)
-                              TextButton(
+                              suffixIcon: IconButton(
+                                icon: Icon(passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
                                 onPressed: () {
-                                  setState(() {
-                                    _isLogin = !_isLogin;
-                                  });
+                                  setState(
+                                    () {
+                                      passwordVisible = !passwordVisible;
+                                    },
+                                  );
                                 },
-                                child: Text(_isLogin
-                                    ? 'Create an account'
-                                    : 'I already have an account'),
                               ),
-                          ],
-                        ),
+                            ),
+                            obscureText: !passwordVisible,
+                            validator: (value) {
+                              if (value == null || value.trim().length < 6) {
+                                return 'Password must be at least 6 characters long.';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _enteredPassword = value!;
+                            },
+                          ),
+                          const SizedBox(height: 12),
+                          if (_isAuthenticating)
+                            const CircularProgressIndicator(),
+                          if (!_isAuthenticating)
+                            SizedBox(
+                              width: double.infinity,
+                              child: Container(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: ElevatedButton(
+                                  onPressed: _submit,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                  ),
+                                  child: Text(
+                                    _isLogin ? 'Login' : 'Signup',
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          if (!_isAuthenticating)
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  _isLogin = !_isLogin;
+                                });
+                              },
+                              child: Text(_isLogin
+                                  ? 'Create an account'
+                                  : 'I already have an account'),
+                            ),
+                        ],
                       ),
                     ),
                   ),
                 ),
+                const Text("V.1.0.1.0001"),
               ],
             ),
           ),
