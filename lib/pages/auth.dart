@@ -68,17 +68,19 @@ class _AuthScreenState extends State<AuthScreen> {
           'image_url': imageUrl,
         });
       }
-      Navigator.of(context).pushReplacementNamed('/home');
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
         // ...
       }
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error.message ?? 'Authentication failed.'),
-        ),
-      );
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed('/home');
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(error.message ?? 'Authentication failed.'),
+          ),
+        );
+      }
       setState(() {
         _isAuthenticating = false;
       });
@@ -246,6 +248,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor:
                                         Theme.of(context).primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
                                   ),
                                   child: Text(
                                     _isLogin ? 'Login' : 'Signup',
