@@ -242,12 +242,15 @@ class _LoginPageState extends State<LoginPage> {
                             SizedBox(
                               width: double.infinity,
                               child: Container(
-                                padding: const EdgeInsets.only(top: 20),
+                                padding: const EdgeInsets.only(top: 10),
                                 child: ElevatedButton(
                                   onPressed: _submit,
                                   style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 15,
+                                    ),
                                     backgroundColor:
-                                        Theme.of(context).primaryColor,
+                                        const Color.fromARGB(255, 30, 128, 184),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
