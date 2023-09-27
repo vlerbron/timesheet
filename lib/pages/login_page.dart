@@ -246,6 +246,9 @@ class _LoginPageState extends State<LoginPage> {
                                 child: ElevatedButton(
                                   onPressed: _submit,
                                   style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 15,
+                                    ),
                                     backgroundColor:
                                         const Color.fromARGB(255, 30, 128, 184),
                                     shape: RoundedRectangleBorder(
