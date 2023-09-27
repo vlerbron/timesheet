@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:timesheet/pages/auth.dart';
-import 'package:timesheet/pages/home.dart';
+import 'package:timesheet/pages/login_page.dart';
+import 'package:timesheet/pages/home_page.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+class SplashPage extends StatelessWidget {
+  const SplashPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +21,9 @@ class SplashScreen extends StatelessWidget {
               ),
             );
           } else if (snapshot.hasData) {
-            return const Home();
+            return const HomePage();
           } else {
-            return const AuthScreen();
+            return const LoginPage();
           }
         });
   }

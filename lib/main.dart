@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timesheet/firebase_options.dart';
-import 'package:timesheet/pages/auth.dart';
-import 'package:timesheet/pages/home.dart';
-import 'package:timesheet/pages/splash.dart';
-import 'package:timesheet/pages/time_sheet.dart';
+import 'package:timesheet/pages/login_page.dart';
+import 'package:timesheet/pages/home_page.dart';
+import 'package:timesheet/pages/splash_page.dart';
+import 'package:timesheet/pages/time_sheet_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 final colorScheme = ColorScheme.fromSeed(
@@ -45,10 +45,10 @@ void main() async {
         title: "TBN Timesheet",
         initialRoute: '/',
         routes: {
-          '/': (context) => const SplashScreen(),
-          '/auth': (context) => const AuthScreen(),
-          '/home': (context) => const Home(),
-          '/timesheet': (context) => const TimeSheet(),
+          '/': (context) => const SplashPage(),
+          '/auth': (context) => const LoginPage(),
+          '/home': (context) => const HomePage(),
+          '/timesheet': (context) => const TimeSheetPage(),
         },
         theme: theme),
   );

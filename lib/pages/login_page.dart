@@ -9,16 +9,16 @@ import 'package:timesheet/widgets/user_image_picker.dart';
 
 final _firebase = FirebaseAuth.instance;
 
-class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<AuthScreen> createState() {
-    return _AuthScreenState();
+  State<LoginPage> createState() {
+    return _LoginPageState();
   }
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _LoginPageState extends State<LoginPage> {
   final _form = GlobalKey<FormState>();
 
   var _isLogin = true;
@@ -275,7 +275,12 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                   ),
                 ),
-                const Text("V.1.0.1.0001"),
+                Text(
+                  "V.1.0.1.0001",
+                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                ),
               ],
             ),
           ),

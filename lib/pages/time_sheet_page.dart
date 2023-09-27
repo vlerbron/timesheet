@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/utils/main_drawer.dart';
 
-class TimeSheet extends StatefulWidget {
-  const TimeSheet({super.key});
+class TimeSheetPage extends StatefulWidget {
+  const TimeSheetPage({super.key});
 
   @override
-  State<TimeSheet> createState() => _TimeSheetState();
+  State<TimeSheetPage> createState() => _TimeSheetPageState();
 }
 
-class _TimeSheetState extends State<TimeSheet> {
+class _TimeSheetPageState extends State<TimeSheetPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
