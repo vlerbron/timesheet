@@ -27,7 +27,8 @@ class MainDrawer extends StatelessWidget {
             }
             final user = snapshot.data!.docs[0].data();
             final String username = user['username'];
-            final String imagePath = user['image_url'];
+            final String imagePath =
+                user['image_url'] ?? 'assets/images/logo.png';
 
             return ListView(
               // Important: Remove any padding from the ListView.
@@ -39,16 +40,17 @@ class MainDrawer extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          imagePath,
+                      if (imagePath != null && imagePath != '')
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            imagePath,
+                          ),
+                          backgroundColor: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withAlpha(180),
+                          radius: 23,
                         ),
-                        backgroundColor: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withAlpha(180),
-                        radius: 23,
-                      ),
                       Text('Welcome $username'),
                     ],
                   ),
