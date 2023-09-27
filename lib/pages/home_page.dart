@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Eakarath comment
     return Scaffold(
       appBar: AppBar(
         title: const Text("Welcome to TBN PM"),
