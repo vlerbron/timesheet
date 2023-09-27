@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timesheet/firebase_options.dart';
-import 'package:timesheet/pages/login_page.dart';
-import 'package:timesheet/pages/home_page.dart';
-import 'package:timesheet/pages/splash_page.dart';
-import 'package:timesheet/pages/time_sheet_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:timesheet/routes/route.dart';
 
 final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.light,
@@ -44,12 +41,7 @@ void main() async {
     MaterialApp(
         title: "TBN Timesheet",
         initialRoute: '/',
-        routes: {
-          '/': (context) => const SplashPage(),
-          '/auth': (context) => const LoginPage(),
-          '/home': (context) => const HomePage(),
-          '/timesheet': (context) => const TimeSheetPage(),
-        },
+        routes: routes,
         theme: theme),
   );
 }

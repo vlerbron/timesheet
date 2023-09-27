@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/utils/main_drawer.dart';
+import 'package:timesheet/widgets/tabs.dart';
 
 class TimeSheetPage extends StatefulWidget {
   const TimeSheetPage({super.key});
@@ -32,6 +33,7 @@ class _TimeSheetPageState extends State<TimeSheetPage> {
           ],
         ),
         drawer: const MainDrawer(selectedIndex: 2),
+        bottomNavigationBar: const Tabs(selectedIndex: 1),
       ),
     );
   }
