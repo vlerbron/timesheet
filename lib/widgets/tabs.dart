@@ -16,6 +16,7 @@ class Tabs extends StatelessWidget {
       showUnselectedLabels: true,
       selectedItemColor: Theme.of(context).colorScheme.primary,
       unselectedItemColor: Theme.of(context).colorScheme.onBackground,
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
       selectedLabelStyle: TextStyle(
         fontSize: Theme.of(context).textTheme.labelMedium?.fontSize,
       ),
@@ -47,36 +48,31 @@ class Tabs extends StatelessWidget {
         );
       },
       currentIndex: selectedIndex,
-      items: [
+      items: const [
         BottomNavigationBarItem(
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
-          icon: const NavIcon('icon-home-inactive.png'),
+          icon: NavIcon('icon-home-inactive.png'),
           label: 'Home',
-          activeIcon: const NavIcon('icon-home-active.png'),
+          activeIcon: NavIcon('icon-home-active.png'),
         ),
         BottomNavigationBarItem(
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
-          icon: const NavIcon('icon-sheet-inactive.png'),
+          icon: NavIcon('icon-sheet-inactive.png'),
           label: 'Timesheet',
-          activeIcon: const NavIcon('icon-sheet-active.png'),
+          activeIcon: NavIcon('icon-sheet-active.png'),
         ),
         BottomNavigationBarItem(
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
-          icon: const NavIcon('icon-doc-inactive.png'),
+          icon: NavIcon('icon-doc-inactive.png'),
           label: 'Project',
-          activeIcon: const NavIcon('icon-doc-active.png'),
+          activeIcon: NavIcon('icon-doc-active.png'),
         ),
         BottomNavigationBarItem(
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
-          icon: const NavIcon('icon-date-inactive.png'),
+          icon: NavIcon('icon-date-inactive.png'),
           label: 'Leave',
-          activeIcon: const NavIcon('icon-date-active.png'),
+          activeIcon: NavIcon('icon-date-active.png'),
         ),
         BottomNavigationBarItem(
-          backgroundColor: Theme.of(context).colorScheme.onPrimary,
-          icon: const NavIcon('icon-account-inactive.png'),
+          icon: NavIcon('icon-account-inactive.png'),
           label: 'Account',
-          activeIcon: const NavIcon('icon-account-active.png'),
+          activeIcon: NavIcon('icon-account-active.png'),
         ),
       ],
     );
