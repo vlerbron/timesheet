@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+final startFormatter = DateFormat('dd MMM');
+final endFormatter = DateFormat('dd MMM yyyy');
 
 class DatePickerTimesheet extends StatefulWidget {
   const DatePickerTimesheet(
-      {super.key, this.restorationId, required this.displayStr});
+      {super.key, this.restorationId, required this.selectedDate});
 
   final String? restorationId;
-  final String displayStr;
+  final DateTime selectedDate;
 
   @override
   State<DatePickerTimesheet> createState() => _DatePickerTimesheetState();
 }
 
-/// RestorationProperty objects can be used because of RestorationMixin.
 class _DatePickerTimesheetState extends State<DatePickerTimesheet>
     with RestorationMixin {
-  // In this example, the restoration ID for the mixin is passed in through
-  // the [StatefulWidget]'s constructor.
   @override
   String? get restorationId => widget.restorationId;
 
@@ -70,13 +71,58 @@ class _DatePickerTimesheetState extends State<DatePickerTimesheet>
     }
   }
 
+  DateTime findFirstDateOfTheWeek(DateTime dateTime) {
+    return dateTime.subtract(Duration(days: dateTime.weekday - 1));
+  }
+
+  DateTime findLastDateOfTheWeek(DateTime dateTime) {
+    return dateTime
+        .add(Duration(days: DateTime.daysPerWeek - dateTime.weekday));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: () {
-        _restorableDatePickerRouteFuture.present();
-      },
-      child: Text(widget.displayStr),
-    );
+    String displayStr =
+        '${startFormatter.format(findFirstDateOfTheWeek(widget.selectedDate))} - ${endFormatter.format(findLastDateOfTheWeek(widget.selectedDate))}';
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.chevron_left),
+            color: const Color(0xff1E80B8),
+            onPressed: () {
+              setState(() {});
+            },
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all(const CircleBorder()),
+              padding: MaterialStateProperty.all(const EdgeInsets.all(5)),
+              backgroundColor: MaterialStateProperty.all(
+                  const Color(0xffF0F0F0)), // <-- Button color
+            ),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              _restorableDatePickerRouteFuture.present();
+            },
+            style: OutlinedButton.styleFrom(
+              side: BorderSide.none,
+            ),
+            child: Text(displayStr),
+          ),
+          IconButton(
+            icon: const Icon(Icons.chevron_right),
+            color: const Color(0xff1E80B8),
+            onPressed: () {
+              setState(() {});
+            },
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all(const CircleBorder()),
+              padding: MaterialStateProperty.all(const EdgeInsets.all(5)),
+              backgroundColor: MaterialStateProperty.all(
+                  const Color(0xffF0F0F0)), // <-- Button color
+            ),
+          ),
+        ]);
   }
 }

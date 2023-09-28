@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:timesheet/providers/timesheet_provider.dart';
+import 'package:timesheet/widgets/date_picker_timesheet.dart';
 import 'package:timesheet/widgets/tabs.dart';
-
-final startFormatter = DateFormat('dd MMM');
-final endFormatter = DateFormat('dd MMM yyyy');
 
 class TimesheetPage extends ConsumerStatefulWidget {
   const TimesheetPage({super.key});
@@ -21,25 +17,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
       appBar: AppBar(
         title: const Text("Timesheet"),
       ),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('< '),
-          Text(
-            startFormatter.format(
-                ref.read(timesheetProvider.notifier).state.startDateTime),
-            textAlign: TextAlign.center,
-          ),
-          const Text(' - '),
-          Text(
-            endFormatter
-                .format(ref.read(timesheetProvider.notifier).state.endDateTime),
-            textAlign: TextAlign.center,
-          ),
-          const Text(' >'),
-        ],
-      ),
+      body: DatePickerTimesheet(selectedDate: DateTime.now()),
       bottomNavigationBar: const Tabs(selectedIndex: 1),
     );
   }

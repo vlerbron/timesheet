@@ -3,8 +3,7 @@ import 'package:timesheet/models/timesheet_model.dart';
 
 final timesheetProvider = StateProvider<TimesheetModel>(
   (ref) => TimesheetModel(
-      endDateTime: DateTime.now(),
-      startDateTime: DateTime.now(),
+      selectedDate: DateTime.now(),
       timeRemainingHour: 0,
       timeRemainingMinute: 0),
 );
