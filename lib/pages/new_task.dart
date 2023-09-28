@@ -33,6 +33,7 @@ class _NewTaskState extends State<NewTask> {
         appBar: AppBar(
           title: const Text('New task'),
           centerTitle: true,
+          automaticallyImplyLeading: false,
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
