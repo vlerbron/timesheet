@@ -1,7 +1,7 @@
 class TimesheetModel {
-  final DateTime selectedDate;
-  final int timeRemainingHour;
-  final int timeRemainingMinute;
+  DateTime selectedDate;
+  int timeRemainingHour;
+  int timeRemainingMinute;
 
   TimesheetModel(
       {required this.selectedDate,

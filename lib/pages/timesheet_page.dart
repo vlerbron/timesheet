@@ -17,7 +17,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
       appBar: AppBar(
         title: const Text("Timesheet"),
       ),
-      body: DatePickerTimesheet(selectedDate: DateTime.now()),
+      body: const DatePickerTimesheet(),
       bottomNavigationBar: const Tabs(selectedIndex: 1),
     );
   }
