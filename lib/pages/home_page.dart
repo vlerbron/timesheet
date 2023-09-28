@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:timesheet/utils/main_drawer.dart';
 import 'package:timesheet/widgets/tabs.dart';
 
 final formatter = DateFormat('EEEE, dd MMMM yyyy');
@@ -36,7 +35,6 @@ class HomePage extends StatelessWidget {
               ),
             ],
           )),
-      drawer: const MainDrawer(selectedIndex: 0),
       bottomNavigationBar: const Tabs(selectedIndex: 0),
     );
   }

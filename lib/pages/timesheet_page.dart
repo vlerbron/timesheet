@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:timesheet/providers/timesheet_provider.dart';
-import 'package:timesheet/utils/main_drawer.dart';
 import 'package:timesheet/widgets/tabs.dart';
 
 final startFormatter = DateFormat('dd MMM');
@@ -41,7 +40,6 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
           const Text(' >'),
         ],
       ),
-      drawer: const MainDrawer(selectedIndex: 2),
       bottomNavigationBar: const Tabs(selectedIndex: 1),
     );
   }
