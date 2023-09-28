@@ -40,7 +40,7 @@ class MainDrawer extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      if (imagePath != null && imagePath != '')
+                      if (imagePath != '')
                         CircleAvatar(
                           backgroundImage: NetworkImage(
                             imagePath,
