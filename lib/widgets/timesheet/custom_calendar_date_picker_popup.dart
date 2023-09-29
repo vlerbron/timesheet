@@ -5,9 +5,9 @@
 import 'dart:math' as math;
 
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 
 const Duration _monthScrollDuration = Duration(milliseconds: 200);
 
@@ -40,12 +40,12 @@ const double _monthNavButtonsWidth = 108.0;
 /// See also:
 ///
 ///  * [showDatePicker], which creates a Dialog that contains a
-///    [CustomCalendarDatePickerTimesheet] and provides an optional compact view where the
+///    [CustomCalendarDatePickerPopup] and provides an optional compact view where the
 ///    user can enter a date as a line of text.
 ///  * [showTimePicker], which shows a dialog that contains a Material Design
 ///    time picker.
 ///
-class CustomCalendarDatePickerTimesheet extends StatefulWidget {
+class CustomCalendarDatePickerPopup extends StatefulWidget {
   /// Creates a calendar date picker.
   ///
   /// It will display a grid of days for the [initialDate]'s month. The day
@@ -73,7 +73,7 @@ class CustomCalendarDatePickerTimesheet extends StatefulWidget {
   ///
   /// If [selectableDayPredicate] is non-null, it must return `true` for the
   /// [initialDate].
-  CustomCalendarDatePickerTimesheet({
+  CustomCalendarDatePickerPopup({
     super.key,
     required DateTime initialDate,
     required DateTime firstDate,
@@ -131,12 +131,12 @@ class CustomCalendarDatePickerTimesheet extends StatefulWidget {
   final SelectableDayPredicate? selectableDayPredicate;
 
   @override
-  State<CustomCalendarDatePickerTimesheet> createState() =>
-      _CustomCalendarDatePickerTimesheetState();
+  State<CustomCalendarDatePickerPopup> createState() =>
+      _CustomCalendarDatePickerPopupState();
 }
 
-class _CustomCalendarDatePickerTimesheetState
-    extends State<CustomCalendarDatePickerTimesheet> {
+class _CustomCalendarDatePickerPopupState
+    extends State<CustomCalendarDatePickerPopup> {
   bool _announcedInitialDate = false;
   late DatePickerMode _mode;
   late DateTime _currentDisplayedMonthDate;
@@ -156,7 +156,7 @@ class _CustomCalendarDatePickerTimesheetState
   }
 
   @override
-  void didUpdateWidget(CustomCalendarDatePickerTimesheet oldWidget) {
+  void didUpdateWidget(CustomCalendarDatePickerPopup oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.initialCalendarMode != oldWidget.initialCalendarMode) {
       _mode = widget.initialCalendarMode;
@@ -369,12 +369,14 @@ class _DatePickerModeToggleButtonState
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final Color controlColor = colorScheme.onSurface.withOpacity(0.60);
+    // final Color controlColor = colorScheme.onSurface.withOpacity(0.60);
+    final Color primaryColor = colorScheme.primary;
 
     return Container(
       padding: const EdgeInsetsDirectional.only(start: 16, end: 4),
       height: _subHeaderHeight,
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Flexible(
             child: Semantics(
@@ -388,13 +390,14 @@ class _DatePickerModeToggleButtonState
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Flexible(
                           child: Text(
                             widget.title,
                             overflow: TextOverflow.ellipsis,
                             style: textTheme.titleSmall?.copyWith(
-                              color: controlColor,
+                              color: primaryColor,
                             ),
                           ),
                         ),
@@ -402,7 +405,7 @@ class _DatePickerModeToggleButtonState
                           turns: _controller,
                           child: Icon(
                             Icons.arrow_drop_down,
-                            color: controlColor,
+                            color: primaryColor,
                           ),
                         ),
                       ],
@@ -753,8 +756,9 @@ class _MonthPickerState extends State<_MonthPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final Color controlColor =
-        Theme.of(context).colorScheme.onSurface.withOpacity(0.60);
+    // final Color controlColor =
+    //     Theme.of(context).colorScheme.onSurface.withOpacity(0.60);
+    final Color primaryColor = Theme.of(context).colorScheme.primary;
 
     return Semantics(
       child: Column(
@@ -766,17 +770,56 @@ class _MonthPickerState extends State<_MonthPicker> {
               children: <Widget>[
                 const Spacer(),
                 IconButton(
-                  icon: const Icon(Icons.chevron_left),
-                  color: controlColor,
+                  style: IconButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+                  ),
+                  icon: const Icon(Icons.chevron_left, size: 30),
+                  color: primaryColor,
                   tooltip: _isDisplayingFirstMonth
                       ? null
                       : _localizations.previousMonthTooltip,
                   onPressed:
                       _isDisplayingFirstMonth ? null : _handlePreviousMonth,
                 ),
+                const SizedBox(
+                  width: 3,
+                ),
+                Container(
+                  height: 48,
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    color: Color.fromARGB(255, 240, 240, 240),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      //custom: focus on today date
+                      if (!DateUtils.isSameMonth(
+                          DateTime.now(), _currentMonth)) {
+                        _showMonth(DateTime.now());
+                      }
+                      _handleDateSelected(DateTime.now());
+                    },
+                    child: Text(
+                      'Today',
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            color: primaryColor,
+                          ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 3,
+                ),
                 IconButton(
-                  icon: const Icon(Icons.chevron_right),
-                  color: controlColor,
+                  style: IconButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+                  ),
+                  icon: const Icon(Icons.chevron_right, size: 30),
+                  color: primaryColor,
                   tooltip: _isDisplayingLastMonth
                       ? null
                       : _localizations.nextMonthTooltip,
@@ -937,27 +980,49 @@ class _DayPickerState extends State<_DayPicker> {
   ///     _ _ _ _ 1 2 3
   ///     4 5 6 7 8 9 10
   ///
+
+  ///Add new list to show day title
+  List<String> daysinweek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
   List<Widget> _dayHeaders(
       TextStyle? headerStyle, MaterialLocalizations localizations) {
     final List<Widget> result = <Widget>[];
-    const firstDayOfWeekIndex =
-        1; //Force Moday instead localizations.firstDayOfWeekIndex
-    for (int i = firstDayOfWeekIndex; true; i = (i + 1) % 7) {
-      final String weekday = localizations.narrowWeekdays[i];
+    for (int i = localizations.firstDayOfWeekIndex; true; i = (i + 1) % 7) {
+      // final String weekday = localizations.narrowWeekdays[i];
+      final String weekday = daysinweek[i];
       result.add(ExcludeSemantics(
         child: Center(child: Text(weekday, style: headerStyle)),
       ));
-      if (i == (firstDayOfWeekIndex - 1) % 7) {
+      if (i == (localizations.firstDayOfWeekIndex - 1) % 7) {
         break;
       }
     }
     return result;
   }
 
+//Custom to tart from monday
+  static int _firstDayOffset(int year, int month) {
+    // 0-based day of week for the month and year, with 0 representing Monday.
+    final int weekdayFromMonday = DateTime(year, month).weekday - 1;
+
+    // 0-based start of week depending on the locale, with 0 representing Sunday.
+    //int firstDayOfWeekIndex = localizations.firstDayOfWeekIndex;
+    int firstDayOfWeekIndex = 1; //1 representing Monday.
+
+    // firstDayOfWeekIndex recomputed to be Monday-based, in order to compare with
+    // weekdayFromMonday.
+    firstDayOfWeekIndex = (firstDayOfWeekIndex - 1) % 7;
+
+    // Number of days between the first day of week appearing on the calendar,
+    // and the day corresponding to the first of the month.
+    return (weekdayFromMonday - firstDayOfWeekIndex) % 7;
+  }
+
   @override
   Widget build(BuildContext context) {
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
+
     final DatePickerThemeData datePickerTheme = DatePickerTheme.of(context);
     final DatePickerThemeData defaults = DatePickerTheme.defaults(context);
     final TextStyle? weekdayStyle =
@@ -968,7 +1033,8 @@ class _DayPickerState extends State<_DayPicker> {
     final int month = widget.displayedMonth.month;
 
     final int daysInMonth = DateUtils.getDaysInMonth(year, month);
-    final int dayOffset = DateUtils.firstDayOffset(year, month, localizations);
+    // final int dayOffset = DateUtils.firstDayOffset(year, month, localizations);
+    final int dayOffset = _firstDayOffset(year, month);
 
     T? effectiveValue<T>(T? Function(DatePickerThemeData? theme) getProperty) {
       return getProperty(datePickerTheme) ?? getProperty(defaults);
@@ -1127,11 +1193,11 @@ const _DayPickerGridDelegate _dayPickerGridDelegate = _DayPickerGridDelegate();
 /// A scrollable grid of years to allow picking a year.
 ///
 /// The year picker widget is rarely used directly. Instead, consider using
-/// [CustomCalendarDatePickerTimesheet], or [showDatePicker] which create full date pickers.
+/// [CustomCalendarDatePickerPopup], or [showDatePicker] which create full date pickers.
 ///
 /// See also:
 ///
-///  * [CustomCalendarDatePickerTimesheet], which provides a Material Design date picker
+///  * [CustomCalendarDatePickerPopup], which provides a Material Design date picker
 ///    interface.
 ///
 ///  * [showDatePicker], which shows a dialog containing a Material Design

@@ -40,7 +40,12 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet> {
             icon: const Icon(Icons.chevron_left),
             color: const Color(0xff1E80B8),
             onPressed: () {
-              setState(() {});
+              setState(() =>
+                  ref.read(timesheetProvider.notifier).state.selectedDate = ref
+                      .read(timesheetProvider.notifier)
+                      .state
+                      .selectedDate
+                      .subtract(const Duration(days: 7)));
             },
             style: ButtonStyle(
               shape: MaterialStateProperty.all(const CircleBorder()),
@@ -73,7 +78,19 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet> {
             icon: const Icon(Icons.chevron_right),
             color: const Color(0xff1E80B8),
             onPressed: () {
-              setState(() {});
+              DateTime nextWeekDay = ref
+                  .read(timesheetProvider.notifier)
+                  .state
+                  .selectedDate
+                  .add(const Duration(days: 7));
+              if (nextWeekDay
+                      .compareTo(findLastDateOfTheWeek(DateTime.now())) <=
+                  0) {
+                setState(() => ref
+                    .read(timesheetProvider.notifier)
+                    .state
+                    .selectedDate = nextWeekDay);
+              }
             },
             style: ButtonStyle(
               shape: MaterialStateProperty.all(const CircleBorder()),
