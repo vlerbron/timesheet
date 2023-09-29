@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/providers/timesheet_provider.dart';
 import 'package:timesheet/widgets/tabs.dart';
 import 'package:timesheet/widgets/timesheet/date_picker_timesheet.dart';
+import 'package:timesheet/widgets/timesheet/tasks_of_days.dart';
 
 class TimesheetPage extends ConsumerStatefulWidget {
   const TimesheetPage({super.key});
@@ -18,8 +19,6 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color primaryColor = colorScheme.primary;
     final Color secondaryColor = colorScheme.secondary;
-
-    final Map taskMap = ref.read(timesheetProvider.notifier).state.taskMap;
 
     return Scaffold(
       appBar: AppBar(
@@ -56,14 +55,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
               ],
             ),
           ),
-          Column(
-            children: [
-              for (var task in taskMap.entries)
-                ListTile(
-                  title: Text(task.key),
-                )
-            ],
-          ),
+          const TasksOfDays(),
         ],
       ),
       bottomNavigationBar: const Tabs(selectedIndex: 1),
