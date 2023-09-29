@@ -800,12 +800,13 @@ class _MonthPickerState extends State<_MonthPicker> {
                   ),
                   child: InkWell(
                     onTap: () {
+                      final selectedDate = DateTime(DateTime.now().year,
+                          DateTime.now().month, DateTime.now().day);
                       //custom: focus on today date
-                      if (!DateUtils.isSameMonth(
-                          DateTime.now(), _currentMonth)) {
-                        _showMonth(DateTime.now());
+                      if (!DateUtils.isSameMonth(selectedDate, _currentMonth)) {
+                        _showMonth(selectedDate);
                       }
-                      _handleDateSelected(DateTime.now());
+                      _handleDateSelected(selectedDate);
                     },
                     child: Text(
                       'Today',

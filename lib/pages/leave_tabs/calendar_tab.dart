@@ -15,12 +15,6 @@ class CalendarTab extends ConsumerStatefulWidget {
 class _CalendarTabState extends ConsumerState<CalendarTab> {
   late DateTime sundayOfTheweek;
   final ItemScrollController itemScrollController = ItemScrollController();
-  final ScrollOffsetController scrollOffsetController =
-      ScrollOffsetController();
-  final ItemPositionsListener itemPositionsListener =
-      ItemPositionsListener.create();
-  final ScrollOffsetListener scrollOffsetListener =
-      ScrollOffsetListener.create();
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +38,7 @@ class _CalendarTabState extends ConsumerState<CalendarTab> {
               }),
         ),
         LeaveListView(
-          itemPositionsListener: itemPositionsListener,
           itemScrollController: itemScrollController,
-          scrollOffsetController: scrollOffsetController,
-          scrollOffsetListener: scrollOffsetListener,
         )
       ],
     );

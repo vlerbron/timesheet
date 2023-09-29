@@ -9,31 +9,41 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 final formatter = DateFormat('EEE');
 
-class LeaveListView extends ConsumerWidget {
+class LeaveListView extends ConsumerStatefulWidget {
   const LeaveListView({
     super.key,
-    required this.itemPositionsListener,
     required this.itemScrollController,
-    required this.scrollOffsetController,
-    required this.scrollOffsetListener,
   });
+  @override
+  ConsumerState<LeaveListView> createState() => _LeaveListViewState();
 
   final ItemScrollController itemScrollController;
-  final ScrollOffsetController scrollOffsetController;
-  final ItemPositionsListener itemPositionsListener;
-  final ScrollOffsetListener scrollOffsetListener;
+}
+
+class _LeaveListViewState extends ConsumerState<LeaveListView> {
+  final initDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.itemScrollController.jumpTo(index: initDate.weekday - 1);
+    });
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void dispose() {
+    ref.invalidate(selectedDateProvider);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final leaveOfThisWeek = ref.watch(filteredLeaveProvider);
     final mondayOfTheweek = ref.watch(selectedDateProvider);
-
     return Expanded(
       child: ScrollablePositionedList.builder(
-          itemScrollController: itemScrollController,
-          scrollOffsetController: scrollOffsetController,
-          itemPositionsListener: itemPositionsListener,
-          scrollOffsetListener: scrollOffsetListener,
+          itemScrollController: widget.itemScrollController,
           itemCount: 7,
           itemBuilder: (ctx, index) {
             final currentDate = mondayOfTheweek.add(Duration(days: index));
