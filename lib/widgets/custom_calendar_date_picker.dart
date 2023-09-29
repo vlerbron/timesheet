@@ -770,9 +770,14 @@ class _MonthPickerState extends State<_MonthPicker> {
                 const Spacer(),
                 IconButton(
                   style: IconButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+                    backgroundColor: const Color.fromARGB(
+                      255,
+                      240,
+                      240,
+                      240,
+                    ),
                   ),
-                  icon: const Icon(Icons.chevron_left, size: 30),
+                  icon: const Icon(Icons.chevron_left, size: 20),
                   color: primaryColor,
                   tooltip: _isDisplayingFirstMonth
                       ? null
@@ -784,7 +789,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                   width: 3,
                 ),
                 Container(
-                  height: 48,
+                  height: 40,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
@@ -804,7 +809,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                     },
                     child: Text(
                       'Today',
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             color: primaryColor,
                           ),
                     ),
@@ -817,7 +822,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                   style: IconButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 240, 240, 240),
                   ),
-                  icon: const Icon(Icons.chevron_right, size: 30),
+                  icon: const Icon(Icons.chevron_right, size: 20),
                   color: primaryColor,
                   tooltip: _isDisplayingLastMonth
                       ? null
