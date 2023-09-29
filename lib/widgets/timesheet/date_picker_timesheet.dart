@@ -29,16 +29,23 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    final Color primaryColor = colorScheme.primary;
+    final Color secondaryColor = colorScheme.secondary;
+
     _selectedDate = ref.read(timesheetProvider.notifier).state.selectedDate;
+
     String displayStr =
         '${startFormatter.format(findFirstDateOfTheWeek(_selectedDate))} - ${endFormatter.format(findLastDateOfTheWeek(_selectedDate))}';
+
     return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
             icon: const Icon(Icons.chevron_left),
-            color: const Color(0xff1E80B8),
+            color: primaryColor,
             onPressed: () {
               setState(() =>
                   ref.read(timesheetProvider.notifier).state.selectedDate = ref
@@ -50,8 +57,8 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet> {
             style: ButtonStyle(
               shape: MaterialStateProperty.all(const CircleBorder()),
               padding: MaterialStateProperty.all(const EdgeInsets.all(5)),
-              backgroundColor: MaterialStateProperty.all(
-                  const Color(0xffF0F0F0)), // <-- Button color
+              backgroundColor:
+                  MaterialStateProperty.all(secondaryColor), // <-- Button color
             ),
           ),
           OutlinedButton(
@@ -72,11 +79,14 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet> {
             style: OutlinedButton.styleFrom(
               side: BorderSide.none,
             ),
-            child: Text(displayStr),
+            child: Text(
+              displayStr,
+              style: textTheme.bodyLarge?.copyWith(),
+            ),
           ),
           IconButton(
             icon: const Icon(Icons.chevron_right),
-            color: const Color(0xff1E80B8),
+            color: primaryColor,
             onPressed: () {
               DateTime nextWeekDay = ref
                   .read(timesheetProvider.notifier)
@@ -95,8 +105,8 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet> {
             style: ButtonStyle(
               shape: MaterialStateProperty.all(const CircleBorder()),
               padding: MaterialStateProperty.all(const EdgeInsets.all(5)),
-              backgroundColor: MaterialStateProperty.all(
-                  const Color(0xffF0F0F0)), // <-- Button color
+              backgroundColor:
+                  MaterialStateProperty.all(secondaryColor), // <-- Button color
             ),
           ),
         ]);
