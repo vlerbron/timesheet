@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:timesheet/providers/timesheet_provider.dart';
+import 'package:timesheet/widgets/timesheet/custom_date_picker_popup.dart';
 
 final startFormatter = DateFormat('dd MMM');
 final endFormatter = DateFormat('dd MMM yyyy');
@@ -50,7 +51,7 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet> {
           ),
           OutlinedButton(
             onPressed: () async {
-              DateTime? newDate = await showDatePicker(
+              DateTime? newDate = await showCustomDatePicker(
                 context: context,
                 initialDate: _selectedDate,
                 firstDate: DateTime(2000),
