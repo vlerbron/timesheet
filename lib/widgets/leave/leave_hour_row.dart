@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/models/leave_model.dart';
+import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/widgets/name_avatar.dart';
 
 class LeaveHourRow extends StatelessWidget {
@@ -51,7 +52,7 @@ class LeaveHourRow extends StatelessWidget {
           NameAvatar(
             text: '+${leaves.length - 5}',
             backgroundColor: Colors.white,
-            textColor: const Color.fromARGB(255, 128, 128, 128),
+            textColor: kColorDarkGrey,
           ),
         );
         break;

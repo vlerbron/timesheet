@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timesheet/utils/const.dart';
 
 class CustomTabBar extends StatelessWidget {
   const CustomTabBar({super.key, required this.tabs});
@@ -12,11 +13,11 @@ class CustomTabBar extends StatelessWidget {
       padding: const EdgeInsets.all(0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: const Color.fromARGB(255, 240, 240, 240),
+        color: kColorLightGrey,
       ),
       height: 40,
       child: TabBar(
-          unselectedLabelColor: const Color.fromARGB(255, 128, 128, 128),
+          unselectedLabelColor: kColorDarkGrey,
           labelColor: Theme.of(context).colorScheme.onPrimary,
           labelStyle: Theme.of(context).textTheme.bodyLarge,
           indicatorSize: TabBarIndicatorSize.tab,

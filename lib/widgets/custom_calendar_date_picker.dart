@@ -8,6 +8,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:timesheet/utils/const.dart';
 
 const Duration _monthScrollDuration = Duration(milliseconds: 200);
 
@@ -793,7 +794,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: const Color.fromARGB(255, 240, 240, 240),
+                    color: kColorLightGrey,
                   ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
@@ -821,7 +822,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                 ),
                 IconButton(
                   style: IconButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 240, 240, 240),
+                    backgroundColor: kColorLightGrey,
                   ),
                   icon: const Icon(Icons.chevron_right, size: 20),
                   color: primaryColor,

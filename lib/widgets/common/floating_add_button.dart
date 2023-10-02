@@ -7,13 +7,16 @@ class FloatingAddButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: onPressed,
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      foregroundColor: Theme.of(context).colorScheme.onPrimary,
-      elevation: 2,
-      shape: const CircleBorder(),
-      child: const Icon(Icons.add),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      child: FloatingActionButton(
+        onPressed: onPressed,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        elevation: 2,
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

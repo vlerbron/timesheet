@@ -7,6 +7,8 @@ List<TaskModel> dummyTasks = [
     taskDetail: 'Flutter Self Learning',
     usageTimeHr: 8,
     usageTimeMinute: 30,
+    issue: 'test',
+    date: DateTime.now(),
   ),
   TaskModel(
     dayOfWeek: 'Monday',
@@ -14,6 +16,8 @@ List<TaskModel> dummyTasks = [
     taskDetail: 'Drawing',
     usageTimeHr: 3,
     usageTimeMinute: 30,
+    issue: 'test',
+    date: DateTime.now(),
   ),
   TaskModel(
     dayOfWeek: 'Tuesday',
@@ -21,6 +25,8 @@ List<TaskModel> dummyTasks = [
     taskDetail: 'Basketball',
     usageTimeHr: 2,
     usageTimeMinute: 0,
+    issue: 'test',
+    date: DateTime.now(),
   ),
   TaskModel(
     dayOfWeek: 'Wednesday',
@@ -28,5 +34,7 @@ List<TaskModel> dummyTasks = [
     taskDetail: 'Flutter Self Learning',
     usageTimeHr: 2,
     usageTimeMinute: 30,
+    issue: 'test',
+    date: DateTime.now(),
   ),
 ];
