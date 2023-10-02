@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:timesheet/pages/new_task.dart';
+import 'package:timesheet/pages/new_task_page.dart';
 import 'package:timesheet/providers/timesheet_provider.dart';
 import 'package:timesheet/widgets/tabs.dart';
 
@@ -48,8 +48,8 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
             OutlinedButton.icon(
               onPressed: () {
                 //NewTask();
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (ctx) => NewTask()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (ctx) => NewTaskPage()));
               },
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.black,
