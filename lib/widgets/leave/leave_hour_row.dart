@@ -25,7 +25,7 @@ class LeaveHourRow extends StatelessWidget {
               flex: 1,
               fit: FlexFit.tight,
               child: Text(
-                _getLeaveHourDisplayText(leaveHours),
+                getLeaveHourDisplayText(leaveHours),
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall!
@@ -41,20 +41,6 @@ class LeaveHourRow extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _getLeaveHourDisplayText(LeaveHours leaveHours) {
-    String leaveHourDisplayText;
-    if (leaveHours == LeaveHours.allday) {
-      leaveHourDisplayText = '${leaveHours.name[0].toUpperCase()}'
-          '${leaveHours.name.substring(1, 3)} '
-          '${leaveHours.name.substring(3)} ';
-    } else {
-      leaveHourDisplayText =
-          leaveHours.name[0].toUpperCase() + leaveHours.name.substring(1);
-    }
-
-    return leaveHourDisplayText;
   }
 
   List<Widget> _getDisplayAvatar(List<Leave> leaves) {

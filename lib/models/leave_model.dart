@@ -15,6 +15,20 @@ Map<LeaveTypes, Color> leaveTypesColor = {
 
 enum LeaveHours { allday, morning, afternoon }
 
+String getLeaveHourDisplayText(LeaveHours leaveHours) {
+  String leaveHourDisplayText;
+  if (leaveHours == LeaveHours.allday) {
+    leaveHourDisplayText = '${leaveHours.name[0].toUpperCase()}'
+        '${leaveHours.name.substring(1, 3)} '
+        '${leaveHours.name.substring(3)} ';
+  } else {
+    leaveHourDisplayText =
+        leaveHours.name[0].toUpperCase() + leaveHours.name.substring(1);
+  }
+
+  return leaveHourDisplayText;
+}
+
 class Leave {
   Leave(
       {required this.startDate,
@@ -34,4 +48,22 @@ class Leave {
   List<File>? attachment;
   double? totalLeaveDays;
   Employee employee;
+
+  bool isCurrentDateAlldayLeave(DateTime currentDate) {
+    return (leaveHour == LeaveHours.allday &&
+        (startDate.isAtSameMomentAs(currentDate) ||
+            startDate.isBefore(currentDate)) &&
+        (endDate.isAtSameMomentAs(currentDate) ||
+            endDate.isAfter(currentDate)));
+  }
+
+  bool isCurrentDateAfternoonLeave(DateTime currentDate) {
+    return (leaveHour == LeaveHours.afternoon &&
+        startDate.isAtSameMomentAs(currentDate));
+  }
+
+  bool isCurrentDateMorningLeave(DateTime currentDate) {
+    return (leaveHour == LeaveHours.morning &&
+        startDate.isAtSameMomentAs(currentDate));
+  }
 }
