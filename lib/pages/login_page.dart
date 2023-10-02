@@ -58,6 +58,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -110,8 +112,8 @@ class _LoginPageState extends State<LoginPage> {
                               labelText: 'Username',
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 219, 219, 219),
+                                borderSide: BorderSide(
+                                  color: colorScheme.secondary,
                                   width: 2,
                                 ),
                               ),
@@ -131,8 +133,8 @@ class _LoginPageState extends State<LoginPage> {
                               labelText: 'Password',
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 219, 219, 219),
+                                borderSide: BorderSide(
+                                  color: colorScheme.secondary,
                                   width: 2,
                                 ),
                               ),
@@ -174,8 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                                     padding: const EdgeInsets.symmetric(
                                       vertical: 15,
                                     ),
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 30, 128, 184),
+                                    backgroundColor: colorScheme.primary,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),

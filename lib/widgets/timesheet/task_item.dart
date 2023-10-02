@@ -7,29 +7,17 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
           children: [
-            Text(
-              taskModel.dayOfWeek,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Row(
-              children: [
-                Text(taskModel.projectCode + taskModel.taskDetail),
-                const Spacer(),
-                Text('${taskModel.usageTimeHr}:${taskModel.usageTimeMinute}'),
-              ],
-            )
+            Text("${taskModel.projectCode}:${taskModel.taskDetail}"),
+            const Spacer(),
+            Text('${taskModel.usageTimeHr}:${taskModel.usageTimeMinute}h'),
           ],
-        ),
-      ),
+        )
+      ],
     );
   }
 }
