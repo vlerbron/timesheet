@@ -23,6 +23,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Timesheet"),
+        centerTitle: true,
       ),
       body: Column(
         children: [

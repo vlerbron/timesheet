@@ -184,7 +184,7 @@ class _NewTaskState extends State<NewTaskPage> {
                   //   ),
                   // ),
                 ]),
-                const SizedBox(height: 200),
+                const SizedBox(height: 300),
                 const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 final formatter = DateFormat('dd MMMM yyyy');
 
 class TaskModel {
+  final String dayOfWeek;
   final String projectCode;
   final String issue;
   final String taskDetail;
@@ -11,6 +12,7 @@ class TaskModel {
   final int usageTimeMinute;
 
   TaskModel({
+    required this.dayOfWeek,
     required this.projectCode,
     required this.issue,
     required this.taskDetail,
