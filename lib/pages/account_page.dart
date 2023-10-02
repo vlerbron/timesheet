@@ -10,6 +10,7 @@ class AccountPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Account'),
+        centerTitle: true,
       ),
       body: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
