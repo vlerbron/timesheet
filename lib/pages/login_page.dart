@@ -1,11 +1,6 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:timesheet/main.dart';
-import 'package:timesheet/widgets/user_image_picker.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -21,18 +16,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _form = GlobalKey<FormState>();
 
-  var _isLogin = true;
   var passwordVisible = false;
   var _enteredEmail = '';
   var _enteredPassword = '';
-  var _enteredUsername = '';
-  File? _selectedImage;
   var _isAuthenticating = false;
 
   void _submit() async {
     final isValid = _form.currentState!.validate();
 
-    if (!isValid && !_isLogin && _selectedImage == null) {
+    if (!isValid) {
       // show error message ...
       return;
     }
@@ -43,37 +35,14 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isAuthenticating = true;
       });
-      if (_isLogin) {
-        // ignore: unused_local_variable
-        final userCredentials = await _firebase.signInWithEmailAndPassword(
-            email: _enteredEmail, password: _enteredPassword);
-      } else {
-        final userCredentials = await _firebase.createUserWithEmailAndPassword(
-            email: _enteredEmail, password: _enteredPassword);
-
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('user_images')
-            .child('${userCredentials.user!.uid}.jpg');
-
-        await storageRef.putFile(_selectedImage!);
-        final imageUrl = await storageRef.getDownloadURL();
-
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredentials.user!.uid)
-            .set({
-          'username': _enteredUsername,
-          'email': _enteredEmail,
-          'image_url': imageUrl,
-        });
-      }
+      await _firebase.signInWithEmailAndPassword(
+          email: _enteredEmail, password: _enteredPassword);
+      if (mounted) Navigator.of(context).pushReplacementNamed('/home');
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
         // ...
       }
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed('/home');
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -119,9 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                         end: Alignment.topLeft,
                       ),
                     ),
-                    height: MediaQuery.of(context).size.height *
-                        (_isLogin ? 5 : 3) /
-                        10,
+                    height: MediaQuery.of(context).size.height * 0.5,
                     width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.only(bottom: 30.0),
                     child: const Image(
@@ -138,15 +105,9 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          if (!_isLogin)
-                            UserImagePicker(
-                              onPickImage: (pickedImage) {
-                                _selectedImage = pickedImage;
-                              },
-                            ),
                           TextFormField(
                             decoration: InputDecoration(
-                              labelText: 'Email Address',
+                              labelText: 'Username',
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -158,46 +119,10 @@ class _LoginPageState extends State<LoginPage> {
                             keyboardType: TextInputType.emailAddress,
                             autocorrect: false,
                             textCapitalization: TextCapitalization.none,
-                            validator: (value) {
-                              if (value == null ||
-                                  value.trim().isEmpty ||
-                                  !value.contains('@')) {
-                                return 'Please enter a valid email address.';
-                              }
-                              return null;
-                            },
                             onSaved: (value) {
                               _enteredEmail = value!;
                             },
                           ),
-                          if (!_isLogin)
-                            Container(
-                              padding: const EdgeInsets.only(top: 30.0),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'Username',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                      color: Color.fromARGB(255, 219, 219, 219),
-                                      width: 2,
-                                    ),
-                                  ),
-                                ),
-                                enableSuggestions: false,
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.isEmpty ||
-                                      value.trim().length < 4) {
-                                    return 'Please enter at least 4 characters.';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _enteredUsername = value!;
-                                },
-                              ),
-                            ),
                           const SizedBox(
                             height: 30,
                           ),
@@ -255,23 +180,12 @@ class _LoginPageState extends State<LoginPage> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
-                                  child: Text(
-                                    _isLogin ? 'Login' : 'Signup',
-                                    style: const TextStyle(color: Colors.white),
+                                  child: const Text(
+                                    'Login',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                 ),
                               ),
-                            ),
-                          if (!_isAuthenticating)
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  _isLogin = !_isLogin;
-                                });
-                              },
-                              child: Text(_isLogin
-                                  ? 'Create an account'
-                                  : 'I already have an account'),
                             ),
                         ],
                       ),

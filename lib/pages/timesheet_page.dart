@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:timesheet/pages/new_task_page.dart';
 import 'package:timesheet/providers/timesheet_provider.dart';
 import 'package:timesheet/widgets/tabs.dart';
-
-final startFormatter = DateFormat('dd MMM');
-final endFormatter = DateFormat('dd MMM yyyy');
+import 'package:timesheet/widgets/timesheet/date_picker_timesheet.dart';
+import 'package:timesheet/widgets/timesheet/tasks_of_days.dart';
 
 class TimesheetPage extends ConsumerStatefulWidget {
   const TimesheetPage({super.key});
@@ -18,48 +15,48 @@ class TimesheetPage extends ConsumerStatefulWidget {
 class _TimesheetPageState extends ConsumerState<TimesheetPage> {
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    final Color primaryColor = colorScheme.primary;
+    final Color secondaryColor = colorScheme.secondary;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Timesheet"),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('< '),
-                Text(
-                  startFormatter.format(
-                      ref.read(timesheetProvider.notifier).state.startDateTime),
-                  textAlign: TextAlign.center,
-                ),
-                const Text(' - '),
-                Text(
-                  endFormatter.format(
-                      ref.read(timesheetProvider.notifier).state.endDateTime),
-                  textAlign: TextAlign.center,
-                ),
-                const Text(' >'),
+      body: Column(
+        children: [
+          const DatePickerTimesheet(),
+          const SizedBox(height: 10),
+          Container(
+            color: secondaryColor,
+            height: 50,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Time remaining',
+                          style: textTheme.bodyLarge?.copyWith(),
+                        ),
+                        const Spacer(),
+                        Text(
+                          '${ref.read(timesheetProvider.notifier).state.timeRemainingHour}h',
+                          style: textTheme.bodyLarge
+                              ?.copyWith(color: primaryColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
-            SizedBox(height: 15),
-            OutlinedButton.icon(
-              onPressed: () {
-                //NewTask();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (ctx) => NewTaskPage()));
-              },
-              style: OutlinedButton.styleFrom(
-                foregroundColor: Colors.black,
-              ),
-              icon: const Icon(Icons.arrow_right_alt),
-              label: const Text('New task'),
-            ),
-            //TextButton(onPressed: () {}, child: NewPage()),
-          ],
-        ),
+          ),
+          const TasksOfDays(),
+        ],
       ),
       bottomNavigationBar: const Tabs(selectedIndex: 1),
     );

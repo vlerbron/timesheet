@@ -1,12 +1,23 @@
+import 'package:timesheet/models/task_model.dart';
+
 class TimesheetModel {
-  final DateTime startDateTime;
-  final DateTime endDateTime;
-  final int timeRemainingHour;
-  final int timeRemainingMinute;
+  DateTime selectedDate;
+  int timeRemainingHour;
+  int timeRemainingMinute;
+  final List<TaskModel> taskList;
+  final List<String> allDayOfWeek = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
 
   TimesheetModel(
-      {required this.startDateTime,
-      required this.endDateTime,
+      {required this.selectedDate,
       required this.timeRemainingHour,
-      required this.timeRemainingMinute});
+      required this.timeRemainingMinute,
+      required this.taskList});
 }
