@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/models/task_model.dart';
+import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/widgets/common/save_button.dart';
 import 'package:timesheet/widgets/common/short_cancel_button.dart';
 
@@ -148,17 +149,15 @@ class _NewTaskState extends State<NewTaskPage> {
                   Text('Usage time'),
                   Text(
                     '*',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                      color: Colors.red,
-                    ),
+                    style: kRequiredTextStyle,
                   ),
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('data'),
+                        Expanded(
+                          child: TextField(),
+                        ),
                       ],
                     ),
                   ),

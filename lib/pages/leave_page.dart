@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/widgets/common/floating_add_button.dart';
 import 'package:timesheet/widgets/tabs.dart';
 import 'package:timesheet/pages/leave_tabs/calendar_tab.dart';
 import 'package:timesheet/widgets/common/custom_tab_bar.dart';
@@ -44,7 +43,6 @@ class LeavePage extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: const Tabs(selectedIndex: 3),
-        floatingActionButton: FloatingAddButton(onPressed: () {}),
       ),
     );
   }
