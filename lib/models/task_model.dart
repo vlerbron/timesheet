@@ -7,7 +7,7 @@ class TaskModel {
   final String issue;
   final String taskDetail;
   final DateTime date;
-  final int usageTimeHour;
+  final int usageTimeHr;
   final int usageTimeMinute;
 
   TaskModel({
@@ -15,7 +15,7 @@ class TaskModel {
     required this.issue,
     required this.taskDetail,
     required this.date,
-    required this.usageTimeHour,
+    required this.usageTimeHr,
     required this.usageTimeMinute,
   });
 
