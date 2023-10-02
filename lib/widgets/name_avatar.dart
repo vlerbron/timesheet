@@ -15,12 +15,12 @@ class NameAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 1),
-      height: 20,
-      width: 20,
+      height: 22,
+      width: 22,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(11),
       ),
       child: Padding(
         padding: const EdgeInsets.all(1.0),
