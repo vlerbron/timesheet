@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/providers/timesheet_provider.dart';
+import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/widgets/timesheet/day_item.dart';
 
 class TasksOfDays extends ConsumerWidget {
@@ -13,6 +14,7 @@ class TasksOfDays extends ConsumerWidget {
 
     return Expanded(
       child: ListView.builder(
+        padding: const EdgeInsets.only(top: kWidgetPadding),
         itemCount: dayList.length,
         itemBuilder: (ctx, index) => DayItem(dayList[index]),
       ),
