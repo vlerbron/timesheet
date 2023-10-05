@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:timesheet/main.dart';
+import 'dart:io';
 
-final _firebase = FirebaseAuth.instance;
+import 'package:flutter/material.dart';
+import 'package:timesheet/main.dart';
+import 'package:timesheet/services/authen/authen_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   final _form = GlobalKey<FormState>();
 
   var passwordVisible = false;
-  var _enteredEmail = '';
+  var _enteredUserName = '';
   var _enteredPassword = '';
   var _isAuthenticating = false;
 
@@ -35,25 +35,35 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isAuthenticating = true;
       });
-      await _firebase.signInWithEmailAndPassword(
-          email: _enteredEmail, password: _enteredPassword);
-      if (mounted) Navigator.of(context).pushReplacementNamed('/home');
-    } on FirebaseAuthException catch (error) {
-      if (error.code == 'email-already-in-use') {
-        // ...
+
+      Map<String, dynamic> response = await AuthenService(
+              userName: _enteredUserName, password: _enteredPassword)
+          .authen();
+      print(response['ResponseCode']);
+      print(response['Description']);
+
+      if (response['ResponseCode'] != '000') {
+        onError(response['Description']);
+      } else if (mounted) {
+        Navigator.of(context).pushReplacementNamed('/home');
       }
-      if (mounted) {
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error.message ?? 'Authentication failed.'),
-          ),
-        );
-      }
-      setState(() {
-        _isAuthenticating = false;
-      });
+    } on Exception catch (error) {
+      onError(error.toString());
     }
+  }
+
+  void onError(String errorMsg) {
+    if (mounted) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMsg),
+        ),
+      );
+    }
+    setState(() {
+      _isAuthenticating = false;
+    });
   }
 
   @override
@@ -118,11 +128,16 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                             ),
-                            keyboardType: TextInputType.emailAddress,
                             autocorrect: false,
+                            validator: (value) {
+                              if (value == null || value.trim().length < 3) {
+                                return 'User name must be at least 4 characters long.';
+                              }
+                              return null;
+                            },
                             textCapitalization: TextCapitalization.none,
                             onSaved: (value) {
-                              _enteredEmail = value!;
+                              _enteredUserName = value!;
                             },
                           ),
                           const SizedBox(
@@ -153,8 +168,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             obscureText: !passwordVisible,
                             validator: (value) {
-                              if (value == null || value.trim().length < 6) {
-                                return 'Password must be at least 6 characters long.';
+                              if (value == null || value.trim().length < 3) {
+                                return 'Password must be at least 4 characters long.';
                               }
                               return null;
                             },
@@ -193,11 +208,16 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                Text(
-                  "V.1.0.1.0001",
-                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed('/home');
+                  },
+                  child: Text(
+                    "V.1.0.1.0001",
+                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                  ),
                 ),
               ],
             ),
