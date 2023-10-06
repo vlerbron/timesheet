@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timesheet/injection_container.dart';
 import 'package:timesheet/routes/route.dart';
 
 final colorScheme = ColorScheme.fromSeed(
@@ -33,6 +34,7 @@ final theme = ThemeData().copyWith(
 );
 
 void main() {
+  setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     ProviderScope(

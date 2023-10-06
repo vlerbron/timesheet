@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:timesheet/main.dart';
-import 'package:timesheet/services/authen/authen_service.dart';
+import 'package:timesheet/repositories/services/i_authen_service_repository.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -33,12 +34,10 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isAuthenticating = true;
       });
-
-      Map<String, dynamic> response = await AuthenService(
-              userName: _enteredUserName, password: _enteredPassword)
-          .authen();
-      print(response['ResponseCode']);
-      print(response['Description']);
+      IAuthenServiceRepository authenService =
+          GetIt.instance<IAuthenServiceRepository>();
+      Map<String, dynamic> response =
+          await authenService.authen(_enteredUserName, _enteredPassword);
 
       if (response['ResponseCode'] != '000') {
         onError(response['Description']);
