@@ -19,3 +19,7 @@ const kRequiredTextStyle = TextStyle(
 const double kWidgetCircularRadius = 8;
 
 const double kWidgetPadding = 16;
+
+//Use 10.0.2.2 as localhost for test.
+const String kBaseURL =
+    'https://timesheetbackend-sandbox.mxapps.io/auth/v1/user-authen';
