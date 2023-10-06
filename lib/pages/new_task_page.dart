@@ -16,7 +16,7 @@ class _NewTaskState extends State<NewTaskPage> {
 
   List<String> listOfValue = ['1', '2'];
 
-  int _selectHours = 1;
+  //int _selectHours = 1;
 
   DateTime? _selectedDate;
 

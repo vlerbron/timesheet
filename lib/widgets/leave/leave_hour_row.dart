@@ -59,7 +59,7 @@ class LeaveHourRow extends StatelessWidget {
       } else {
         displayAvatar.add(
           NameAvatar(
-            text: leave.employee!.avatarText,
+            text: leave.employee.avatarText,
             backgroundColor: leaveTypesColor[leave.leaveType]!,
             textColor: Colors.white,
           ),

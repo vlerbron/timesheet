@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:timesheet/widgets/tabs.dart';
 
@@ -18,7 +17,6 @@ class AccountPage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                FirebaseAuth.instance.signOut();
                 Navigator.pushReplacementNamed(context, '/');
               },
               style: ElevatedButton.styleFrom(

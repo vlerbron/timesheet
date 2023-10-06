@@ -1,22 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/data/dummy_leaves.dart';
-import 'package:timesheet/models/leave_model.dart';
 import 'package:timesheet/providers/selected_date_provider.dart';
 
-// final leavesProvider = Provider((ref) {
-//   return dummyLeaves;
-// });
-
-class LeaveNotifier extends StateNotifier<List<Leave>> {
-  LeaveNotifier() : super(dummyLeaves);
-
-  void leaveAdded(Leave leave) {
-    state = [...state, leave];
-  }
-}
-
-final leavesProvider =
-    StateNotifierProvider<LeaveNotifier, List<Leave>>((ref) => LeaveNotifier());
+final leavesProvider = Provider((ref) {
+  return dummyLeaves;
+});
 
 final filteredLeaveProvider = Provider((ref) {
   final leaves = ref.watch(leavesProvider);
