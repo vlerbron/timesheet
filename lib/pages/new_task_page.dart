@@ -65,11 +65,7 @@ class _NewTaskState extends State<NewTaskPage> {
                     const Text('Issue'),
                     const Text(
                       '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Colors.red,
-                      ),
+                      style: kRequiredTextStyle,
                     ),
                     Expanded(
                       child: Row(
@@ -115,11 +111,7 @@ class _NewTaskState extends State<NewTaskPage> {
                     const Text('Date'),
                     const Text(
                       '*',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Colors.red,
-                      ),
+                      style: kRequiredTextStyle,
                     ),
                     const SizedBox(width: 16),
                     Expanded(
