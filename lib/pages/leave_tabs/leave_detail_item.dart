@@ -16,7 +16,7 @@ class LeaveDetailItem extends StatelessWidget {
     return Row(
       children: [
         NameAvatar(
-            text: leave.employee.avatarText,
+            text: leave.employee!.avatarText,
             backgroundColor: leaveTypesColor[leave.leaveType]!,
             textColor: Colors.white),
         const SizedBox(
@@ -32,7 +32,7 @@ class LeaveDetailItem extends StatelessWidget {
               )),
             ),
             child: Text(
-              '${leave.employee.firstName}${leave.employee.lastName == null ? '' : ' ${leave.employee.lastName}'}',
+              '${leave.employee!.firstName}${leave.employee!.lastName == null ? '' : ' ${leave.employee!.lastName}'}',
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
