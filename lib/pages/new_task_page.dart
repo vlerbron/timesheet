@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:timesheet/data/dummy_select_issue.dart';
 import 'package:timesheet/models/task_model.dart';
+import 'package:timesheet/pages/select_issue_page.dart';
 import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/widgets/common/save_button.dart';
 import 'package:timesheet/widgets/common/short_cancel_button.dart';
@@ -22,7 +24,13 @@ class _NewTaskState extends State<NewTaskPage> {
 
   void _save() {}
 
-  void _issue() {}
+  void _issue() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+          builder: (context) =>
+              SelectIssuePage(selectIssueModels: dummySelectIssue)),
+    );
+  }
 
   void _presentDatePicker() async {
     final now = DateTime.now();
