@@ -9,14 +9,16 @@ class TasksOfDays extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<String> dayList =
+    final Map<String, Color> allDayOfWeek =
         ref.read(timesheetProvider.notifier).state.allDayOfWeek;
+    final List<String> dayList = allDayOfWeek.keys.toList();
+    final List<Color> colorList = allDayOfWeek.values.toList();
 
     return Expanded(
       child: ListView.builder(
         padding: const EdgeInsets.only(top: kWidgetPadding),
         itemCount: dayList.length,
-        itemBuilder: (ctx, index) => DayItem(dayList[index]),
+        itemBuilder: (ctx, index) => DayItem(dayList[index], colorList[index]),
       ),
     );
   }

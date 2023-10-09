@@ -7,8 +7,9 @@ import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/widgets/timesheet/task_item.dart';
 
 class DayItem extends ConsumerStatefulWidget {
-  const DayItem(this.dayOfWeek, {super.key});
+  const DayItem(this.dayOfWeek, this.dayColor, {super.key});
   final String dayOfWeek;
+  final Color dayColor;
 
   @override
   ConsumerState<DayItem> createState() => _DayItemState();
@@ -35,6 +36,15 @@ class _DayItemState extends ConsumerState<DayItem> {
           right: BorderSide(color: colorScheme.secondary),
         ),
         borderRadius: BorderRadius.circular(kWidgetCircularRadius),
+        color: colorScheme.background,
+        boxShadow: const [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.14),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: Offset(1, 1),
+          ),
+        ],
       ),
       child: Column(
         children: [
@@ -49,7 +59,7 @@ class _DayItemState extends ConsumerState<DayItem> {
                       String.fromCharCode(CupertinoIcons.circle.codePoint),
                       style: TextStyle(
                         inherit: false,
-                        color: Colors.red,
+                        color: widget.dayColor,
                         fontSize: 14.0,
                         fontWeight: FontWeight.w700,
                         fontFamily: CupertinoIcons.circle.fontFamily,
