@@ -16,6 +16,7 @@ class SelectIssuePage extends StatelessWidget {
         title: const Text(
           'Select Issue',
         ),
+        centerTitle: true,
         leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
