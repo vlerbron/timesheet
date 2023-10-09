@@ -17,7 +17,7 @@ class IssueItem extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  selectIssueModel.client,
+                  selectIssueModel.clientCode,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -25,7 +25,7 @@ class IssueItem extends StatelessWidget {
                 ),
                 const SizedBox(width: 15),
                 Text(
-                  selectIssueModel.issueNo,
+                  selectIssueModel.projectCode,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -55,7 +55,7 @@ class IssueItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        selectIssueModel.project,
+                        selectIssueModel.issueNo,
                       ),
                     ],
                   ),

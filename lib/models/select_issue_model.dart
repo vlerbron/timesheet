@@ -1,13 +1,13 @@
 class SelectIssueModel {
-  String client;
-  String project;
+  String clientCode;
+  String projectCode;
   String issueNo;
   String title;
   String status;
 
   SelectIssueModel({
-    required this.client,
-    required this.project,
+    required this.clientCode,
+    required this.projectCode,
     required this.issueNo,
     required this.title,
     required this.status,
