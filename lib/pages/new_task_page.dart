@@ -110,10 +110,14 @@ class _NewTaskState extends State<NewTaskPage> {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   ),
                 ),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     const Text('Date'),
@@ -145,9 +149,9 @@ class _NewTaskState extends State<NewTaskPage> {
                 ),
                 const Divider(),
                 const SizedBox(height: 20),
-                const Row(children: [
-                  Text('Usage time'),
-                  Text(
+                Row(children: [
+                  const Text('Usage time'),
+                  const Text(
                     '*',
                     style: kRequiredTextStyle,
                   ),
@@ -155,41 +159,73 @@ class _NewTaskState extends State<NewTaskPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        const Expanded(
+                            child: Padding(
+                                padding: EdgeInsets.fromLTRB(10, 0, 0, 0))),
+                        const Expanded(
+                            child: Padding(
+                                padding: EdgeInsets.fromLTRB(10, 0, 0, 0))),
                         Expanded(
-                          child: TextField(),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: TextFormField(
+                              autofocus: false,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                hintText: 'HH',
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Text(':'),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                            child: TextFormField(
+                              autofocus: false,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(255, 255, 255, 255),
+                                hintText: 'MM',
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  // Expanded(
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.end,
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     children: [
-                  //       DropdownButtonFormField(
-                  //           items: [
-                  //             for (final hour in listOfValue)
-                  //               DropdownMenuItem(
-                  //                 value: hour,
-                  //                 child: Text(hour),
-                  //               )
-                  //           ],
-                  //           onChanged: (value) {
-                  //             setState(() {
-                  //               _selectHours = value! as int;
-                  //             });
-                  //           })
-                  //     ],
-                  //   ),
-                  // ),
                 ]),
-                const SizedBox(height: 300),
+                const SizedBox(height: 5),
                 const Divider(),
+                const SizedBox(height: 200),
+                const Divider(),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // Cancel Button
                     ShortCancelButton(onTap: () => Navigator.pop(context)),
                     const SizedBox(width: 15),
+                    // Save Button
                     SaveButton(
                       onTap: _save,
                     )
