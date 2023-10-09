@@ -36,6 +36,15 @@ class _DayItemState extends ConsumerState<DayItem> {
           right: BorderSide(color: colorScheme.secondary),
         ),
         borderRadius: BorderRadius.circular(kWidgetCircularRadius),
+        color: colorScheme.background,
+        boxShadow: const [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.14),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: Offset(1, 1),
+          ),
+        ],
       ),
       child: Column(
         children: [
