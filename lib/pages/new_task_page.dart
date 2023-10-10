@@ -159,28 +159,22 @@ class _NewTaskState extends State<NewTaskPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const Expanded(
-                            child: Padding(
-                                padding: EdgeInsets.fromLTRB(10, 0, 0, 0))),
-                        const Expanded(
-                            child: Padding(
-                                padding: EdgeInsets.fromLTRB(10, 0, 0, 0))),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                            child: TextFormField(
-                              autofocus: false,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor:
-                                    const Color.fromARGB(255, 255, 255, 255),
-                                hintText: 'HH',
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                  ),
+                        const Spacer(),
+                        SizedBox(
+                          width: 60,
+                          height: 50,
+                          child: TextFormField(
+                            autofocus: false,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor:
+                                  const Color.fromARGB(255, 255, 255, 255),
+                              hintText: 'HH',
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
                                 ),
                               ),
                             ),
@@ -189,22 +183,21 @@ class _NewTaskState extends State<NewTaskPage> {
                         const SizedBox(width: 8),
                         const Text(':'),
                         const SizedBox(width: 8),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                            child: TextFormField(
-                              autofocus: false,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor:
-                                    const Color.fromARGB(255, 255, 255, 255),
-                                hintText: 'MM',
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                  ),
+                        SizedBox(
+                          width: 60,
+                          height: 50,
+                          child: TextFormField(
+                            autofocus: false,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor:
+                                  const Color.fromARGB(255, 255, 255, 255),
+                              hintText: 'MM',
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
                                 ),
                               ),
                             ),
