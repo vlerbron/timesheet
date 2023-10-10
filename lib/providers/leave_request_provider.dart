@@ -15,7 +15,7 @@ class LeaveRequestNotifier extends StateNotifier<Leave> {
         ));
 
   void onUrgentCheckboxChange(bool? checkboxSts) {
-    state = state.copywith(isUrgent: checkboxSts ?? false);
+    state = state.copywith(isUrgent: checkboxSts);
   }
 
   void onStartDateChange(DateTime startDate) {
@@ -53,6 +53,21 @@ class LeaveRequestNotifier extends StateNotifier<Leave> {
   void onRemoveAttachment(File file) {
     state.attachment!.remove(file);
     state = state.copywith(attachment: state.attachment);
+  }
+
+  void onEditLeave(Leave leave) {
+    state = leave.copywith(
+      attachment: leave.attachment,
+      employee: leave.employee,
+      endDate: leave.endDate,
+      isUrgent: leave.isUrgent,
+      leaveAction: leave.leaveAction,
+      leaveHour: leave.leaveHour,
+      leaveStatus: leave.leaveStatus,
+      leaveType: leave.leaveType,
+      startDate: leave.startDate,
+      taskDetails: leave.taskDetails,
+    );
   }
 }
 

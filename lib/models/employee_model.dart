@@ -1,4 +1,7 @@
-class Employee {
+import 'package:equatable/equatable.dart';
+
+//ignore: must_be_immutable
+class Employee extends Equatable {
   Employee(
       {required this.firstName,
       this.lastName,
@@ -18,4 +21,7 @@ class Employee {
     }
     return displayText;
   }
+
+  @override
+  List<Object> get props => [firstName, nickname];
 }

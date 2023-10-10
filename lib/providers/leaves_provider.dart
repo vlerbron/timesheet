@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/data/dummy_leaves.dart';
+import 'package:timesheet/models/employee_model.dart';
 import 'package:timesheet/models/leave_model.dart';
 import 'package:timesheet/providers/selected_date_provider.dart';
 
@@ -17,6 +18,20 @@ class LeaveNotifier extends StateNotifier<List<Leave>> {
 
 final leavesProvider =
     StateNotifierProvider<LeaveNotifier, List<Leave>>((ref) => LeaveNotifier());
+
+final myLeaveProvider = Provider((ref) {
+  final List<Leave> leaves = ref.watch(leavesProvider);
+  return leaves.where(
+    (leave) =>
+        leave.employee ==
+        //TO BE REVISED: current user
+        Employee(
+          firstName: 'Nuntuch',
+          nickname: 'Nan',
+          employeeStartDate: DateTime(2023, 1, 16),
+        ),
+  );
+});
 
 final filteredLeaveProvider = Provider((ref) {
   final leaves = ref.watch(leavesProvider);

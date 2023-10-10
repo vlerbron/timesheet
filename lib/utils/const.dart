@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 ///// Color
 /////
@@ -19,6 +20,11 @@ const kRequiredTextStyle = TextStyle(
 const double kWidgetCircularRadius = 8;
 
 const double kWidgetPadding = 16;
+
+////// Date formatter
+/////
+final dateFormatterddMMyyyy = DateFormat('dd/MM/yyyy');
+final dateFormatterddMMyyyyhhmm = DateFormat('dd/MM/yyyy hh:mm');
 
 //Use 10.0.2.2 as localhost for test.
 const String kBaseURL =

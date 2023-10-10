@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:timesheet/utils/const.dart';
 
 class DateInput extends StatefulWidget {
@@ -22,12 +21,11 @@ class DateInput extends StatefulWidget {
 
 class _DateInputState extends State<DateInput> {
   late DateTime selectedDate;
-  final formatter = DateFormat('dd/MM/yyyy');
 
   @override
   void initState() {
     selectedDate = widget.initDate;
-    widget.controller.text = formatter.format(selectedDate);
+    widget.controller.text = dateFormatterddMMyyyy.format(selectedDate);
     super.initState();
   }
 
@@ -65,7 +63,8 @@ class _DateInputState extends State<DateInput> {
                   ),
                   onPressed: () async {
                     selectedDate = await _presentDatePicker();
-                    widget.controller.text = formatter.format(selectedDate);
+                    widget.controller.text =
+                        dateFormatterddMMyyyy.format(selectedDate);
                     widget.onSelectedDate(selectedDate);
                   },
                 ),

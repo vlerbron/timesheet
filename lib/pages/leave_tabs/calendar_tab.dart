@@ -46,8 +46,12 @@ class _CalendarTabState extends ConsumerState<CalendarTab> {
         ],
       ),
       FloatingAddButton(onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (ctx) => const NewLeaveRequest()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (ctx) => const NewLeaveRequest(
+                      isNew: true,
+                    )));
       }),
     ]);
   }

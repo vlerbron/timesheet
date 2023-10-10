@@ -13,7 +13,34 @@ Map<LeaveTypes, Color> leaveTypesColor = {
   LeaveTypes.holiday: const Color.fromRGBO(244, 211, 209, 1)
 };
 
+Map<LeaveActions, Color> leaveActionsColor = {
+  LeaveActions.cancel: const Color.fromRGBO(128, 128, 128, 1),
+  LeaveActions.request: const Color.fromRGBO(2, 194, 242, 1),
+};
+
+Map<LeaveActions, IconData> leaveActionsIcon = {
+  LeaveActions.cancel: Icons.remove_circle_outline,
+  LeaveActions.request: Icons.arrow_outward_rounded,
+};
+Map<LeaveStatus, Color> leaveStatusColor = {
+  LeaveStatus.approved: const Color.fromRGBO(139, 195, 74, 1),
+  LeaveStatus.rejected: const Color.fromRGBO(245, 69, 81, 1),
+  LeaveStatus.waitforapproval: const Color.fromRGBO(255, 184, 0, 1),
+  LeaveStatus.waitforpreapproval: const Color.fromRGBO(255, 184, 0, 1),
+};
+
+Map<LeaveStatus, IconData> leaveStatusIcon = {
+  LeaveStatus.approved: Icons.check_circle_rounded,
+  LeaveStatus.rejected: Icons.cancel_rounded,
+  LeaveStatus.waitforapproval: Icons.access_time_rounded,
+  LeaveStatus.waitforpreapproval: Icons.access_time_rounded,
+};
+
 enum LeaveHours { allday, morning, afternoon }
+
+enum LeaveActions { request, cancel }
+
+enum LeaveStatus { waitforapproval, waitforpreapproval, approved, rejected }
 
 String getLeaveHourDisplayText(LeaveHours leaveHours) {
   String leaveHourDisplayText;
@@ -43,6 +70,36 @@ String getLeaveTypeDisplayText(LeaveTypes leaveType) {
   return leaveTypeDisplayText;
 }
 
+String getLeaveActionDisplayText(LeaveActions leaveAction) {
+  String leaveActionDisplayText;
+
+  leaveActionDisplayText =
+      leaveAction.name[0].toUpperCase() + leaveAction.name.substring(1);
+
+  return leaveActionDisplayText;
+}
+
+String getLeaveStatusDisplayText(LeaveStatus leaveStatus) {
+  String leaveStatusDisplayText;
+  if (leaveStatus == LeaveStatus.waitforapproval) {
+    leaveStatusDisplayText = '${leaveStatus.name[0].toUpperCase()}'
+        '${leaveStatus.name.substring(1, 4)} '
+        '${leaveStatus.name.substring(4, 7)} '
+        '${leaveStatus.name.substring(7)}';
+  } else if (leaveStatus == LeaveStatus.waitforpreapproval) {
+    leaveStatusDisplayText = '${leaveStatus.name[0].toUpperCase()}'
+        '${leaveStatus.name.substring(1, 4)} '
+        '${leaveStatus.name.substring(4, 7)} '
+        '${leaveStatus.name.substring(7, 10)}-'
+        '${leaveStatus.name.substring(10)}';
+  } else {
+    leaveStatusDisplayText =
+        leaveStatus.name[0].toUpperCase() + leaveStatus.name.substring(1);
+  }
+
+  return leaveStatusDisplayText;
+}
+
 class Leave {
   Leave(
       {required this.startDate,
@@ -51,7 +108,10 @@ class Leave {
       this.leaveType,
       this.employee,
       this.isUrgent,
-      this.attachment}) {
+      this.attachment,
+      this.taskDetails,
+      this.leaveAction,
+      this.leaveStatus}) {
     if (leaveType != null) {
       if (leaveHour == LeaveHours.allday) {
         totalLeaveDays = (endDate.difference(startDate).inDays + 1) * 1.0;
@@ -63,6 +123,9 @@ class Leave {
     }
 
     attachment ??= [];
+    leaveAction ??= LeaveActions.request;
+    leaveStatus ??= LeaveStatus.waitforpreapproval;
+    isUrgent ??= false;
   }
 
   DateTime startDate;
@@ -72,8 +135,10 @@ class Leave {
   LeaveHours? leaveHour;
   String? taskDetails;
   List<File>? attachment;
-  double? totalLeaveDays;
   Employee? employee;
+  double? totalLeaveDays;
+  LeaveActions? leaveAction;
+  LeaveStatus? leaveStatus;
 
   bool isCurrentDateAlldayLeave(DateTime currentDate) {
     return (leaveHour == LeaveHours.allday &&
@@ -93,25 +158,27 @@ class Leave {
         startDate.isAtSameMomentAs(currentDate));
   }
 
-  Leave copywith({
-    DateTime? startDate,
-    DateTime? endDate,
-    LeaveTypes? leaveType,
-    bool? isUrgent,
-    LeaveHours? leaveHour,
-    String? taskDetails,
-    List<File>? attachment,
-    double? totalLeaveDays,
-    Employee? employee,
-  }) {
+  Leave copywith(
+      {DateTime? startDate,
+      DateTime? endDate,
+      LeaveTypes? leaveType,
+      bool? isUrgent,
+      LeaveHours? leaveHour,
+      String? taskDetails,
+      List<File>? attachment,
+      Employee? employee,
+      LeaveActions? leaveAction,
+      LeaveStatus? leaveStatus}) {
     return Leave(
-      startDate: startDate ?? this.startDate,
-      endDate: endDate ?? this.endDate,
-      leaveHour: leaveHour ?? this.leaveHour,
-      employee: employee ?? this.employee,
-      leaveType: leaveType ?? this.leaveType,
-      isUrgent: isUrgent ?? this.isUrgent,
-      attachment: attachment ?? this.attachment,
-    );
+        startDate: startDate ?? this.startDate,
+        endDate: endDate ?? this.endDate,
+        leaveHour: leaveHour ?? this.leaveHour,
+        employee: employee ?? this.employee,
+        leaveType: leaveType ?? this.leaveType,
+        isUrgent: isUrgent ?? this.isUrgent,
+        attachment: attachment ?? this.attachment,
+        taskDetails: taskDetails ?? this.taskDetails,
+        leaveAction: leaveAction ?? this.leaveAction,
+        leaveStatus: leaveStatus ?? this.leaveStatus);
   }
 }

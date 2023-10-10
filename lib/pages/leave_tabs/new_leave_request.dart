@@ -10,12 +10,15 @@ import 'package:timesheet/pages/leave_tabs/date_input.dart';
 import 'package:timesheet/pages/leave_tabs/detail_input.dart';
 import 'package:timesheet/providers/leave_request_provider.dart';
 import 'package:timesheet/providers/leaves_provider.dart';
+import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/widgets/common/circle_grey_closepage_button.dart';
 import 'package:timesheet/widgets/common/save_button.dart';
 import 'package:timesheet/widgets/common/short_cancel_button.dart';
 
 class NewLeaveRequest extends ConsumerStatefulWidget {
-  const NewLeaveRequest({super.key});
+  const NewLeaveRequest({super.key, required this.isNew});
+
+  final bool isNew;
 
   @override
   ConsumerState<NewLeaveRequest> createState() => _NewLeaveRequestState();
@@ -46,12 +49,17 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
     final leave = ref.watch(leaveRequestProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'New request leave',
+        title: Text(
+          widget.isNew ? 'New request leave' : 'Edit request leave',
         ),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        actions: const [CircleGreyClosePageButton()],
+        actions: [
+          Visibility(
+            visible: widget.isNew,
+            child: const CircleGreyClosePageButton(),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -62,7 +70,8 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
           child: Form(
             key: _formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Column(children: [
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               DateInput(
                 title: 'Start date',
                 controller: startDateCntroller,
@@ -153,6 +162,200 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
                   ],
                 ),
               ),
+              Visibility(
+                visible: leave.leaveStatus != LeaveStatus.waitforapproval &&
+                    leave.leaveStatus != LeaveStatus.waitforpreapproval,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Approval Information',
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onBackground),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: kColorLightGrey),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Column(
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Action',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        getLeaveActionDisplayText(
+                                            leave.leaveAction!),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color: leaveActionsColor[
+                                                    leave.leaveAction!]),
+                                      ),
+                                      const SizedBox(
+                                        width: 2,
+                                      ),
+                                      Icon(
+                                        leaveActionsIcon[leave.leaveAction!],
+                                        color: leaveActionsColor[
+                                            leave.leaveAction!],
+                                        size: 16,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Status',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        getLeaveStatusDisplayText(
+                                            leave.leaveStatus!),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color: leaveStatusColor[
+                                                    leave.leaveStatus!]),
+                                      ),
+                                      const SizedBox(
+                                        width: 2,
+                                      ),
+                                      Icon(
+                                        leaveStatusIcon[leave.leaveStatus!],
+                                        color: leaveStatusColor[
+                                            leave.leaveStatus!],
+                                        size: 16,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              const Divider(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Pre-approved by',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary),
+                                  ),
+                                  //TO BE REVISED: add pre-approver name
+                                  const Text('Mr.Pre Approver'),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    //TO BE REVISED: pre-approver date
+                                    dateFormatterddMMyyyyhhmm
+                                        .format(leave.endDate),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary),
+                                  )
+                                ],
+                              ),
+                              const Divider(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Approved by',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary),
+                                  ),
+                                  //TO BE REVISED: add approver name
+                                  const Text('Mr.Approver Tbn'),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    //TO BE REVISED: approver date
+                                    dateFormatterddMMyyyyhhmm
+                                        .format(leave.endDate),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary),
+                                  )
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
               const Spacer(),
               const Divider(),
               Row(
@@ -177,15 +380,7 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
                                 ),
                               ),
                             );
-                        // dummyLeaves.add(
-                        //   leave.copywith(
-                        //     employee: Employee(
-                        //       firstName: 'Nuntuch',
-                        //       nickname: 'Nan',
-                        //       employeeStartDate: DateTime(2023, 01, 16),
-                        //     ),
-                        //   ),
-                        // );
+
                         Navigator.pop(context);
                       }
                     },
