@@ -25,21 +25,19 @@ class SelectIssuePage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextFormField(
-                autofocus: false,
-                keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color.fromARGB(255, 240, 240, 240),
-                  hintText:
-                      'Search from title, issue no, project code, client code',
-                  suffixIcon: const NavIcon('icon-close.png'),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: TextFormField(
+              autofocus: false,
+              keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: const Color.fromARGB(255, 240, 240, 240),
+                hintText:
+                    'Search from title, issue no, project code, client code',
+                suffixIcon: const NavIcon('icon-close.png'),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
             ),
@@ -59,6 +57,7 @@ class SelectIssuePage extends StatelessWidget {
               onTap: () => Navigator.of(context).pop(),
             ),
           ),
+          const SizedBox(height: 30),
         ],
       ),
     );

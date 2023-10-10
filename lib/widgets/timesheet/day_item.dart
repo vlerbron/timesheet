@@ -2,25 +2,36 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/models/task_model.dart';
+import 'package:timesheet/models/timesheet_model.dart';
 import 'package:timesheet/providers/timesheet_provider.dart';
 import 'package:timesheet/utils/const.dart';
+import 'package:timesheet/utils/date_time_mixin.dart';
 import 'package:timesheet/widgets/timesheet/task_item.dart';
 
 class DayItem extends ConsumerStatefulWidget {
-  const DayItem(this.dayOfWeek, {super.key});
+  const DayItem(this.dayOfWeek, this.dayColor, this.selectedDate, {super.key});
   final String dayOfWeek;
+  final Color dayColor;
+  final DateTime selectedDate;
 
   @override
   ConsumerState<DayItem> createState() => _DayItemState();
 }
 
-class _DayItemState extends ConsumerState<DayItem> {
-  bool isShowTask = false;
+class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
   @override
   Widget build(BuildContext context) {
+    final TimesheetModel timesheetModel = ref.watch(timesheetProvider);
+    bool isShowTasks = timesheetModel.isShowTasksMap[widget.dayOfWeek]!;
+    DateTime selectedDate = widget.selectedDate;
     final List<TaskModel> taskList = ref
         .read(taskListProvider.notifier)
-        .getTaskListbyDayOfWeek(widget.dayOfWeek);
+        .getTaskListbyDayOfWeek(
+            widget.dayOfWeek,
+            findFirstDateOfTheWeek(selectedDate),
+            findLastDateOfTheWeek(selectedDate));
+    final TimesheetNotifier timesheetNotifier =
+        ref.read(timesheetProvider.notifier);
     final TextTheme textTheme = Theme.of(context).textTheme;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
@@ -35,6 +46,15 @@ class _DayItemState extends ConsumerState<DayItem> {
           right: BorderSide(color: colorScheme.secondary),
         ),
         borderRadius: BorderRadius.circular(kWidgetCircularRadius),
+        color: colorScheme.background,
+        boxShadow: const [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.14),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: Offset(1, 1),
+          ),
+        ],
       ),
       child: Column(
         children: [
@@ -49,7 +69,7 @@ class _DayItemState extends ConsumerState<DayItem> {
                       String.fromCharCode(CupertinoIcons.circle.codePoint),
                       style: TextStyle(
                         inherit: false,
-                        color: Colors.red,
+                        color: widget.dayColor,
                         fontSize: 14.0,
                         fontWeight: FontWeight.w700,
                         fontFamily: CupertinoIcons.circle.fontFamily,
@@ -66,10 +86,15 @@ class _DayItemState extends ConsumerState<DayItem> {
                     ),
                     const Spacer(),
                     IconButton(
-                      onPressed: () => setState(() {
-                        isShowTask = !isShowTask;
-                      }),
-                      icon: (isShowTask)
+                      onPressed: () {
+                        timesheetNotifier.setIsShowTasks(
+                            widget.dayOfWeek, !isShowTasks);
+                        setState(() {
+                          isShowTasks =
+                              timesheetModel.isShowTasksMap[widget.dayOfWeek]!;
+                        });
+                      },
+                      icon: (isShowTasks)
                           ? Icon(
                               Icons.arrow_drop_up,
                               color: colorScheme.primary,
@@ -85,7 +110,7 @@ class _DayItemState extends ConsumerState<DayItem> {
             ),
           ),
           Visibility(
-            visible: isShowTask,
+            visible: isShowTasks,
             child: Container(
               decoration: BoxDecoration(
                 border: Border(top: BorderSide(color: colorScheme.secondary)),

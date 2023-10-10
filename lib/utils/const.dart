@@ -29,3 +29,12 @@ final dateFormatterddMMyyyyhhmm = DateFormat('dd/MM/yyyy hh:mm');
 //Use 10.0.2.2 as localhost for test.
 const String kBaseURL =
     'https://timesheetbackend-sandbox.mxapps.io/auth/v1/user-authen';
+
+//Day of Week
+const String kMonday = 'Monday';
+const String kTuesday = 'Tuesday';
+const String kWednesday = 'Wednesday';
+const String kThursday = 'Thursday';
+const String kFriday = 'Friday';
+const String kSaturday = 'Saturday';
+const String kSunday = 'Sunday';

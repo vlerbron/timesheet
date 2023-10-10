@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timesheet/models/timesheet_model.dart';
 import 'package:timesheet/providers/timesheet_provider.dart';
 import 'package:timesheet/widgets/tabs.dart';
 import 'package:timesheet/widgets/timesheet/date_picker_timesheet.dart';
@@ -19,6 +20,8 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color primaryColor = colorScheme.primary;
     final Color secondaryColor = colorScheme.secondary;
+    TimesheetModel timesheetModel = ref.watch(timesheetProvider);
+    DateTime selectedDate = timesheetModel.selectedDate;
 
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +30,13 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
       ),
       body: Column(
         children: [
-          const DatePickerTimesheet(),
+          DatePickerTimesheet(
+            onSelectedDateChanged: (dateTime) {
+              setState(() {
+                selectedDate = dateTime;
+              });
+            },
+          ),
           const SizedBox(height: 10),
           Container(
             color: secondaryColor,
@@ -45,7 +54,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
                         ),
                         const Spacer(),
                         Text(
-                          '${ref.read(timesheetProvider.notifier).state.timeRemainingHour}h',
+                          '${timesheetModel.timeRemainingHour}h',
                           style: textTheme.bodyLarge
                               ?.copyWith(color: primaryColor),
                         ),
@@ -56,7 +65,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
               ],
             ),
           ),
-          const TasksOfDays(),
+          TasksOfDays(selectedDate),
         ],
       ),
       bottomNavigationBar: const Tabs(selectedIndex: 1),
