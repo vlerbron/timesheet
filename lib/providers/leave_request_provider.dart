@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:file_previewer/file_previewer.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/models/leave_model.dart';
 
@@ -46,12 +48,21 @@ class LeaveRequestNotifier extends StateNotifier<Leave> {
     state = state.copywith(taskDetails: detail);
   }
 
-  void onAddAttachment(File file) {
-    state = state.copywith(attachment: [...state.attachment!, file]);
+  Future<void> onAddAttachment(File file) async {
+    late Widget thumbnail;
+    try {
+      thumbnail = await FilePreview.getThumbnail(file.path);
+    } catch (e) {
+      thumbnail = Image.asset("");
+    }
+    state = state.copywith(attachment: [
+      ...state.attachment!,
+      {file: thumbnail}
+    ]);
   }
 
-  void onRemoveAttachment(File file) {
-    state.attachment!.remove(file);
+  void onRemoveAttachment(Widget valueWidget) {
+    state.attachment!.removeWhere((att) => att.containsValue(valueWidget));
     state = state.copywith(attachment: state.attachment);
   }
 

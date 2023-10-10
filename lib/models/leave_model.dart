@@ -134,7 +134,7 @@ class Leave {
   bool? isUrgent;
   LeaveHours? leaveHour;
   String? taskDetails;
-  List<File>? attachment;
+  List<Map<File, Widget>>? attachment;
   Employee? employee;
   double? totalLeaveDays;
   LeaveActions? leaveAction;
@@ -165,7 +165,7 @@ class Leave {
       bool? isUrgent,
       LeaveHours? leaveHour,
       String? taskDetails,
-      List<File>? attachment,
+      List<Map<File, Widget>>? attachment,
       Employee? employee,
       LeaveActions? leaveAction,
       LeaveStatus? leaveStatus}) {

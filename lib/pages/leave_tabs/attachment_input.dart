@@ -1,20 +1,22 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:file_previewer/file_previewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timesheet/pages/leave_tabs/remove_photo.dart';
 import 'package:timesheet/providers/leave_request_provider.dart';
 
 class AttachmentInput extends ConsumerWidget {
-  const AttachmentInput(
-      {super.key, required this.title, required this.filePreviews});
+  const AttachmentInput({
+    super.key,
+    required this.title,
+  });
 
   final String title;
-  final List<Widget> filePreviews;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final leave = ref.watch(leaveRequestProvider);
     return Column(
       children: [
         Row(children: [
@@ -46,19 +48,29 @@ class AttachmentInput extends ConsumerWidget {
           ),
         ]),
         Visibility(
-          visible: filePreviews.isNotEmpty,
+          visible: leave.attachment!.isNotEmpty,
           child: SizedBox(
             height: 100,
             child: ListView.builder(
-                itemCount: filePreviews.length,
+                itemCount: leave.attachment!.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (ctx, index) {
-                  var preview = filePreviews[index];
+                  var preview = leave.attachment![index];
                   return Container(
                     margin: const EdgeInsets.all(4),
                     width: 70,
                     height: 70,
-                    child: preview,
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (ctx) =>
+                                  RemovePhoto(child: preview.values.first),
+                            ),
+                          );
+                        },
+                        child: preview.values.first),
                   );
                 }),
           ),
@@ -72,12 +84,6 @@ class AttachmentInput extends ConsumerWidget {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
       final file = File(result.files.single.path!);
-      try {
-        final thumbnail = await FilePreview.getThumbnail(file.path);
-        filePreviews.add(thumbnail);
-      } catch (e) {
-        filePreviews.add(Image.asset(""));
-      }
       ref.read(leaveRequestProvider.notifier).onAddAttachment(file);
     } else {
       // ignore: use_build_context_synchronously

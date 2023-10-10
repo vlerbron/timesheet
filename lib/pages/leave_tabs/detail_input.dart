@@ -5,10 +5,12 @@ class DetailInput extends StatefulWidget {
   const DetailInput(
       {super.key,
       required this.title,
+      required this.initText,
       required this.onSubmitted,
       required this.validator});
 
   final String title;
+  final String? initText;
   final void Function(String) onSubmitted;
   final String? Function(String?) validator;
 
@@ -17,6 +19,14 @@ class DetailInput extends StatefulWidget {
 }
 
 class _DetailInputState extends State<DetailInput> {
+  @override
+  void initState() {
+    if (widget.initText != null) {
+      controller.text = widget.initText!;
+    }
+    super.initState();
+  }
+
   @override
   void dispose() {
     controller.dispose();

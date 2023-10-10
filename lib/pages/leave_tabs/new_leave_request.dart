@@ -48,8 +48,6 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
   @override
   Widget build(BuildContext context) {
     final leave = ref.watch(leaveRequestProvider);
-    // final bottom = MediaQuery.of(context).viewInsets.bottom;
-    // print('lllllllllll $bottom');
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -66,10 +64,7 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height -
-              AppBar().preferredSize.height -
-              MediaQuery.of(context).padding.top +
-              44,
+          height: MediaQuery.of(context).size.height,
           margin: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Form(
             key: _formKey,
@@ -138,15 +133,15 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
                     leave.leaveType != null,
                 child: DetailInput(
                   title: 'Task details',
+                  initText: leave.taskDetails,
                   onSubmitted: ref
                       .read(leaveRequestProvider.notifier)
                       .onTaskDetailChange,
                   validator: _validateTaskDetail,
                 ),
               ),
-              AttachmentInput(
+              const AttachmentInput(
                 title: 'Attachment',
-                filePreviews: filePreviews,
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 8),
