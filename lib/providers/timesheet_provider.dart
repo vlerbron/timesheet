@@ -71,6 +71,10 @@ class TaskListNotifier extends StateNotifier<List<TaskModel>> {
   void addTask(TaskModel task) {
     state.add(task);
   }
+
+  void deleteTask(TaskModel task) {
+    state.remove(task);
+  }
 }
 
 final taskListProvider =

@@ -1,3 +1,4 @@
+import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/models/timesheet_model.dart';
@@ -5,16 +6,30 @@ import 'package:timesheet/providers/timesheet_provider.dart';
 import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/widgets/timesheet/day_item.dart';
 
-class TasksOfDays extends ConsumerWidget {
+class TasksOfDays extends ConsumerStatefulWidget {
   const TasksOfDays(this.selectedDate, {super.key});
   final DateTime selectedDate;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _TasksOfDays();
+}
+
+class _TasksOfDays extends ConsumerState<TasksOfDays> {
+  @override
+  Widget build(BuildContext context) {
     final TimesheetModel timesheetModel = ref.watch(timesheetProvider);
     final Map<String, Color> allDayOfWeek = timesheetModel.allDayOfWeekColorMap;
     final List<String> dayList = allDayOfWeek.keys.toList();
     final List<Color> colorList = allDayOfWeek.values.toList();
+    DateTime selectedDate = widget.selectedDate;
+
+    //for add new task
+    final EventEmitter events = ref.watch(timesheetEventProvider);
+    events.once(
+        kTimesheetRebuild,
+        (DateTime dateTime) => setState(() {
+              selectedDate = dateTime;
+            }));
 
     return Expanded(
       child: ListView.builder(
