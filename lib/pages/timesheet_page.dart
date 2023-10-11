@@ -1,7 +1,9 @@
+import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/models/timesheet_model.dart';
 import 'package:timesheet/providers/timesheet_provider.dart';
+import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/widgets/tabs.dart';
 import 'package:timesheet/widgets/timesheet/date_picker_timesheet.dart';
 import 'package:timesheet/widgets/timesheet/tasks_of_days.dart';
@@ -22,6 +24,14 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
     final Color secondaryColor = colorScheme.secondary;
     TimesheetModel timesheetModel = ref.watch(timesheetProvider);
     DateTime selectedDate = timesheetModel.selectedDate;
+
+    //for add new task
+    final EventEmitter events = ref.watch(timesheetEventProvider);
+    events.once(
+        kTimesheetRebuild,
+        (DateTime dateTime) => setState(() {
+              selectedDate = dateTime;
+            }));
 
     return Scaffold(
       appBar: AppBar(

@@ -7,4 +7,6 @@ mixin DateTimeMixin {
     return dateTime
         .add(Duration(days: DateTime.daysPerWeek - dateTime.weekday));
   }
+
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
 }

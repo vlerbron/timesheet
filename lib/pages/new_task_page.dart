@@ -1,28 +1,73 @@
+import 'dart:math';
+
+import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:timesheet/data/dummy_select_issue.dart';
 import 'package:timesheet/models/task_model.dart';
 import 'package:timesheet/pages/select_issue_page.dart';
+import 'package:timesheet/providers/timesheet_provider.dart';
 import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/widgets/common/save_button.dart';
 import 'package:timesheet/widgets/common/short_cancel_button.dart';
 
-class NewTaskPage extends StatefulWidget {
+class NewTaskPage extends ConsumerStatefulWidget {
   const NewTaskPage({super.key});
 
   @override
-  State<NewTaskPage> createState() => _NewTaskState();
+  ConsumerState<NewTaskPage> createState() => _NewTaskState();
 }
 
-class _NewTaskState extends State<NewTaskPage> {
+class _NewTaskState extends ConsumerState<NewTaskPage> {
   final _formKey = GlobalKey<FormState>();
 
-  List<String> listOfValue = ['1', '2'];
+  String _projectCode = '';
+  String _issueCode = '';
+  String _taskDetail = '';
+  DateTime? _taskDate;
+  String _hour = '0';
+  String _minute = '00';
+  late Duration _taskDuration;
 
   //int _selectHours = 1;
 
   DateTime? _selectedDate;
 
-  void _save() {}
+  //for mock up test data.
+  String generateRandomString(int len) {
+    var r = Random();
+    return String.fromCharCodes(
+        List.generate(len, (index) => r.nextInt(33) + 89));
+  }
+
+  void _save() {
+    _formKey.currentState!.save();
+    _projectCode = 'GEN ${generateRandomString(5)}';
+    _issueCode = generateRandomString(5);
+    _taskDate = _selectedDate?.copyWith(
+        hour: 0,
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+        microsecond: 0,
+        isUtc: true);
+    _taskDuration =
+        Duration(hours: int.parse(_hour), minutes: int.parse(_minute));
+    TaskModel taskModel = TaskModel(
+        dayOfWeek: DateFormat('EEEE').format(_taskDate!),
+        projectCode: _projectCode,
+        issueNo: _issueCode,
+        taskDetail: _taskDetail,
+        date: _taskDate ??= DateTime.now(),
+        duration: _taskDuration);
+    final TaskListNotifier taskListNotifier =
+        ref.read(taskListProvider.notifier);
+    taskListNotifier.addTask(taskModel);
+    final EventEmitter events = ref.watch(timesheetEventProvider);
+    events.emit(kTimesheetRebuild, taskModel.date);
+    Navigator.of(context).pop();
+  }
 
   void _issue() {
     Navigator.of(context).push(
@@ -115,6 +160,7 @@ class _NewTaskState extends State<NewTaskPage> {
                         ),
                       ),
                     ),
+                    onSaved: (value) => _taskDetail = value ??= '',
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -178,6 +224,7 @@ class _NewTaskState extends State<NewTaskPage> {
                                 ),
                               ),
                             ),
+                            onSaved: (value) => _hour = value ??= '00',
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -201,6 +248,7 @@ class _NewTaskState extends State<NewTaskPage> {
                                 ),
                               ),
                             ),
+                            onSaved: (value) => _minute = value ??= '00',
                           ),
                         ),
                       ],

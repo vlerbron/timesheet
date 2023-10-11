@@ -53,7 +53,7 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet>
             icon: const Icon(Icons.chevron_left),
             color: primaryColor,
             onPressed: () {
-              timesheetNotifier.setSelectedDate();
+              timesheetNotifier.setSelectedDate(is7Days: true);
               setSelectedDate(timesheetModel.selectedDate);
             },
             style: ButtonStyle(
@@ -94,7 +94,8 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet>
               if (nextWeekDay
                       .compareTo(findLastDateOfTheWeek(DateTime.now())) <=
                   0) {
-                timesheetNotifier.setSelectedDate(isBefore: false);
+                timesheetNotifier.setSelectedDate(
+                    isBefore: false, is7Days: true);
                 setSelectedDate(timesheetModel.selectedDate);
               }
             },

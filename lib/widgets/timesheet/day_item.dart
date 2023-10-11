@@ -24,11 +24,14 @@ class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
     final TimesheetModel timesheetModel = ref.watch(timesheetProvider);
     bool isShowTasks = timesheetModel.isShowTasksMap[widget.dayOfWeek]!;
     DateTime selectedDate = widget.selectedDate;
+    final firstDateOfWeek = findFirstDateOfTheWeek(selectedDate);
+    final dayIndex = timesheetModel.allDayOfWeekColorMap.keys
+        .toList()
+        .indexOf(widget.dayOfWeek);
+    final widgetDate = firstDateOfWeek.add(Duration(days: dayIndex));
     final List<TaskModel> taskList = ref
         .read(taskListProvider.notifier)
-        .getTaskListbyDayOfWeek(
-            widget.dayOfWeek,
-            findFirstDateOfTheWeek(selectedDate),
+        .getTaskListbyDayOfWeek(widget.dayOfWeek, firstDateOfWeek,
             findLastDateOfTheWeek(selectedDate));
     final TimesheetNotifier timesheetNotifier =
         ref.read(timesheetProvider.notifier);
@@ -122,7 +125,9 @@ class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
                     padding: const EdgeInsets.all(10),
                     child: InkWell(
                       onTap: () {
-                        print('Add Task on ${widget.dayOfWeek}.');
+                        timesheetNotifier.setSelectedDate(
+                            is7Days: false, dateTime: widgetDate);
+                        Navigator.of(context).pushNamed('/new-task');
                       },
                       child: Text(
                         'Add Task',

@@ -38,3 +38,6 @@ const String kThursday = 'Thursday';
 const String kFriday = 'Friday';
 const String kSaturday = 'Saturday';
 const String kSunday = 'Sunday';
+
+//Timesheet
+const String kTimesheetRebuild = 'timesheetPageRebuild';

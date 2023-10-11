@@ -1,3 +1,4 @@
+import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/data/dummy_task.dart';
 import 'package:timesheet/models/task_model.dart';
@@ -18,7 +19,7 @@ class TimesheetNotifier extends StateNotifier<TimesheetModel> {
         ));
 
   void setSelectedDate(
-      {bool isBefore = true, bool is7Days = true, dynamic dateTime}) {
+      {bool isBefore = true, required bool is7Days, dynamic dateTime}) {
     if (is7Days) {
       state.selectedDate = isBefore
           ? state.selectedDate.subtract(const Duration(days: 7))
@@ -66,9 +67,22 @@ class TaskListNotifier extends StateNotifier<List<TaskModel>> {
                 task.date.isAtSameMomentAs(endDate)))
         .toList();
   }
+
+  void addTask(TaskModel task) {
+    state.add(task);
+  }
 }
 
 final taskListProvider =
     StateNotifierProvider<TaskListNotifier, List<TaskModel>>((ref) {
   return TaskListNotifier();
+});
+
+class TimesheetEventNotifier extends StateNotifier<EventEmitter> {
+  TimesheetEventNotifier() : super(EventEmitter());
+}
+
+final timesheetEventProvider =
+    StateNotifierProvider<TimesheetEventNotifier, EventEmitter>((ref) {
+  return TimesheetEventNotifier();
 });
