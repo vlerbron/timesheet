@@ -18,7 +18,7 @@ class TaskItem extends StatelessWidget with DateTimeMixin {
         Row(
           children: [
             Text(
-              "${taskModel.projectCode}:${taskModel.taskDetail}",
+              "${taskModel.issue.clientCode}-${taskModel.issue.projectCode}-${taskModel.issue.title}",
               style: textTheme.titleMedium?.copyWith(color: kColorGreyText),
             ),
             const Spacer(),

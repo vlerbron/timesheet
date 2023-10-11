@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:timesheet/data/dummy_select_issue.dart';
+import 'package:timesheet/models/select_issue_model.dart';
 import 'package:timesheet/models/task_model.dart';
 import 'package:timesheet/pages/select_issue_page.dart';
 import 'package:timesheet/providers/timesheet_provider.dart';
@@ -22,8 +23,7 @@ class NewTaskPage extends ConsumerStatefulWidget {
 class _NewTaskState extends ConsumerState<NewTaskPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String _projectCode = '';
-  String _issueCode = '';
+  SelectIssueModel? _issueModel;
   String _taskDetail = '';
   DateTime? _taskDate;
   String _hour = '0';
@@ -34,17 +34,10 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
 
   DateTime? _selectedDate;
 
-  //for mock up test data.
-  String generateRandomString(int len) {
-    var r = Random();
-    return String.fromCharCodes(
-        List.generate(len, (index) => r.nextInt(33) + 89));
-  }
-
   void _save() {
     _formKey.currentState!.save();
-    _projectCode = 'GEN ${generateRandomString(5)}';
-    _issueCode = generateRandomString(5);
+    //TODO: Below dummy for test, delete later.
+    _issueModel = dummySelectIssue[Random().nextInt(6)];
     _taskDate = _selectedDate?.copyWith(
         hour: 0,
         minute: 0,
@@ -56,16 +49,15 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
         Duration(hours: int.parse(_hour), minutes: int.parse(_minute));
     TaskModel taskModel = TaskModel(
         dayOfWeek: DateFormat('EEEE').format(_taskDate!),
-        projectCode: _projectCode,
-        issueNo: _issueCode,
+        issue: _issueModel!,
         taskDetail: _taskDetail,
-        date: _taskDate ??= DateTime.now(),
+        taskDate: _taskDate ??= DateTime.now(),
         duration: _taskDuration);
     final TaskListNotifier taskListNotifier =
         ref.read(taskListProvider.notifier);
     taskListNotifier.addTask(taskModel);
     final EventEmitter events = ref.watch(timesheetEventProvider);
-    events.emit(kTimesheetRebuild, taskModel.date);
+    events.emit(kTimesheetRebuild, taskModel.taskDate);
     Navigator.of(context).pop();
   }
 

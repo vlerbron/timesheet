@@ -61,10 +61,10 @@ class TaskListNotifier extends StateNotifier<List<TaskModel>> {
       DateTime startDate, DateTime endDate) {
     return state
         .where((task) =>
-            (task.date.isAfter(startDate) ||
-                task.date.isAtSameMomentAs(startDate)) &&
-            (task.date.isBefore(endDate) ||
-                task.date.isAtSameMomentAs(endDate)))
+            (task.taskDate.isAfter(startDate) ||
+                task.taskDate.isAtSameMomentAs(startDate)) &&
+            (task.taskDate.isBefore(endDate) ||
+                task.taskDate.isAtSameMomentAs(endDate)))
         .toList();
   }
 
