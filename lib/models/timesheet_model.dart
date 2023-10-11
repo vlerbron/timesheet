@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/utils/const.dart';
 
+enum TimesheetStatus {
+  active('In Progress'),
+  submit('Wait for Approve'),
+  reject('Rejected'),
+  approve('Approved');
+
+  const TimesheetStatus(this.value);
+  final String value;
+}
+
 class TimesheetModel {
   DateTime selectedDate;
-  int timeRemainingHour;
-  int timeRemainingMinute;
+  Duration timeRemaining;
+  TimesheetStatus status;
 
   final Map<String, Color> allDayOfWeekColorMap = {
     kMonday: const Color(0xFFFFD700),
@@ -28,7 +38,7 @@ class TimesheetModel {
 
   TimesheetModel({
     required this.selectedDate,
-    required this.timeRemainingHour,
-    required this.timeRemainingMinute,
+    required this.timeRemaining,
+    required this.status,
   });
 }

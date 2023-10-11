@@ -14,8 +14,8 @@ class TimesheetNotifier extends StateNotifier<TimesheetModel> {
               millisecond: 0,
               microsecond: 0,
               isUtc: true),
-          timeRemainingHour: 0,
-          timeRemainingMinute: 0,
+          timeRemaining: const Duration(),
+          status: TimesheetStatus.active,
         ));
 
   void setSelectedDate(

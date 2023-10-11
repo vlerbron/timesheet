@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timesheet/utils/const.dart';
 
 class LongSubmitButton extends StatelessWidget {
   const LongSubmitButton({super.key, required this.onTap});
@@ -7,20 +8,29 @@ class LongSubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onTap,
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 167,
-          vertical: 15,
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    return Column(
+      children: [
+        const Divider(),
+        Container(
+          padding: const EdgeInsets.only(top: 2, bottom: 10),
+          child: ElevatedButton(
+            onPressed: onTap,
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 167,
+                vertical: 15,
+              ),
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.background,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(kWidgetCircularRadius),
+              ),
+            ),
+            child: const Text('Submit'),
+          ),
         ),
-        backgroundColor: const Color.fromARGB(255, 30, 128, 184),
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      child: const Text('Submit'),
+      ],
     );
   }
 }
