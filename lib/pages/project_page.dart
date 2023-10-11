@@ -16,8 +16,12 @@ class ProjectPage extends StatelessWidget {
         child: OutlinedButton.icon(
           onPressed: () {
             //NewTask();
-            Navigator.push(context,
-                MaterialPageRoute(builder: (ctx) => const NewTaskPage()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (ctx) => NewTaskPage(
+                          choosedDate: DateTime.now(),
+                        )));
           },
           style: OutlinedButton.styleFrom(
             foregroundColor: Colors.black,

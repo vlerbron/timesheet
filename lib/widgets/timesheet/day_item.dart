@@ -127,7 +127,8 @@ class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
                       onTap: () {
                         timesheetNotifier.setSelectedDate(
                             is7Days: false, dateTime: widgetDate);
-                        Navigator.of(context).pushNamed('/new-task');
+                        Navigator.of(context)
+                            .pushNamed('/new-task', arguments: widgetDate);
                       },
                       child: Text(
                         'Add Task',

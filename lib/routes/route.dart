@@ -15,5 +15,6 @@ Map<String, Widget Function(BuildContext)> routes = {
   '/project': (context) => const ProjectPage(),
   '/leave': (context) => const LeavePage(),
   '/account': (context) => const AccountPage(),
-  '/new-task': (context) => const NewTaskPage(),
+  '/new-task': (context) => NewTaskPage(
+      choosedDate: ModalRoute.of(context)?.settings.arguments as DateTime),
 };

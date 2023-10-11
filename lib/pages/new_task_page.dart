@@ -14,7 +14,8 @@ import 'package:timesheet/widgets/common/save_button.dart';
 import 'package:timesheet/widgets/common/short_cancel_button.dart';
 
 class NewTaskPage extends ConsumerStatefulWidget {
-  const NewTaskPage({super.key});
+  const NewTaskPage({super.key, required this.choosedDate});
+  final DateTime choosedDate;
 
   @override
   ConsumerState<NewTaskPage> createState() => _NewTaskState();
@@ -85,6 +86,7 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
 
   @override
   Widget build(BuildContext context) {
+    _selectedDate = widget.choosedDate;
     return Scaffold(
       appBar: AppBar(
         title: const Text('New task'),
