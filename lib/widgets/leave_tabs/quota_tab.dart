@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/pages/leave_tabs/additional_annual_leave.dart';
-import 'package:timesheet/pages/leave_tabs/annual_leave_info_box.dart';
-import 'package:timesheet/pages/leave_tabs/annual_statistics.dart';
-import 'package:timesheet/pages/leave_tabs/leave_quota_header.dart';
+import 'package:timesheet/widgets/leave_tabs/additional_annual_leave.dart';
+import 'package:timesheet/widgets/leave_tabs/annual_leave_info_box.dart';
+import 'package:timesheet/widgets/leave_tabs/annual_statistics.dart';
+import 'package:timesheet/widgets/leave_tabs/leave_quota_header.dart';
 import 'package:timesheet/providers/leave_quota_provider.dart';
 
 class QuotaTab extends ConsumerStatefulWidget {

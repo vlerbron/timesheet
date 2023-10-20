@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/models/leave_quota_model.dart';
-import 'package:timesheet/pages/leave_tabs/annual_info_item.dart';
-import 'package:timesheet/pages/leave_tabs/annual_leave_info.dart';
-import 'package:timesheet/pages/leave_tabs/annual_leave_info_banner.dart';
+import 'package:timesheet/widgets/leave_tabs/annual_info_item.dart';
+import 'package:timesheet/widgets/leave_tabs/annual_leave_info.dart';
+import 'package:timesheet/widgets/leave_tabs/annual_leave_info_banner.dart';
 import 'package:timesheet/utils/const.dart';
 
 class AnnualLeaveInfoBox extends StatelessWidget {

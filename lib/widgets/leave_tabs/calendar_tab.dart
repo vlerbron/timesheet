@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/pages/leave_tabs/new_leave_request.dart';
+import 'package:timesheet/widgets/leave_tabs/new_leave_request.dart';
 import 'package:timesheet/providers/selected_date_provider.dart';
 import 'package:timesheet/widgets/common/floating_add_button.dart';
 import 'package:timesheet/widgets/custom_calendar_date_picker.dart';

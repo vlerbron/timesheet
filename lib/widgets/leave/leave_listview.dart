@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:timesheet/models/leave_model.dart';
-import 'package:timesheet/pages/leave_tabs/leave_detail.dart';
+import 'package:timesheet/widgets/leave_tabs/leave_detail.dart';
 import 'package:timesheet/providers/leaves_provider.dart';
 import 'package:timesheet/widgets/leave/leave_hour_row.dart';
 import 'package:timesheet/providers/selected_date_provider.dart';

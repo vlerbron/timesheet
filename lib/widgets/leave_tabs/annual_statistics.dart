@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:timesheet/pages/leave_tabs/annual_statistic_box.dart';
+import 'package:timesheet/widgets/leave_tabs/annual_statistic_box.dart';
 import 'package:timesheet/providers/leave_quota_provider.dart';
 
 class AnnualStatistics extends ConsumerStatefulWidget {

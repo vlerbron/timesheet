@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/models/leave_model.dart';
 import 'package:timesheet/models/leave_quota_model.dart';
-import 'package:timesheet/pages/leave_tabs/annual_statistic_item.dart';
+import 'package:timesheet/widgets/leave_tabs/annual_statistic_item.dart';
 import 'package:timesheet/utils/const.dart';
 
 class AnnualStatisticBox extends StatelessWidget {

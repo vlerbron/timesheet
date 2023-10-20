@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/pages/leave_tabs/remove_photo.dart';
+import 'package:timesheet/widgets/leave_tabs/remove_photo.dart';
 import 'package:timesheet/providers/leave_request_provider.dart';
 
 class AttachmentInput extends ConsumerWidget {

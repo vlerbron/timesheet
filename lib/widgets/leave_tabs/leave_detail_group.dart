@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:timesheet/models/leave_model.dart';
-import 'package:timesheet/pages/leave_tabs/leave_detail_item.dart';
+import 'package:timesheet/widgets/leave_tabs/leave_detail_item.dart';
 
 class LeaveDetailGroup extends StatelessWidget {
   const LeaveDetailGroup(
