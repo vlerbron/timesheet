@@ -33,9 +33,36 @@ class AnnualStatisticBox extends StatelessWidget {
                 offset: Offset(0, 1),
                 blurRadius: 2),
           ]),
-      child: Column(
-        children: [
-          Padding(
+      child: AnnualStatisticData(
+        leaveQuota: leaveQuota,
+        showHeader: true,
+        showHoliday: false,
+        textColor: kColorGreyText,
+      ),
+    );
+  }
+}
+
+class AnnualStatisticData extends StatelessWidget {
+  const AnnualStatisticData(
+      {super.key,
+      required this.leaveQuota,
+      required this.showHeader,
+      required this.showHoliday,
+      required this.textColor});
+
+  final LeaveQuota leaveQuota;
+  final bool showHeader;
+  final bool showHoliday;
+  final Color textColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Visibility(
+          visible: showHeader,
+          child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Row(
               children: [
@@ -57,36 +84,55 @@ class AnnualStatisticBox extends StatelessWidget {
               ],
             ),
           ),
-          AnnualStatisticItem(
-            leaveTypes: LeaveTypes.sick,
-            title: 'Sick leave',
-            usedDays: leaveQuota.sickUsed,
-            totalDays: leaveQuota.sickDay,
+        ),
+        AnnualStatisticItem(
+          leaveTypes: LeaveTypes.sick,
+          title: 'Sick leave',
+          usedDays: leaveQuota.sickUsed,
+          totalDays: leaveQuota.sickDay,
+          showUnit: false,
+          textColor: textColor,
+        ),
+        AnnualStatisticItem(
+          leaveTypes: LeaveTypes.personal,
+          title: 'Personal leave',
+          usedDays: leaveQuota.personalUsed,
+          totalDays: leaveQuota.personalDay,
+          showUnit: false,
+          textColor: textColor,
+        ),
+        AnnualStatisticItem(
+          leaveTypes: LeaveTypes.annual,
+          title: 'Annual leave',
+          usedDays: leaveQuota.annualUsed,
+          totalDays: leaveQuota.totalAnnualDays,
+          showUnit: false,
+          textColor: textColor,
+        ),
+        AnnualStatisticItem(
+          leaveTypes: LeaveTypes.withoutPay,
+          title: 'Without pay used',
+          usedDays: leaveQuota.withoutPayDays,
+          showUnit: showHoliday,
+          textColor: textColor,
+        ),
+        AnnualStatisticItem(
+          leaveTypes: LeaveTypes.special,
+          title: 'Special leave',
+          usedDays: leaveQuota.specialLeaveDays,
+          showUnit: showHoliday,
+          textColor: textColor,
+        ),
+        Visibility(
+          visible: showHoliday,
+          child: AnnualStatisticItem(
+            leaveTypes: LeaveTypes.holiday,
+            title: 'Holiday',
+            showUnit: false,
+            textColor: textColor,
           ),
-          AnnualStatisticItem(
-            leaveTypes: LeaveTypes.personal,
-            title: 'Personal leave',
-            usedDays: leaveQuota.personalUsed,
-            totalDays: leaveQuota.personalDay,
-          ),
-          AnnualStatisticItem(
-            leaveTypes: LeaveTypes.annual,
-            title: 'Annual leave',
-            usedDays: leaveQuota.annualUsed,
-            totalDays: leaveQuota.totalAnnualDays,
-          ),
-          AnnualStatisticItem(
-            leaveTypes: LeaveTypes.withoutPay,
-            title: 'Without pay used',
-            usedDays: leaveQuota.withoutPayDays,
-          ),
-          AnnualStatisticItem(
-            leaveTypes: LeaveTypes.special,
-            title: 'Special leave',
-            usedDays: leaveQuota.specialLeaveDays,
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

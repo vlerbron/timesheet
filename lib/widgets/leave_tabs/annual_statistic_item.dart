@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/models/leave_model.dart';
-import 'package:timesheet/utils/const.dart';
 
 class AnnualStatisticItem extends StatelessWidget {
-  const AnnualStatisticItem({
-    super.key,
-    required this.leaveTypes,
-    required this.title,
-    required this.usedDays,
-    this.totalDays,
-  });
+  const AnnualStatisticItem(
+      {super.key,
+      required this.leaveTypes,
+      required this.title,
+      this.usedDays,
+      this.totalDays,
+      required this.showUnit,
+      required this.textColor});
   final String title;
-  final double usedDays;
+  final double? usedDays;
   final double? totalDays;
   final LeaveTypes leaveTypes;
+  final bool showUnit;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -37,19 +39,46 @@ class AnnualStatisticItem extends StatelessWidget {
               Text(
                 title,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: kColorGreyText,
+                    color: textColor,
                     fontSize:
                         Theme.of(context).textTheme.titleMedium!.fontSize),
               ),
             ],
           ),
           const Spacer(),
-          Text(
-            totalDays == null ? '$usedDays' : '$usedDays/$totalDays',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: kColorGreyText,
-                fontSize: Theme.of(context).textTheme.titleMedium!.fontSize),
-          )
+          usedDays != null
+              ? Row(
+                  children: [
+                    Text(
+                      totalDays == null ? '$usedDays' : '$usedDays/$totalDays',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: textColor,
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .fontSize),
+                    ),
+                    Visibility(
+                      visible: showUnit,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 4.0),
+                        child: Text(
+                          'used',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  color: textColor,
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .fontSize),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : Container()
         ],
       ),
     );
