@@ -1,5 +1,5 @@
 class LeaveQuota {
-  double sickDay = 0;
+  double sickDay;
   double sickUsed = 0;
   double sickRemain = 0;
   double annualCarried = 0;
@@ -18,4 +18,37 @@ class LeaveQuota {
   String periodWork = '';
   double additionalLeaveDay = 0;
   bool calculateAnnualTopup = false;
+  int renderYear;
+  List<AdditionalAnnualLeave>? additionalAnnualLeaves;
+
+  LeaveQuota({
+    this.sickDay = 0,
+    this.sickUsed = 0,
+    this.sickRemain = 0,
+    this.annualCarried = 0,
+    this.annualDay = 0,
+    this.totalAnnualDays = 0,
+    this.annualUsed = 0,
+    this.annualRemain = 0,
+    this.personalDay = 0,
+    this.personalUsed = 0,
+    this.personalRemain = 0,
+    this.specialLeaveDays = 0,
+    this.withoutPayDays = 0,
+    this.remark = '',
+    this.periodWorkTimeY = 0,
+    this.periodWorkTimeM = 0,
+    this.periodWork = '',
+    this.additionalLeaveDay = 0,
+    this.calculateAnnualTopup = false,
+    this.renderYear = 0,
+    this.additionalAnnualLeaves,
+  });
+}
+
+class AdditionalAnnualLeave {
+  String details;
+  double numberOfDays;
+
+  AdditionalAnnualLeave({this.details = '', this.numberOfDays = 0});
 }

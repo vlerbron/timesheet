@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:timesheet/models/employee_model.dart';
+import 'package:timesheet/utils/const.dart';
 
 enum LeaveTypes { sick, annual, personal, special, withoutPay, holiday }
 
@@ -23,7 +24,7 @@ Map<LeaveActions, IconData> leaveActionsIcon = {
   LeaveActions.request: Icons.arrow_outward_rounded,
 };
 Map<LeaveStatus, Color> leaveStatusColor = {
-  LeaveStatus.approved: const Color.fromRGBO(139, 195, 74, 1),
+  LeaveStatus.approved: kColorLightGreen,
   LeaveStatus.rejected: const Color.fromRGBO(245, 69, 81, 1),
   LeaveStatus.waitforapproval: const Color.fromRGBO(255, 184, 0, 1),
   LeaveStatus.waitforpreapproval: const Color.fromRGBO(255, 184, 0, 1),

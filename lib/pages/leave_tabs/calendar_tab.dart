@@ -28,17 +28,11 @@ class _CalendarTabState extends ConsumerState<CalendarTab> {
           ),
           Expanded(
             child: CustomCalendarDatePicker(
-                initialDate: DateTime.now(),
-                firstDate: DateTime(DateTime.now().year - 5),
-                lastDate: DateTime(DateTime.now().year + 5),
-                onDateChanged: (selectedDate) {
-                  ref
-                      .read(selectedDateProvider.notifier)
-                      .onSelectDate(selectedDate);
-                  itemScrollController.jumpTo(
-                    index: selectedDate.weekday - 1,
-                  );
-                }),
+              initialDate: DateTime.now(),
+              firstDate: DateTime(DateTime.now().year - 5),
+              lastDate: DateTime(DateTime.now().year + 5),
+              onDateChanged: _selectDate,
+            ),
           ),
           LeaveListView(
             itemScrollController: itemScrollController,
@@ -54,5 +48,12 @@ class _CalendarTabState extends ConsumerState<CalendarTab> {
                     )));
       }),
     ]);
+  }
+
+  void _selectDate(selectedDate) {
+    ref.read(selectedDateProvider.notifier).onSelectDate(selectedDate);
+    itemScrollController.jumpTo(
+      index: selectedDate.weekday - 1,
+    );
   }
 }

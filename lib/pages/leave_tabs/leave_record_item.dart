@@ -226,7 +226,7 @@ class LeaveRecordItem extends ConsumerWidget {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: kColorLightGrey,
+                          backgroundColor: kColorMidtGrey,
                           foregroundColor:
                               Theme.of(context).colorScheme.onPrimaryContainer,
                           shape: RoundedRectangleBorder(
@@ -261,7 +261,7 @@ class LeaveRecordItem extends ConsumerWidget {
                           ),
                         ),
                         onPressed: () {
-                          //TO BE REVISED: sent cancel Leave request
+                          //TODO: sent cancel Leave request
                         },
                         child: const Text(
                           'Yes',

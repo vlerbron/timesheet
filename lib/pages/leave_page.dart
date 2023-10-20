@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timesheet/widgets/tabs.dart';
 import 'package:timesheet/pages/leave_tabs/calendar_tab.dart';
 import 'package:timesheet/pages/leave_tabs/records_tab.dart';
+import 'package:timesheet/pages/leave_tabs/quota_tab.dart';
 import 'package:timesheet/widgets/common/custom_tab_bar.dart';
 
 class LeavePage extends StatelessWidget {
@@ -17,7 +18,7 @@ class LeavePage extends StatelessWidget {
           title: const Text('Leave Calendar'),
         ),
         body: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
           child: const Column(
             children: [
               CustomTabBar(
@@ -37,7 +38,7 @@ class LeavePage extends StatelessWidget {
                 child: TabBarView(children: [
                   CalendarTab(),
                   LeaveRecords(),
-                  Text('Quota'),
+                  QuotaTab(),
                 ]),
               ),
             ],

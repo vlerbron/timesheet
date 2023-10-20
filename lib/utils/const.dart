@@ -4,10 +4,14 @@ import 'package:intl/intl.dart';
 ///// Color
 /////
 const kColorDarkGrey = Color.fromARGB(255, 128, 128, 128);
-const kColorLightGrey = Color.fromARGB(255, 240, 240, 240);
+const kColorMidtGrey = Color.fromARGB(255, 240, 240, 240);
+const kColorLighttGrey = Color.fromARGB(255, 250, 250, 250);
 
 const kColorGreyText = Color(0xFF616161);
 const kColorDarkGreyText = Color(0xFF242424);
+const kColorLightBlue = Color.fromARGB(255, 245, 248, 253);
+
+const kColorLightGreen = Color.fromRGBO(139, 195, 74, 1);
 
 ///// Text Style
 /////

@@ -28,7 +28,7 @@ class LeaveDetailItem extends StatelessWidget {
             decoration: const BoxDecoration(
               border: Border(
                   bottom: BorderSide(
-                color: kColorLightGrey,
+                color: kColorMidtGrey,
               )),
             ),
             child: Text(

@@ -34,7 +34,7 @@ class LeaveApprovalInfo extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-              border: Border.all(color: kColorLightGrey),
+              border: Border.all(color: kColorMidtGrey),
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: Column(
@@ -127,7 +127,7 @@ class LeaveApprovalInfo extends StatelessWidget {
                                   color:
                                       Theme.of(context).colorScheme.tertiary),
                         ),
-                        //TO BE REVISED: add pre-approver name
+                        //TODO: add pre-approver name
                         const Text('Mr.Pre Approver'),
                       ],
                     ),
@@ -138,7 +138,7 @@ class LeaveApprovalInfo extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          //TO BE REVISED: pre-approver date
+                          //TODO: pre-approver date
                           dateFormatterddMMyyyyhhmm.format(leave.endDate),
                           style: Theme.of(context)
                               .textTheme
@@ -162,7 +162,7 @@ class LeaveApprovalInfo extends StatelessWidget {
                                   color:
                                       Theme.of(context).colorScheme.tertiary),
                         ),
-                        //TO BE REVISED: add approver name
+                        //TODO: add approver name
                         const Text('Mr.Approver Tbn'),
                       ],
                     ),
@@ -173,7 +173,7 @@ class LeaveApprovalInfo extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          //TO BE REVISED: approver date
+                          //TODO: approver date
                           dateFormatterddMMyyyyhhmm.format(leave.endDate),
                           style: Theme.of(context)
                               .textTheme

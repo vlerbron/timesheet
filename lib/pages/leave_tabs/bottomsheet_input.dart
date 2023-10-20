@@ -94,7 +94,7 @@ class BottomSheetInput extends StatelessWidget {
               const CircleGreyClosePageButton(),
             ],
           ),
-          const Divider(color: kColorLightGrey),
+          const Divider(color: kColorMidtGrey),
           Expanded(
             child: ListView(
               shrinkWrap: true,

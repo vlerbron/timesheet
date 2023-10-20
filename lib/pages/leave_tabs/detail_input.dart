@@ -57,7 +57,7 @@ class _DetailInputState extends State<DetailInput> {
             maxLines: 3,
             decoration: const InputDecoration(
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: kColorLightGrey),
+                  borderSide: BorderSide(color: kColorMidtGrey),
                 ),
                 border: OutlineInputBorder()),
             onTapOutside: (event) {

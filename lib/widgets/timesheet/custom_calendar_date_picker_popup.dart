@@ -772,7 +772,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                 const Spacer(),
                 IconButton(
                   style: IconButton.styleFrom(
-                    backgroundColor: kColorLightGrey,
+                    backgroundColor: kColorMidtGrey,
                   ),
                   icon: const Icon(Icons.chevron_left, size: 30),
                   color: primaryColor,
@@ -790,7 +790,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
-                    color: kColorLightGrey,
+                    color: kColorMidtGrey,
                   ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
@@ -817,7 +817,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                 ),
                 IconButton(
                   style: IconButton.styleFrom(
-                    backgroundColor: kColorLightGrey,
+                    backgroundColor: kColorMidtGrey,
                   ),
                   icon: const Icon(Icons.chevron_right, size: 30),
                   color: primaryColor,

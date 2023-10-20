@@ -794,7 +794,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: kColorLightGrey,
+                    color: kColorMidtGrey,
                   ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
@@ -822,7 +822,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                 ),
                 IconButton(
                   style: IconButton.styleFrom(
-                    backgroundColor: kColorLightGrey,
+                    backgroundColor: kColorMidtGrey,
                   ),
                   icon: const Icon(Icons.chevron_right, size: 20),
                   color: primaryColor,

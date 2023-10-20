@@ -24,7 +24,7 @@ final myLeaveProvider = Provider((ref) {
   return leaves.where(
     (leave) =>
         leave.employee ==
-        //TO BE REVISED: current user
+        //TODO: current user
         Employee(
           firstName: 'Nuntuch',
           nickname: 'Nan',
