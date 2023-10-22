@@ -43,7 +43,7 @@ class Tabs extends StatelessWidget {
           context,
           FadeInRoute(
             routeName: routeName,
-            page: routes[routeName]!(context),
+            page: Routes.routes[routeName]!(context),
           ),
         );
       },

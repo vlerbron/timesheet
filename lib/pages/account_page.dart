@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/widgets/tabs.dart';
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends ConsumerWidget {
   const AccountPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var loginNotifier = ref.watch(loginProvider.provider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Account'),
@@ -17,6 +20,7 @@ class AccountPage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
+                loginNotifier.logout();
                 Navigator.pushReplacementNamed(context, '/');
               },
               style: ElevatedButton.styleFrom(

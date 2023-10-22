@@ -30,9 +30,7 @@ const double kWidgetPadding = 16;
 final dateFormatterddMMyyyy = DateFormat('dd/MM/yyyy');
 final dateFormatterddMMyyyyhhmm = DateFormat('dd/MM/yyyy hh:mm');
 
-//Use 10.0.2.2 as localhost for test.
-const String kBaseURL =
-    'https://timesheetbackend-sandbox.mxapps.io/auth/v1/user-authen';
+const String kBaseURL = 'BASE_URL';
 
 //Day of Week
 const String kMonday = 'Monday';
@@ -45,3 +43,15 @@ const String kSunday = 'Sunday';
 
 //Timesheet
 const String kTimesheetRebuild = 'timesheetPageRebuild';
+
+class ConstantConfig {
+  final String token = 'TOKEN';
+  final String isLogin = 'IS_LOGIN';
+  final String user = 'USER';
+}
+
+class HostPath {
+  static const String auth = '/auth/v1';
+  static const String login = '$auth/user-authen';
+  static const String getUserProfile = '$auth/get-user-profile';
+}

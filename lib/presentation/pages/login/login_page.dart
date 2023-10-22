@@ -1,71 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/main.dart';
-import 'package:timesheet/repositories/services/i_authen_service_repository.dart';
+import 'package:timesheet/presentation/provider/login_provider/login/state/login_state.dart';
+import 'package:timesheet/provider_container.dart';
+import 'package:timesheet/routes/route.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() {
+  ConsumerState<LoginPage> createState() {
     return _LoginPageState();
   }
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final _form = GlobalKey<FormState>();
 
   var passwordVisible = false;
   var _enteredUserName = '';
   var _enteredPassword = '';
-  var _isAuthenticating = false;
 
-  void _submit() async {
-    final isValid = _form.currentState!.validate();
-
-    if (!isValid) {
-      // show error message ...
+  void _submit() {
+    if (!_form.currentState!.validate()) {
       return;
     }
-
     _form.currentState!.save();
 
-    try {
-      setState(() {
-        _isAuthenticating = true;
-      });
-      IAuthenServiceRepository authenService =
-          GetIt.instance<IAuthenServiceRepository>();
-      Map<String, dynamic> response =
-          await authenService.authen(_enteredUserName, _enteredPassword);
-
-      if (response['ResponseCode'] != '000') {
-        onError(response['Description']);
-      } else if (mounted) {
-        Navigator.of(context).pushReplacementNamed('/home');
-      }
-    } on Exception catch (error) {
-      onError(error.toString());
-    }
-  }
-
-  void onError(String errorMsg) {
-    if (mounted) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(errorMsg),
-        ),
-      );
-    }
     setState(() {
-      _isAuthenticating = false;
+      ref
+          .read(loginProvider.provider.notifier)
+          .login(username: _enteredUserName, password: _enteredPassword);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final LoginState state = ref.watch(loginProvider.provider);
+    ref.listen(
+      loginProvider.provider.select((value) => value),
+      ((previous, next) {
+        //show Snackbar on failure
+        if (next is Failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(next.exception.message.toString())));
+        } else if (next is Success) {
+          Navigator.of(context).pushReplacementNamed(Routes.homePage);
+        }
+      }),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -175,10 +159,10 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                           const SizedBox(height: 12),
-                          if (_isAuthenticating)
-                            const CircularProgressIndicator(),
-                          if (!_isAuthenticating)
-                            SizedBox(
+                          state.maybeMap(
+                            loading: (_) => const Center(
+                                child: CircularProgressIndicator()),
+                            orElse: () => SizedBox(
                               width: double.infinity,
                               child: Container(
                                 padding: const EdgeInsets.only(top: 10),
@@ -200,6 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                             ),
+                          ),
                         ],
                       ),
                     ),

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timesheet/injection_container.dart';
 import 'package:timesheet/routes/route.dart';
+import 'package:timesheet/utils/const.dart';
 
 final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.light,
@@ -33,15 +36,24 @@ final theme = ThemeData().copyWith(
   ),
 );
 
-void main() {
-  setupLocator();
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
+  //Initialize locale
+  FlavorConfig(
+    name: 'sandbox',
+    variables: {
+      kBaseURL: dotenv.env['BASE_URL']!,
+    },
+  );
+  await init();
+  
   runApp(
     ProviderScope(
       child: MaterialApp(
           title: "TBN Timesheet",
           initialRoute: '/',
-          routes: routes,
+          routes: Routes.routes,
           theme: theme),
     ),
   );
