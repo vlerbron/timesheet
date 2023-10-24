@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
 import 'package:timesheet/presentation/widgets/timesheet/custom_date_picker_popup.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
+import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/utils/date_time_mixin.dart';
 
 final startFormatter = DateFormat('dd MMM');
@@ -38,9 +38,9 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet>
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color primaryColor = colorScheme.primary;
     final Color secondaryColor = colorScheme.secondary;
-    final TimesheetModel timesheetModel = ref.watch(timesheetProvider);
+    final TimesheetModel timesheetModel = ref.watch(timesheetProvider.provider);
     final TimesheetNotifier timesheetNotifier =
-        ref.read(timesheetProvider.notifier);
+        ref.read(timesheetProvider.provider.notifier);
     selectedDate = timesheetModel.selectedDate;
 
     String displayStr =

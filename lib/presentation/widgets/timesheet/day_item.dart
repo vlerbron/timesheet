@@ -5,7 +5,7 @@ import 'package:timesheet/models/task_model.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
 import 'package:timesheet/presentation/widgets/timesheet/task_item.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
+import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/utils/date_time_mixin.dart';
 
@@ -22,7 +22,7 @@ class DayItem extends ConsumerStatefulWidget {
 class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
   @override
   Widget build(BuildContext context) {
-    final TimesheetModel timesheetModel = ref.watch(timesheetProvider);
+    final TimesheetModel timesheetModel = ref.watch(timesheetProvider.provider);
     bool isShowTasks = timesheetModel.isShowTasksMap[widget.dayOfWeek]!;
     DateTime selectedDate = widget.selectedDate;
     final firstDateOfWeek = findFirstDateOfTheWeek(selectedDate);
@@ -31,11 +31,11 @@ class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
         .indexOf(widget.dayOfWeek);
     final widgetDate = firstDateOfWeek.add(Duration(days: dayIndex));
     final List<TaskModel> taskList = ref
-        .read(taskListProvider.notifier)
+        .read(taskListProvider.provider.notifier)
         .getTaskListbyDayOfWeek(widget.dayOfWeek, firstDateOfWeek,
             findLastDateOfTheWeek(selectedDate));
     final TimesheetNotifier timesheetNotifier =
-        ref.read(timesheetProvider.notifier);
+        ref.read(timesheetProvider.provider.notifier);
     final TextTheme textTheme = Theme.of(context).textTheme;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 

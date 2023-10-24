@@ -9,7 +9,7 @@ import 'package:timesheet/models/select_issue_model.dart';
 import 'package:timesheet/models/task_model.dart';
 import 'package:timesheet/presentation/pages/timesheet/select_issue_page.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_list_notifier.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
+import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/widgets/common/save_button.dart';
 import 'package:timesheet/widgets/common/short_cancel_button.dart';
@@ -56,9 +56,9 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
         taskDate: _taskDate ??= DateTime.now(),
         duration: _taskDuration);
     final TaskListNotifier taskListNotifier =
-        ref.read(taskListProvider.notifier);
+        ref.read(taskListProvider.provider.notifier);
     taskListNotifier.addTask(taskModel);
-    final EventEmitter events = ref.watch(timesheetEventProvider);
+    final EventEmitter events = ref.watch(timesheetEventProvider.provider);
     events.emit(kTimesheetRebuild, taskModel.taskDate);
     Navigator.of(context).pop();
   }

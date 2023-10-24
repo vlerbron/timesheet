@@ -4,7 +4,7 @@ import 'package:timesheet/models/task_model.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
 import 'package:timesheet/presentation/widgets/timesheet/date_picker_timesheet.dart';
 import 'package:timesheet/presentation/widgets/timesheet/tasks_of_days.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
+import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/widgets/common/long_submit_button.dart';
 import 'package:timesheet/widgets/tabs.dart';
 
@@ -22,9 +22,9 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color primaryColor = colorScheme.primary;
     final Color secondaryColor = colorScheme.secondary;
-    TimesheetModel timesheetModel = ref.watch(timesheetProvider);
+    TimesheetModel timesheetModel = ref.watch(timesheetProvider.provider);
     DateTime selectedDate = timesheetModel.selectedDate;
-    List<TaskModel> tasks = ref.watch(taskListProvider);
+    List<TaskModel> tasks = ref.watch(taskListProvider.provider);
 
     return Scaffold(
       appBar: AppBar(

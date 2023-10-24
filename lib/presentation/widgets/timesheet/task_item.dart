@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/models/task_model.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_list_notifier.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
+import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/utils/date_time_mixin.dart';
 import 'package:timesheet/widgets/common/alert_dialog_two_button.dart';
@@ -20,9 +20,9 @@ class TaskItem extends ConsumerWidget with DateTimeMixin {
     final String minute = twoDigits(taskModel.duration.inMinutes.remainder(60));
     final AlertDialogTwoButton dialog = AlertDialogTwoButton(onRightTap: () {
       final TaskListNotifier taskListNotifier =
-          ref.read(taskListProvider.notifier);
+          ref.read(taskListProvider.provider.notifier);
       taskListNotifier.deleteTask(taskModel);
-      final EventEmitter events = ref.watch(timesheetEventProvider);
+      final EventEmitter events = ref.watch(timesheetEventProvider.provider);
       events.emit(kTimesheetRebuild, taskModel.taskDate);
       Navigator.of(context).pop();
     });
