@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
 import 'package:timesheet/presentation/widgets/timesheet/custom_date_picker_popup.dart';
 import 'package:timesheet/provider_container.dart';
@@ -38,7 +38,7 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet>
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color primaryColor = colorScheme.primary;
     final Color secondaryColor = colorScheme.secondary;
-    final TimesheetModel timesheetModel = ref.watch(timesheetProvider.provider);
+    final TimesheetEntity timesheetModel = ref.watch(timesheetProvider.provider);
     final TimesheetNotifier timesheetNotifier =
         ref.read(timesheetProvider.provider.notifier);
     selectedDate = timesheetModel.selectedDate;

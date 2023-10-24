@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:timesheet/data/datasources/dummies/dummy_select_issue.dart';
-import 'package:timesheet/models/select_issue_model.dart';
-import 'package:timesheet/models/task_model.dart';
+import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
+import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/presentation/pages/timesheet/select_issue_page.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_list_notifier.dart';
 import 'package:timesheet/provider_container.dart';
@@ -25,7 +25,7 @@ class NewTaskPage extends ConsumerStatefulWidget {
 class _NewTaskState extends ConsumerState<NewTaskPage> {
   final _formKey = GlobalKey<FormState>();
 
-  SelectIssueModel? _issueModel;
+  SelectIssueEntity? _issueEntity;
   String _taskDetail = '';
   DateTime? _taskDate;
   String _hour = '0';
@@ -39,7 +39,7 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
   void _save() {
     _formKey.currentState!.save();
     //TODO: Below dummy for test, delete later.
-    _issueModel = dummySelectIssue[Random().nextInt(6)];
+    _issueEntity = dummySelectIssue[Random().nextInt(6)];
     _taskDate = _selectedDate?.copyWith(
         hour: 0,
         minute: 0,
@@ -49,17 +49,17 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
         isUtc: true);
     _taskDuration =
         Duration(hours: int.parse(_hour), minutes: int.parse(_minute));
-    TaskModel taskModel = TaskModel(
+    TaskEntity taskEntity = TaskEntity(
         dayOfWeek: DateFormat('EEEE').format(_taskDate!),
-        issue: _issueModel!,
+        issue: _issueEntity!,
         taskDetail: _taskDetail,
         taskDate: _taskDate ??= DateTime.now(),
         duration: _taskDuration);
     final TaskListNotifier taskListNotifier =
         ref.read(taskListProvider.provider.notifier);
-    taskListNotifier.addTask(taskModel);
+    taskListNotifier.addTask(taskEntity);
     final EventEmitter events = ref.watch(timesheetEventProvider.provider);
-    events.emit(kTimesheetRebuild, taskModel.taskDate);
+    events.emit(kTimesheetRebuild, taskEntity.taskDate);
     Navigator.of(context).pop();
   }
 

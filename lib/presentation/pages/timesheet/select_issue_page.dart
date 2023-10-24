@@ -46,7 +46,7 @@ class SelectIssuePage extends StatelessWidget {
             child: ListView.builder(
               itemCount: selectIssueModels.length,
               itemBuilder: (context, index) => IssueItem(
-                selectIssueModel: selectIssueModels[index],
+                selectIssueEntity: selectIssueModels[index],
               ),
             ),
           ),

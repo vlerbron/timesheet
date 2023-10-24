@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/models/task_model.dart';
-import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
+import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
 import 'package:timesheet/presentation/widgets/timesheet/task_item.dart';
 import 'package:timesheet/provider_container.dart';
@@ -22,7 +22,7 @@ class DayItem extends ConsumerStatefulWidget {
 class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
   @override
   Widget build(BuildContext context) {
-    final TimesheetModel timesheetModel = ref.watch(timesheetProvider.provider);
+    final TimesheetEntity timesheetModel = ref.watch(timesheetProvider.provider);
     bool isShowTasks = timesheetModel.isShowTasksMap[widget.dayOfWeek]!;
     DateTime selectedDate = widget.selectedDate;
     final firstDateOfWeek = findFirstDateOfTheWeek(selectedDate);
@@ -30,7 +30,7 @@ class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
         .toList()
         .indexOf(widget.dayOfWeek);
     final widgetDate = firstDateOfWeek.add(Duration(days: dayIndex));
-    final List<TaskModel> taskList = ref
+    final List<TaskEntity> taskList = ref
         .read(taskListProvider.provider.notifier)
         .getTaskListbyDayOfWeek(widget.dayOfWeek, firstDateOfWeek,
             findLastDateOfTheWeek(selectedDate));

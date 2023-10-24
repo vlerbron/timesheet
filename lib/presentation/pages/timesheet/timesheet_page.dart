@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/models/task_model.dart';
-import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
+import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
 import 'package:timesheet/presentation/widgets/timesheet/date_picker_timesheet.dart';
 import 'package:timesheet/presentation/widgets/timesheet/tasks_of_days.dart';
 import 'package:timesheet/provider_container.dart';
@@ -22,9 +22,9 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color primaryColor = colorScheme.primary;
     final Color secondaryColor = colorScheme.secondary;
-    TimesheetModel timesheetModel = ref.watch(timesheetProvider.provider);
+    TimesheetEntity timesheetModel = ref.watch(timesheetProvider.provider);
     DateTime selectedDate = timesheetModel.selectedDate;
-    List<TaskModel> tasks = ref.watch(taskListProvider.provider);
+    List<TaskEntity> tasks = ref.watch(taskListProvider.provider);
 
     return Scaffold(
       appBar: AppBar(

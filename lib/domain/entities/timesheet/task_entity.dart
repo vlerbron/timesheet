@@ -1,16 +1,16 @@
 import 'package:intl/intl.dart';
-import 'package:timesheet/models/select_issue_model.dart';
+import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
 
 final formatter = DateFormat('dd MMMM yyyy');
 
-class TaskModel {
+class TaskEntity {
   final String dayOfWeek;
-  final SelectIssueModel issue;
+  final SelectIssueEntity issue;
   final String taskDetail;
   final DateTime taskDate;
   final Duration duration;
 
-  TaskModel({
+  TaskEntity({
     required this.dayOfWeek,
     required this.issue,
     required this.taskDetail,

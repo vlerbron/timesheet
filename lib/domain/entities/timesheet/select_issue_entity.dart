@@ -1,11 +1,11 @@
-class SelectIssueModel {
+class SelectIssueEntity {
   String clientCode;
   String projectCode;
   String issueNo;
   String title;
   String status;
 
-  SelectIssueModel({
+  SelectIssueEntity({
     required this.clientCode,
     required this.projectCode,
     required this.issueNo,

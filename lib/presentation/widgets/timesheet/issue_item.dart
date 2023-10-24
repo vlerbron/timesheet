@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/models/select_issue_model.dart';
+import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
 
 class IssueItem extends StatelessWidget {
-  const IssueItem({super.key, required this.selectIssueModel});
+  const IssueItem({super.key, required this.selectIssueEntity});
 
-  final SelectIssueModel selectIssueModel;
+  final SelectIssueEntity selectIssueEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class IssueItem extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  selectIssueModel.clientCode,
+                  selectIssueEntity.clientCode,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -25,7 +25,7 @@ class IssueItem extends StatelessWidget {
                 ),
                 const SizedBox(width: 15),
                 Text(
-                  selectIssueModel.projectCode,
+                  selectIssueEntity.projectCode,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -37,7 +37,7 @@ class IssueItem extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  selectIssueModel.title,
+                  selectIssueEntity.title,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -55,7 +55,7 @@ class IssueItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        selectIssueModel.issueNo,
+                        selectIssueEntity.issueNo,
                       ),
                     ],
                   ),
@@ -73,7 +73,7 @@ class IssueItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        selectIssueModel.status,
+                        selectIssueEntity.status,
                         style: const TextStyle(color: Colors.green),
                       ),
                     ],

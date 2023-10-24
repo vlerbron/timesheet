@@ -1,7 +1,7 @@
 import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
 import 'package:timesheet/presentation/widgets/timesheet/day_item.dart';
 import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/utils/const.dart';
@@ -17,7 +17,7 @@ class TasksOfDays extends ConsumerStatefulWidget {
 class _TasksOfDays extends ConsumerState<TasksOfDays> {
   @override
   Widget build(BuildContext context) {
-    final TimesheetModel timesheetModel = ref.watch(timesheetProvider.provider);
+    final TimesheetEntity timesheetModel = ref.watch(timesheetProvider.provider);
     final Map<String, Color> allDayOfWeek = timesheetModel.allDayOfWeekColorMap;
     final List<String> dayList = allDayOfWeek.keys.toList();
     final List<Color> colorList = allDayOfWeek.values.toList();

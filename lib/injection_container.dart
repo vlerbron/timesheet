@@ -7,11 +7,11 @@ import 'package:timesheet/data/datasources/local/login_local_datasource.dart';
 import 'package:timesheet/data/datasources/remote/login_remote_datasource.dart';
 import 'package:timesheet/data/helpers/dio_interceptor_config.dart';
 import 'package:timesheet/data/repositories/login_repository_impl.dart';
-import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
+import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
 import 'package:timesheet/domain/repositories/login_repository.dart';
 import 'package:timesheet/domain/use_case/login_use_case/login_use_case_adapter.dart';
 import 'package:timesheet/domain/use_case/login_use_case/remote_use_case/login_use_case.dart';
-import 'package:timesheet/models/task_model.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/login_provider.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/state/login_notifier.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/state/login_state.dart';
@@ -38,11 +38,11 @@ init() async {
             return LoginNotifier(locator());
           }));
   locator.registerLazySingleton(
-      () => StateNotifierProvider<TimesheetNotifier, TimesheetModel>((ref) {
+      () => StateNotifierProvider<TimesheetNotifier, TimesheetEntity>((ref) {
             return TimesheetNotifier();
           }));
   locator.registerLazySingleton(
-      () => StateNotifierProvider<TaskListNotifier, List<TaskModel>>((ref) {
+      () => StateNotifierProvider<TaskListNotifier, List<TaskEntity>>((ref) {
             return TaskListNotifier();
           }));
   locator.registerLazySingleton(

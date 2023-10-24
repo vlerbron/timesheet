@@ -11,7 +11,7 @@ enum TimesheetStatus {
   final String value;
 }
 
-class TimesheetModel{
+class TimesheetEntity{
   DateTime selectedDate;
   Duration timeRemaining;
   TimesheetStatus status;
@@ -36,7 +36,7 @@ class TimesheetModel{
     kSunday: false,
   };
 
-  TimesheetModel({
+  TimesheetEntity({
     required this.selectedDate,
     required this.timeRemaining,
     required this.status,

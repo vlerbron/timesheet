@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
 
-class TimesheetNotifier extends StateNotifier<TimesheetModel> {
+class TimesheetNotifier extends StateNotifier<TimesheetEntity> {
   TimesheetNotifier()
-      : super(TimesheetModel(
+      : super(TimesheetEntity(
           selectedDate: DateTime.now().copyWith(
               hour: 0,
               minute: 0,
