@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
-import 'package:timesheet/presentation/widgets/common/button/long_submit_button.dart';
 import 'package:timesheet/presentation/widgets/timesheet/date_picker_timesheet.dart';
 import 'package:timesheet/presentation/widgets/timesheet/tasks_of_days.dart';
+import 'package:timesheet/presentation/widgets/timesheet/visibility_submit_button.dart';
 import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/presentation/widgets/common/tabs.dart';
 
@@ -22,9 +21,8 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color primaryColor = colorScheme.primary;
     final Color secondaryColor = colorScheme.secondary;
-    TimesheetEntity timesheetModel = ref.watch(timesheetProvider.provider);
-    DateTime selectedDate = timesheetModel.selectedDate;
-    List<TaskEntity> tasks = ref.watch(taskListProvider.provider);
+    TimesheetEntity timesheetEntity = ref.watch(timesheetProvider.provider);
+    DateTime selectedDate = timesheetEntity.selectedDate;
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +55,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
                         ),
                         const Spacer(),
                         Text(
-                          '${timesheetModel.timeRemaining.inHours}h',
+                          '${timesheetEntity.timeRemaining.inHours}h',
                           style: textTheme.bodyLarge
                               ?.copyWith(color: primaryColor),
                         ),
@@ -69,11 +67,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
             ),
           ),
           TasksOfDays(selectedDate),
-          Visibility(
-              visible: [TimesheetStatus.active, TimesheetStatus.reject]
-                      .contains(timesheetModel.status) &&
-                  tasks.isNotEmpty,
-              child: LongSubmitButton(onTap: () {})),
+          VisibilitySubmitButton(timesheetEntity.status),
         ],
       ),
       bottomNavigationBar: const Tabs(selectedIndex: 1),

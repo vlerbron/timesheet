@@ -59,7 +59,9 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
         ref.read(taskListProvider.provider.notifier);
     taskListNotifier.addTask(taskEntity);
     final EventEmitter events = ref.watch(timesheetEventProvider.provider);
-    events.emit(kTimesheetRebuild, taskEntity.taskDate);
+    events.emit(TimesheetRebuildEvent.kTaskListRebuild, taskEntity.taskDate);
+    events.emit(TimesheetRebuildEvent.kSubmitButtonRebuild,
+        ref.watch(timesheetProvider.provider).status);
     Navigator.of(context).pop();
   }
 

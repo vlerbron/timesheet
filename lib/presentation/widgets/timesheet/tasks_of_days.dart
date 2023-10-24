@@ -17,16 +17,17 @@ class TasksOfDays extends ConsumerStatefulWidget {
 class _TasksOfDays extends ConsumerState<TasksOfDays> {
   @override
   Widget build(BuildContext context) {
-    final TimesheetEntity timesheetModel = ref.watch(timesheetProvider.provider);
+    final TimesheetEntity timesheetModel =
+        ref.watch(timesheetProvider.provider);
     final Map<String, Color> allDayOfWeek = timesheetModel.allDayOfWeekColorMap;
     final List<String> dayList = allDayOfWeek.keys.toList();
     final List<Color> colorList = allDayOfWeek.values.toList();
     DateTime selectedDate = widget.selectedDate;
 
-    //for add new task
+    //*for add new task
     final EventEmitter events = ref.watch(timesheetEventProvider.provider);
     events.once(
-        kTimesheetRebuild,
+        TimesheetRebuildEvent.kTaskListRebuild,
         (DateTime dateTime) => setState(() {
               selectedDate = dateTime;
             }));

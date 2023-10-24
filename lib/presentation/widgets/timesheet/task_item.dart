@@ -17,13 +17,16 @@ class TaskItem extends ConsumerWidget with DateTimeMixin {
   Widget build(BuildContext context, WidgetRef ref) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final String hour = taskEntity.duration.inHours.toString();
-    final String minute = twoDigits(taskEntity.duration.inMinutes.remainder(60));
+    final String minute =
+        twoDigits(taskEntity.duration.inMinutes.remainder(60));
     final AlertDialogTwoButton dialog = AlertDialogTwoButton(onRightTap: () {
       final TaskListNotifier taskListNotifier =
           ref.read(taskListProvider.provider.notifier);
       taskListNotifier.deleteTask(taskEntity);
       final EventEmitter events = ref.watch(timesheetEventProvider.provider);
-      events.emit(kTimesheetRebuild, taskEntity.taskDate);
+      events.emit(TimesheetRebuildEvent.kTaskListRebuild, taskEntity.taskDate);
+      events.emit(TimesheetRebuildEvent.kSubmitButtonRebuild,
+          ref.watch(timesheetProvider.provider).status);
       Navigator.of(context).pop();
     });
     return Column(

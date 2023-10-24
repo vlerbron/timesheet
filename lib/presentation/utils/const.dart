@@ -42,7 +42,10 @@ const String kSaturday = 'Saturday';
 const String kSunday = 'Sunday';
 
 //Timesheet
-const String kTimesheetRebuild = 'timesheetPageRebuild';
+class TimesheetRebuildEvent {
+  static const String kTaskListRebuild = 'taskListRebuild';
+  static const String kSubmitButtonRebuild = 'submitButtonRebuild';
+}
 
 class ConstantConfig {
   final String token = 'TOKEN';
