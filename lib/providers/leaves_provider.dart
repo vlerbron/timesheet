@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/data/dummy_leaves.dart';
+import 'package:timesheet/data/datasources/dummies/dummy_leaves.dart';
 import 'package:timesheet/models/employee_model.dart';
 import 'package:timesheet/models/leave_model.dart';
 import 'package:timesheet/providers/selected_date_provider.dart';

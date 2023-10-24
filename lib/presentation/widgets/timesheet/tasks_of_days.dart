@@ -1,10 +1,10 @@
 import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/models/timesheet_model.dart';
-import 'package:timesheet/providers/timesheet_provider.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
+import 'package:timesheet/presentation/widgets/timesheet/day_item.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
 import 'package:timesheet/utils/const.dart';
-import 'package:timesheet/widgets/timesheet/day_item.dart';
 
 class TasksOfDays extends ConsumerStatefulWidget {
   const TasksOfDays(this.selectedDate, {super.key});

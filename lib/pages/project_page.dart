@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/pages/new_task_page.dart';
+import 'package:timesheet/presentation/pages/timesheet/new_task_page.dart';
 import 'package:timesheet/widgets/tabs.dart';
 
 class ProjectPage extends StatelessWidget {

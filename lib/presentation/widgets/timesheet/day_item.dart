@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/models/task_model.dart';
-import 'package:timesheet/models/timesheet_model.dart';
-import 'package:timesheet/providers/timesheet_provider.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
+import 'package:timesheet/presentation/widgets/timesheet/task_item.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
 import 'package:timesheet/utils/const.dart';
 import 'package:timesheet/utils/date_time_mixin.dart';
-import 'package:timesheet/widgets/timesheet/task_item.dart';
 
 class DayItem extends ConsumerStatefulWidget {
   const DayItem(this.dayOfWeek, this.dayColor, this.selectedDate, {super.key});

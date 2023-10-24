@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:timesheet/models/timesheet_model.dart';
-import 'package:timesheet/providers/timesheet_provider.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_model.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
+import 'package:timesheet/presentation/widgets/timesheet/custom_date_picker_popup.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
 import 'package:timesheet/utils/date_time_mixin.dart';
-import 'package:timesheet/widgets/timesheet/custom_date_picker_popup.dart';
 
 final startFormatter = DateFormat('dd MMM');
 final endFormatter = DateFormat('dd MMM yyyy');

@@ -11,7 +11,7 @@ enum TimesheetStatus {
   final String value;
 }
 
-class TimesheetModel {
+class TimesheetModel{
   DateTime selectedDate;
   Duration timeRemaining;
   TimesheetStatus status;
@@ -41,4 +41,5 @@ class TimesheetModel {
     required this.timeRemaining,
     required this.status,
   });
+  
 }

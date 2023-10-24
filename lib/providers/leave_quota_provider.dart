@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/data/dummy_leave_quota.dart';
+import 'package:timesheet/data/datasources/dummies/dummy_leave_quota.dart';
 import 'package:timesheet/models/leave_quota_model.dart';
 
 class LeaveQuotaNotifier extends StateNotifier<List<LeaveQuota>> {
