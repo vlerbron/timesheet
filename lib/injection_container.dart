@@ -21,7 +21,7 @@ import 'package:timesheet/presentation/provider/timesheet_provider/state/timeshe
 import 'package:timesheet/presentation/provider/timesheet_provider/task_list_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_event_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
-import 'package:timesheet/utils/const.dart';
+import 'package:timesheet/presentation/utils/const.dart';
 
 final locator = GetIt.instance;
 

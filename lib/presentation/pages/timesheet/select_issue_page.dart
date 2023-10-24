@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/models/select_issue_model.dart';
+import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
+import 'package:timesheet/presentation/widgets/common/button/long_cancel_button.dart';
+import 'package:timesheet/presentation/widgets/common/nav_icon.dart';
 import 'package:timesheet/presentation/widgets/timesheet/issue_item.dart';
-import 'package:timesheet/widgets/common/long_cancel_button.dart';
-import 'package:timesheet/widgets/nav_icon.dart';
 
 class SelectIssuePage extends StatelessWidget {
   const SelectIssuePage({super.key, required this.selectIssueModels});
 
-  final List<SelectIssueModel> selectIssueModels;
+  final List<SelectIssueEntity> selectIssueModels;
 
   @override
   Widget build(BuildContext context) {

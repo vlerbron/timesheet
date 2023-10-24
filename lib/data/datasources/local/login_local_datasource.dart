@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:timesheet/domain/entities/login/user_profile_entity.dart';
-import 'package:timesheet/utils/const.dart';
+import 'package:timesheet/presentation/utils/const.dart';
 
 abstract class LoginLocalDataSource {
   Future<void> storeLoginData({required String token});

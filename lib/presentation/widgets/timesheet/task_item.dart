@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_list_notifier.dart';
+import 'package:timesheet/presentation/widgets/common/button/alert_dialog_two_button.dart';
 import 'package:timesheet/provider_container.dart';
-import 'package:timesheet/utils/const.dart';
-import 'package:timesheet/utils/date_time_mixin.dart';
-import 'package:timesheet/widgets/common/alert_dialog_two_button.dart';
+import 'package:timesheet/presentation/utils/const.dart';
+import 'package:timesheet/presentation/utils/date_time_mixin.dart';
 
 class TaskItem extends ConsumerWidget with DateTimeMixin {
   const TaskItem(this.taskEntity, {super.key});

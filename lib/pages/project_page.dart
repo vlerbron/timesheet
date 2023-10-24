@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/presentation/pages/timesheet/new_task_page.dart';
-import 'package:timesheet/widgets/tabs.dart';
+import 'package:timesheet/presentation/widgets/common/tabs.dart';
 
 class ProjectPage extends StatelessWidget {
   const ProjectPage({super.key});

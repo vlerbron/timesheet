@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:timesheet/providers/leave_quota_provider.dart';
 import 'package:timesheet/widgets/leave_tabs/annual_statistic_box.dart';
-import 'package:timesheet/widgets/tabs.dart';
+import 'package:timesheet/presentation/widgets/common/tabs.dart';
 
 final formatter = DateFormat('EEEE, dd MMMM yyyy');
 

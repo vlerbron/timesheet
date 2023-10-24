@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/provider_container.dart';
-import 'package:timesheet/routes/route.dart';
+import 'package:timesheet/presentation/routes/route.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({Key? key}) : super(key: key);

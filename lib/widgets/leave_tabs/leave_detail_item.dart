@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/models/leave_model.dart';
-import 'package:timesheet/utils/const.dart';
-import 'package:timesheet/widgets/name_avatar.dart';
+import 'package:timesheet/presentation/utils/const.dart';
+import 'package:timesheet/presentation/widgets/common/name_avatar.dart';
 
 class LeaveDetailItem extends StatelessWidget {
   const LeaveDetailItem({

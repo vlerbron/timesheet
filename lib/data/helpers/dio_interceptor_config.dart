@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:timesheet/utils/const.dart';
+import 'package:timesheet/presentation/utils/const.dart';
 
 // Project imports:
 

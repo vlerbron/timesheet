@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/provider_container.dart';
-import 'package:timesheet/widgets/tabs.dart';
+import 'package:timesheet/presentation/widgets/common/tabs.dart';
 
 class AccountPage extends ConsumerWidget {
   const AccountPage({super.key});

@@ -4,8 +4,8 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timesheet/injection_container.dart';
-import 'package:timesheet/routes/route.dart';
-import 'package:timesheet/utils/const.dart';
+import 'package:timesheet/presentation/routes/route.dart';
+import 'package:timesheet/presentation/utils/const.dart';
 
 final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.light,

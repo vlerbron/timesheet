@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
 import 'package:timesheet/presentation/widgets/timesheet/day_item.dart';
 import 'package:timesheet/provider_container.dart';
-import 'package:timesheet/utils/const.dart';
+import 'package:timesheet/presentation/utils/const.dart';
 
 class TasksOfDays extends ConsumerStatefulWidget {
   const TasksOfDays(this.selectedDate, {super.key});

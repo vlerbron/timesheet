@@ -6,8 +6,8 @@ import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
 import 'package:timesheet/presentation/widgets/timesheet/task_item.dart';
 import 'package:timesheet/provider_container.dart';
-import 'package:timesheet/utils/const.dart';
-import 'package:timesheet/utils/date_time_mixin.dart';
+import 'package:timesheet/presentation/utils/const.dart';
+import 'package:timesheet/presentation/utils/date_time_mixin.dart';
 
 class DayItem extends ConsumerStatefulWidget {
   const DayItem(this.dayOfWeek, this.dayColor, this.selectedDate, {super.key});

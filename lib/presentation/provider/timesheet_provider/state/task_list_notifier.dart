@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/data/datasources/dummies/dummy_task.dart';
-import 'package:timesheet/models/task_model.dart';
+import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 
-class TaskListNotifier extends StateNotifier<List<TaskModel>> {
+class TaskListNotifier extends StateNotifier<List<TaskEntity>> {
   TaskListNotifier() : super(dummyTasks);
 
-  List<TaskModel> getTaskListbyDayOfWeek(
+  List<TaskEntity> getTaskListbyDayOfWeek(
       String dayOfWeek, DateTime startDate, DateTime endDate) {
-    List<TaskModel> tasks = _getTaskListbyDateDuration(startDate, endDate);
+    List<TaskEntity> tasks = _getTaskListbyDateDuration(startDate, endDate);
     return tasks.where((task) => task.dayOfWeek == dayOfWeek).toList();
   }
 
-  List<TaskModel> _getTaskListbyDateDuration(
+  List<TaskEntity> _getTaskListbyDateDuration(
       DateTime startDate, DateTime endDate) {
     return state
         .where((task) =>
@@ -22,11 +22,11 @@ class TaskListNotifier extends StateNotifier<List<TaskModel>> {
         .toList();
   }
 
-  void addTask(TaskModel task) {
+  void addTask(TaskEntity task) {
     state.add(task);
   }
 
-  void deleteTask(TaskModel task) {
+  void deleteTask(TaskEntity task) {
     state.remove(task);
   }
 }

@@ -4,7 +4,7 @@ import 'package:timesheet/models/leave_model.dart';
 import 'package:timesheet/widgets/leave_tabs/new_leave_request.dart';
 import 'package:timesheet/providers/leave_request_provider.dart';
 
-import '../../utils/const.dart';
+import '../../presentation/utils/const.dart';
 
 class LeaveRecordItem extends ConsumerWidget {
   const LeaveRecordItem({

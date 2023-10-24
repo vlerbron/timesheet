@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/utils/const.dart';
+import 'package:timesheet/presentation/utils/const.dart';
 
 class CustomTabBar extends StatelessWidget {
   const CustomTabBar({super.key, required this.tabs});

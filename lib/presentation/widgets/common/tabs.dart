@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/routes/route.dart';
-import 'package:timesheet/widgets/fade_in_route.dart';
-import 'package:timesheet/widgets/nav_icon.dart';
+import 'package:timesheet/presentation/routes/route.dart';
+import 'package:timesheet/presentation/widgets/common/fade_in_route.dart';
+import 'package:timesheet/presentation/widgets/common/nav_icon.dart';
 
 class Tabs extends StatelessWidget {
   const Tabs({super.key, required this.selectedIndex});

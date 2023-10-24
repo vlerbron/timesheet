@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
+import 'package:timesheet/presentation/widgets/common/button/long_submit_button.dart';
 import 'package:timesheet/presentation/widgets/timesheet/date_picker_timesheet.dart';
 import 'package:timesheet/presentation/widgets/timesheet/tasks_of_days.dart';
 import 'package:timesheet/provider_container.dart';
-import 'package:timesheet/widgets/common/long_submit_button.dart';
-import 'package:timesheet/widgets/tabs.dart';
+import 'package:timesheet/presentation/widgets/common/tabs.dart';
 
 class TimesheetPage extends ConsumerStatefulWidget {
   const TimesheetPage({super.key});

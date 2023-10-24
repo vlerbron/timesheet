@@ -4,7 +4,7 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:timesheet/data/exception.dart';
 import 'package:timesheet/data/model/login/login_model.dart';
 import 'package:timesheet/data/model/login/user_profile_model.dart';
-import 'package:timesheet/utils/const.dart';
+import 'package:timesheet/presentation/utils/const.dart';
 
 abstract class LoginRemoteDataSource {
   Future<LoginModel> login({

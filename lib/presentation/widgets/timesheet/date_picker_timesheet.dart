@@ -5,7 +5,7 @@ import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
 import 'package:timesheet/presentation/widgets/timesheet/custom_date_picker_popup.dart';
 import 'package:timesheet/provider_container.dart';
-import 'package:timesheet/utils/date_time_mixin.dart';
+import 'package:timesheet/presentation/utils/date_time_mixin.dart';
 
 final startFormatter = DateFormat('dd MMM');
 final endFormatter = DateFormat('dd MMM yyyy');
