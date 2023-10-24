@@ -38,10 +38,10 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet>
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color primaryColor = colorScheme.primary;
     final Color secondaryColor = colorScheme.secondary;
-    final TimesheetEntity timesheetModel = ref.watch(timesheetProvider.provider);
+    final TimesheetEntity timesheetEntity = ref.watch(timesheetProvider.provider).timesheetEntity;
     final TimesheetNotifier timesheetNotifier =
         ref.read(timesheetProvider.provider.notifier);
-    selectedDate = timesheetModel.selectedDate;
+    selectedDate = timesheetEntity.selectedDate;
 
     String displayStr =
         '${startFormatter.format(findFirstDateOfTheWeek(selectedDate))} - ${endFormatter.format(findLastDateOfTheWeek(selectedDate))}';
@@ -55,7 +55,7 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet>
             color: primaryColor,
             onPressed: () {
               timesheetNotifier.setSelectedDate(is7Days: true);
-              setSelectedDate(timesheetModel.selectedDate);
+              setSelectedDate(timesheetEntity.selectedDate);
             },
             style: ButtonStyle(
               shape: MaterialStateProperty.all(const CircleBorder()),
@@ -91,13 +91,13 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet>
             color: primaryColor,
             onPressed: () {
               DateTime nextWeekDay =
-                  timesheetModel.selectedDate.add(const Duration(days: 7));
+                  timesheetEntity.selectedDate.add(const Duration(days: 7));
               if (nextWeekDay
                       .compareTo(findLastDateOfTheWeek(DateTime.now())) <=
                   0) {
                 timesheetNotifier.setSelectedDate(
                     isBefore: false, is7Days: true);
-                setSelectedDate(timesheetModel.selectedDate);
+                setSelectedDate(timesheetEntity.selectedDate);
               }
             },
             style: ButtonStyle(

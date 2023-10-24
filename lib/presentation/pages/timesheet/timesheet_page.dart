@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_state.dart';
 import 'package:timesheet/presentation/widgets/timesheet/date_picker_timesheet.dart';
 import 'package:timesheet/presentation/widgets/timesheet/tasks_of_days.dart';
 import 'package:timesheet/presentation/widgets/timesheet/visibility_submit_button.dart';
@@ -21,7 +22,9 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color primaryColor = colorScheme.primary;
     final Color secondaryColor = colorScheme.secondary;
-    TimesheetEntity timesheetEntity = ref.watch(timesheetProvider.provider);
+    TimesheetState state = ref.watch(timesheetProvider.provider);
+    TimesheetEntity timesheetEntity = state.timesheetEntity;
+    TimesheetStatus status = state.timesheetStatus;
     DateTime selectedDate = timesheetEntity.selectedDate;
 
     return Scaffold(
@@ -67,7 +70,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
             ),
           ),
           TasksOfDays(selectedDate),
-          VisibilitySubmitButton(timesheetEntity.status),
+          VisibilitySubmitButton(status),
         ],
       ),
       bottomNavigationBar: const Tabs(selectedIndex: 1),

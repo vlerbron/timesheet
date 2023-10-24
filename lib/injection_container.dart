@@ -18,6 +18,7 @@ import 'package:timesheet/presentation/provider/login_provider/login/state/login
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_list_notifier.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_event_notifier.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_list_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_event_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
@@ -38,8 +39,8 @@ init() async {
             return LoginNotifier(locator());
           }));
   locator.registerLazySingleton(
-      () => StateNotifierProvider<TimesheetNotifier, TimesheetEntity>((ref) {
-            return TimesheetNotifier();
+      () => StateNotifierProvider<TimesheetNotifier, TimesheetState>((ref) {
+            return TimesheetNotifier(locator());
           }));
   locator.registerLazySingleton(
       () => StateNotifierProvider<TaskListNotifier, List<TaskEntity>>((ref) {
@@ -86,4 +87,16 @@ init() async {
 
   // ================ Section : Config ================
   locator.registerLazySingleton(() => ConstantConfig());
+
+  // ================ Section : Entity ================
+  locator.registerLazySingleton(() => TimesheetEntity(
+        selectedDate: DateTime.now().copyWith(
+            hour: 0,
+            minute: 0,
+            second: 0,
+            millisecond: 0,
+            microsecond: 0,
+            isUtc: true),
+        timeRemaining: const Duration(),
+      ));
 }

@@ -2,7 +2,7 @@ import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
-import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_state.dart';
 import 'package:timesheet/presentation/utils/const.dart';
 import 'package:timesheet/presentation/widgets/common/button/long_submit_button.dart';
 import 'package:timesheet/provider_container.dart';

@@ -22,11 +22,11 @@ class DayItem extends ConsumerStatefulWidget {
 class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
   @override
   Widget build(BuildContext context) {
-    final TimesheetEntity timesheetModel = ref.watch(timesheetProvider.provider);
-    bool isShowTasks = timesheetModel.isShowTasksMap[widget.dayOfWeek]!;
+    final TimesheetEntity timesheetEntity = ref.watch(timesheetProvider.provider).timesheetEntity;
+    bool isShowTasks = timesheetEntity.isShowTasksMap[widget.dayOfWeek]!;
     DateTime selectedDate = widget.selectedDate;
     final firstDateOfWeek = findFirstDateOfTheWeek(selectedDate);
-    final dayIndex = timesheetModel.allDayOfWeekColorMap.keys
+    final dayIndex = timesheetEntity.allDayOfWeekColorMap.keys
         .toList()
         .indexOf(widget.dayOfWeek);
     final widgetDate = firstDateOfWeek.add(Duration(days: dayIndex));
@@ -95,7 +95,7 @@ class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
                             widget.dayOfWeek, !isShowTasks);
                         setState(() {
                           isShowTasks =
-                              timesheetModel.isShowTasksMap[widget.dayOfWeek]!;
+                              timesheetEntity.isShowTasksMap[widget.dayOfWeek]!;
                         });
                       },
                       icon: (isShowTasks)

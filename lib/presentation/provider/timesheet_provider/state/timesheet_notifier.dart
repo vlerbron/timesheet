@@ -1,29 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_state.dart';
 
-class TimesheetNotifier extends StateNotifier<TimesheetEntity> {
-  TimesheetNotifier()
-      : super(TimesheetEntity(
-          selectedDate: DateTime.now().copyWith(
-              hour: 0,
-              minute: 0,
-              second: 0,
-              millisecond: 0,
-              microsecond: 0,
-              isUtc: true),
-          timeRemaining: const Duration(),
-          status: TimesheetStatus.active,
+class TimesheetNotifier extends StateNotifier<TimesheetState> {
+  final TimesheetEntity timesheetEntity;
+  TimesheetNotifier(this.timesheetEntity)
+      : super(TimesheetState(
+          timesheetEntity: timesheetEntity,
+          timesheetStatus: TimesheetStatus.active,
         ));
 
   void setSelectedDate(
       {bool isBefore = true, required bool is7Days, dynamic dateTime}) {
     if (is7Days) {
-      state.selectedDate = isBefore
-          ? state.selectedDate.subtract(const Duration(days: 7))
-          : state.selectedDate.add(const Duration(days: 7));
+      state.timesheetEntity.selectedDate = isBefore
+          ? state.timesheetEntity.selectedDate.subtract(const Duration(days: 7))
+          : state.timesheetEntity.selectedDate.add(const Duration(days: 7));
     } else {
       DateTime d = dateTime;
-      state.selectedDate = d.copyWith(
+      state.timesheetEntity.selectedDate = d.copyWith(
           hour: 0,
           minute: 0,
           second: 0,
@@ -31,11 +26,11 @@ class TimesheetNotifier extends StateNotifier<TimesheetEntity> {
           microsecond: 0,
           isUtc: true);
     }
-    state.isShowTasksMap
-        .forEach((key, value) => state.isShowTasksMap[key] = false);
+    state.timesheetEntity.isShowTasksMap
+        .forEach((key, value) => state.timesheetEntity.isShowTasksMap[key] = false);
   }
 
   void setIsShowTasks(String dayOfWeek, bool isShowTasks) {
-    state.isShowTasksMap[dayOfWeek] = isShowTasks;
+    state.timesheetEntity.isShowTasksMap[dayOfWeek] = isShowTasks;
   }
 }
