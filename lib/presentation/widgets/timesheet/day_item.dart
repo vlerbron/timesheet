@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/state/task_notifier.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
+import 'package:timesheet/presentation/routes/route.dart';
 import 'package:timesheet/presentation/widgets/timesheet/task_item.dart';
 import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/presentation/utils/const.dart';
@@ -36,6 +38,7 @@ class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
             findLastDateOfTheWeek(selectedDate));
     final TimesheetNotifier timesheetNotifier =
         ref.read(timesheetProvider.provider.notifier);
+    final TaskNotifier taskNotifier = ref.read(taskProvider.provider.notifier);
     final TextTheme textTheme = Theme.of(context).textTheme;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
@@ -128,8 +131,9 @@ class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
                       onTap: () {
                         timesheetNotifier.setSelectedDate(
                             is7Days: false, dateTime: widgetDate);
+                        taskNotifier.setNewTaskState(widget.dayOfWeek, widgetDate);
                         Navigator.of(context)
-                            .pushNamed('/new-task', arguments: widgetDate);
+                            .pushNamed(Routes.newEditTaskPage);
                       },
                       child: Text(
                         'Add Task',

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,22 +7,24 @@ import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/presentation/pages/timesheet/select_issue_page.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_list_notifier.dart';
+import 'package:timesheet/presentation/utils/date_time_mixin.dart';
 import 'package:timesheet/presentation/widgets/common/button/save_button.dart';
 import 'package:timesheet/presentation/widgets/common/button/short_cancel_button.dart';
 import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/presentation/utils/const.dart';
 
-class NewTaskPage extends ConsumerStatefulWidget {
-  const NewTaskPage({super.key, required this.choosedDate});
-  final DateTime choosedDate;
+class NewEditTaskPage extends ConsumerStatefulWidget {
+  const NewEditTaskPage({super.key});
 
   @override
-  ConsumerState<NewTaskPage> createState() => _NewTaskState();
+  ConsumerState<NewEditTaskPage> createState() => _NewEditTaskState();
 }
 
-class _NewTaskState extends ConsumerState<NewTaskPage> {
+class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
+    with DateTimeMixin {
   final _formKey = GlobalKey<FormState>();
 
+  TaskEntity? _taskEntity;
   SelectIssueEntity? _issueEntity;
   String _taskDetail = '';
   DateTime? _taskDate;
@@ -38,8 +38,6 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
 
   void _save() {
     _formKey.currentState!.save();
-    //TODO: Below dummy for test, delete later.
-    _issueEntity = dummySelectIssue[Random().nextInt(6)];
     _taskDate = _selectedDate?.copyWith(
         hour: 0,
         minute: 0,
@@ -49,7 +47,8 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
         isUtc: true);
     _taskDuration =
         Duration(hours: int.parse(_hour), minutes: int.parse(_minute));
-    TaskEntity taskEntity = TaskEntity(
+    TaskEntity taskEntity = ref.watch(taskProvider.provider).taskEntity!;
+    taskEntity.setTask(
         dayOfWeek: DateFormat('EEEE').format(_taskDate!),
         issue: _issueEntity!,
         taskDetail: _taskDetail,
@@ -88,8 +87,22 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _taskEntity = ref.watch(taskProvider.provider).taskEntity!;
+    _issueEntity = _taskEntity!.issue;
+    _selectedDate = _taskEntity!.taskDate;
+    _hour = _taskEntity!.duration.inHours.toString();
+    _minute = twoDigits(_taskEntity!.duration.inMinutes.remainder(60));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _selectedDate = widget.choosedDate;
     return Scaffold(
       appBar: AppBar(
         title: const Text('New task'),
@@ -103,9 +116,11 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
             key: _formKey,
             child: Column(
               children: [
-                const Row(
+                Row(
                   children: [
-                    Text('Project code'),
+                    const Text('Project code'),
+                    const Spacer(),
+                    Text(_issueEntity!.clientCode),
                   ],
                 ),
                 const SizedBox(height: 15),
@@ -121,6 +136,7 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+                          Text(_issueEntity!.projectCode),
                           IconButton(
                             onPressed: _issue,
                             icon: const Icon(
@@ -149,6 +165,7 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
                     minLines: 3,
                     maxLines: 3,
                     keyboardType: TextInputType.multiline,
+                    initialValue: _taskEntity!.taskDetail,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -209,6 +226,7 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
                           child: TextFormField(
                             autofocus: false,
                             keyboardType: TextInputType.number,
+                            initialValue: _hour,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor:
@@ -233,6 +251,7 @@ class _NewTaskState extends ConsumerState<NewTaskPage> {
                           child: TextFormField(
                             autofocus: false,
                             keyboardType: TextInputType.number,
+                            initialValue: _minute,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor:

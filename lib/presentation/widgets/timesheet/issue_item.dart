@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
 
 class IssueItem extends StatelessWidget {
-  const IssueItem({super.key, required this.selectIssueEntity});
+  const IssueItem({super.key, required this.selectIssueEntity, required this.onTap});
+
+  final void Function(SelectIssueEntity) onTap;
 
   final SelectIssueEntity selectIssueEntity;
 
@@ -11,7 +13,9 @@ class IssueItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          onTap(selectIssueEntity);
+        },
         child: Column(
           children: [
             Row(

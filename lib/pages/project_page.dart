@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/presentation/pages/timesheet/new_task_page.dart';
+import 'package:timesheet/presentation/pages/timesheet/new_edit_task_page.dart';
 import 'package:timesheet/presentation/widgets/common/tabs.dart';
 
 class ProjectPage extends StatelessWidget {
@@ -16,12 +16,8 @@ class ProjectPage extends StatelessWidget {
         child: OutlinedButton.icon(
           onPressed: () {
             //NewTask();
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (ctx) => NewTaskPage(
-                          choosedDate: DateTime.now(),
-                        )));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (ctx) => const NewEditTaskPage()));
           },
           style: OutlinedButton.styleFrom(
             foregroundColor: Colors.black,

@@ -21,5 +21,5 @@ class TimesheetState extends Equatable {
 
 
   @override
-  List<Object> get props => [timesheetStatus];
+  List<Object> get props => [timesheetStatus, timesheetEntity];
 }

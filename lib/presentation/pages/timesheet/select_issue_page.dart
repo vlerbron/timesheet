@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
 import 'package:timesheet/presentation/widgets/common/button/long_cancel_button.dart';
 import 'package:timesheet/presentation/widgets/common/nav_icon.dart';
 import 'package:timesheet/presentation/widgets/timesheet/issue_item.dart';
+import 'package:timesheet/provider_container.dart';
 
-class SelectIssuePage extends StatelessWidget {
+class SelectIssuePage extends ConsumerStatefulWidget {
   const SelectIssuePage({super.key, required this.selectIssueModels});
 
   final List<SelectIssueEntity> selectIssueModels;
 
+  @override
+  ConsumerState<SelectIssuePage> createState() => _SelectIssuePageState();
+}
+
+class _SelectIssuePageState extends ConsumerState<SelectIssuePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +51,13 @@ class SelectIssuePage extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: selectIssueModels.length,
+              itemCount: widget.selectIssueModels.length,
               itemBuilder: (context, index) => IssueItem(
-                selectIssueEntity: selectIssueModels[index],
+                selectIssueEntity: widget.selectIssueModels[index],
+                onTap: (SelectIssueEntity entity) {
+                  ref.read(taskProvider.provider.notifier).setSelectedIssueEntity(entity);
+                  Navigator.of(context).pop();
+                },
               ),
             ),
           ),

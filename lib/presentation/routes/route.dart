@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timesheet/pages/account_page.dart';
 import 'package:timesheet/presentation/pages/home/home_page.dart';
 import 'package:timesheet/pages/leave_page.dart';
-import 'package:timesheet/presentation/pages/timesheet/new_task_page.dart';
+import 'package:timesheet/presentation/pages/timesheet/new_edit_task_page.dart';
 import 'package:timesheet/pages/project_page.dart';
 import 'package:timesheet/presentation/pages/timesheet/timesheet_page.dart';
 import 'package:timesheet/presentation/pages/login/login_page.dart';
@@ -16,7 +16,7 @@ class Routes {
   static const String projectPage = '/project';
   static const String leavePage = '/leave';
   static const String accountPage = '/account';
-  static const String newTaskPage = '/new-task';
+  static const String newEditTaskPage = '/new-task';
 
   static Map<String, Widget Function(BuildContext)> routes = {
     Routes.rootPage: (context) => const SplashPage(),
@@ -26,7 +26,6 @@ class Routes {
     Routes.projectPage: (context) => const ProjectPage(),
     Routes.leavePage: (context) => const LeavePage(),
     Routes.accountPage: (context) => const AccountPage(),
-    Routes.newTaskPage: (context) => NewTaskPage(
-        choosedDate: ModalRoute.of(context)?.settings.arguments as DateTime),
+    Routes.newEditTaskPage: (context) => const NewEditTaskPage(),
   };
 }

@@ -15,6 +15,9 @@ import 'package:timesheet/domain/use_case/login_use_case/remote_use_case/login_u
 import 'package:timesheet/presentation/provider/login_provider/login/login_provider.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/state/login_notifier.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/state/login_state.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/task_provider.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/state/task_notifier.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/state/task_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_list_notifier.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_event_notifier.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
@@ -28,16 +31,23 @@ final locator = GetIt.instance;
 
 init() async {
   //** ================ Section : Provider ================ */
+  //* Login
   locator.registerFactory(() => LoginProvider(locator()));
+
+  //* Timesheet
   locator.registerFactory(() => TimesheetProvider(locator()));
   locator.registerFactory(() => TaskListProvider(locator()));
   locator.registerFactory(() => TimesheetEventProvider(locator()));
+  locator.registerFactory(() => TaskProvider(locator()));
 
   // ================ Section : Notifier ================
+  //* Login
   locator.registerLazySingleton(
       () => StateNotifierProvider<LoginNotifier, LoginState>((ref) {
             return LoginNotifier(locator());
           }));
+
+  //* Timesheet
   locator.registerLazySingleton(
       () => StateNotifierProvider<TimesheetNotifier, TimesheetState>((ref) {
             return TimesheetNotifier(locator());
@@ -49,6 +59,10 @@ init() async {
   locator.registerLazySingleton(
       () => StateNotifierProvider<TimesheetEventNotifier, EventEmitter>((ref) {
             return TimesheetEventNotifier();
+          }));
+  locator.registerLazySingleton(
+      () => StateNotifierProvider<TaskNotifier, TaskState>((ref) {
+            return TaskNotifier();
           }));
 
   // ================ Section : Use Case ================
@@ -89,6 +103,7 @@ init() async {
   locator.registerLazySingleton(() => ConstantConfig());
 
   // ================ Section : Entity ================
+  //* Timesheet
   locator.registerLazySingleton(() => TimesheetEntity(
         selectedDate: DateTime.now().copyWith(
             hour: 0,

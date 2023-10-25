@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_list_notifier.dart';
+import 'package:timesheet/presentation/routes/route.dart';
 import 'package:timesheet/presentation/widgets/common/button/alert_dialog_two_button.dart';
 import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/presentation/utils/const.dart';
@@ -34,9 +35,15 @@ class TaskItem extends ConsumerWidget with DateTimeMixin {
       children: [
         Row(
           children: [
-            Text(
-              "${taskEntity.issue.clientCode}-${taskEntity.issue.projectCode}-${taskEntity.issue.title}",
-              style: textTheme.titleMedium?.copyWith(color: kColorGreyText),
+            InkWell(
+              onTap: () {
+                ref.read(taskProvider.provider.notifier).setEditTaskState(taskEntity);
+                Navigator.of(context).pushNamed(Routes.newEditTaskPage);
+              },
+              child: Text(
+                "${taskEntity.issue.clientCode}-${taskEntity.issue.projectCode}-${taskEntity.issue.title}",
+                style: textTheme.titleMedium?.copyWith(color: kColorGreyText),
+              ),
             ),
             const Spacer(),
             Text('$hour.${minute}h'),
