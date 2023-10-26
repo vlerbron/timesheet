@@ -13,18 +13,13 @@ import 'package:timesheet/domain/repositories/login_repository.dart';
 import 'package:timesheet/domain/use_case/login_use_case/login_use_case_adapter.dart';
 import 'package:timesheet/domain/use_case/login_use_case/remote_use_case/login_use_case.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/login_provider.dart';
-import 'package:timesheet/presentation/provider/login_provider/login/state/login_notifier.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/state/login_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_provider.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/state/task_notifier.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_state.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/state/task_list_notifier.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_event_notifier.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_list_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_event_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_state.dart';
 import 'package:timesheet/presentation/utils/const.dart';
 
 final locator = GetIt.instance;
@@ -36,34 +31,27 @@ init() async {
 
   //* Timesheet
   locator.registerFactory(() => TimesheetProvider(locator()));
-  locator.registerFactory(() => TaskListProvider(locator()));
-  locator.registerFactory(() => TimesheetEventProvider(locator()));
-  locator.registerFactory(() => TaskProvider(locator()));
+  locator.registerFactory(() => TaskListProvider());
+  locator.registerFactory(() => TimesheetEventProvider());
+  locator.registerFactory(() => TaskProvider());
 
   // ================ Section : Notifier ================
   //* Login
-  locator.registerLazySingleton(
-      () => StateNotifierProvider<LoginNotifier, LoginState>((ref) {
-            return LoginNotifier(locator());
-          }));
+  locator.registerLazySingleton(() =>
+      StateNotifierProvider<LoginProvider, LoginState>((ref) => locator()));
 
   //* Timesheet
+  locator.registerLazySingleton(() =>
+      StateNotifierProvider<TimesheetProvider, TimesheetState>(
+          (ref) => locator()));
+  locator.registerLazySingleton(() =>
+      StateNotifierProvider<TaskListProvider, List<TaskEntity>>(
+          (ref) => locator()));
+  locator.registerLazySingleton(() =>
+      StateNotifierProvider<TimesheetEventProvider, EventEmitter>(
+          (ref) => locator()));
   locator.registerLazySingleton(
-      () => StateNotifierProvider<TimesheetNotifier, TimesheetState>((ref) {
-            return TimesheetNotifier(locator());
-          }));
-  locator.registerLazySingleton(
-      () => StateNotifierProvider<TaskListNotifier, List<TaskEntity>>((ref) {
-            return TaskListNotifier();
-          }));
-  locator.registerLazySingleton(
-      () => StateNotifierProvider<TimesheetEventNotifier, EventEmitter>((ref) {
-            return TimesheetEventNotifier();
-          }));
-  locator.registerLazySingleton(
-      () => StateNotifierProvider<TaskNotifier, TaskState>((ref) {
-            return TaskNotifier();
-          }));
+      () => StateNotifierProvider<TaskProvider, TaskState>((ref) => locator()));
 
   // ================ Section : Use Case ================
   locator.registerLazySingleton(() => LoginUseCase(locator()));

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/state/task_list_notifier.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/task_list_provider.dart';
 import 'package:timesheet/presentation/routes/route.dart';
 import 'package:timesheet/presentation/widgets/common/button/alert_dialog_two_button.dart';
 import 'package:timesheet/provider_container.dart';
@@ -21,13 +21,13 @@ class TaskItem extends ConsumerWidget with DateTimeMixin {
     final String minute =
         twoDigits(taskEntity.duration.inMinutes.remainder(60));
     final AlertDialogTwoButton dialog = AlertDialogTwoButton(onRightTap: () {
-      final TaskListNotifier taskListNotifier =
-          ref.read(taskListProvider.provider.notifier);
+      final TaskListProvider taskListNotifier =
+          ref.read(taskListProvider.notifier);
       taskListNotifier.deleteTask(taskEntity);
-      final EventEmitter events = ref.watch(timesheetEventProvider.provider);
+      final EventEmitter events = ref.watch(timesheetEventProvider);
       events.emit(TimesheetRebuildEvent.kTaskListRebuild, taskEntity.taskDate);
       events.emit(TimesheetRebuildEvent.kSubmitButtonRebuild,
-          ref.watch(timesheetProvider.provider).timesheetStatus);
+          ref.watch(timesheetProvider).timesheetStatus);
       Navigator.of(context).pop();
     });
     return Column(
@@ -37,7 +37,7 @@ class TaskItem extends ConsumerWidget with DateTimeMixin {
           children: [
             InkWell(
               onTap: () {
-                ref.read(taskProvider.provider.notifier).setEditTaskState(taskEntity);
+                ref.read(taskProvider.notifier).setEditTaskState(taskEntity);
                 Navigator.of(context).pushNamed(Routes.newEditTaskPage);
               },
               child: Text(

@@ -19,7 +19,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
       () async {
         await ref
             .read(FutureProvider<bool>((ref) async {
-          final provider = ref.watch(loginProvider.provider.notifier);
+          final provider = ref.watch(loginProvider.notifier);
           return await provider.getIsLoginStatus();
         }).future)
             .then(

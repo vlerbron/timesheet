@@ -18,19 +18,21 @@ class _TasksOfDays extends ConsumerState<TasksOfDays> {
   @override
   Widget build(BuildContext context) {
     final TimesheetEntity timesheetModel =
-        ref.watch(timesheetProvider.provider).timesheetEntity;
+        ref.watch(timesheetProvider).timesheetEntity;
     final Map<String, Color> allDayOfWeek = timesheetModel.allDayOfWeekColorMap;
     final List<String> dayList = allDayOfWeek.keys.toList();
     final List<Color> colorList = allDayOfWeek.values.toList();
     DateTime selectedDate = widget.selectedDate;
 
     //*for add new task
-    final EventEmitter events = ref.watch(timesheetEventProvider.provider);
-    events.once(
-        TimesheetRebuildEvent.kTaskListRebuild,
-        (DateTime dateTime) => setState(() {
-              selectedDate = dateTime;
-            }));
+    final EventEmitter events = ref.watch(timesheetEventProvider);
+    events.once(TimesheetRebuildEvent.kTaskListRebuild, (DateTime dateTime) {
+      if (mounted) {
+        setState(() {
+          selectedDate = dateTime;
+        });
+      }
+    });
 
     return Expanded(
       child: ListView.builder(

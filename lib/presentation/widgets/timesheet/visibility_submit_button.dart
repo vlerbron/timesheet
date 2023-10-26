@@ -21,13 +21,16 @@ class _VisibilitySubmitButton extends ConsumerState<VisibilitySubmitButton> {
   @override
   Widget build(BuildContext context) {
     TimesheetStatus status = widget.status;
-    List<TaskEntity> tasks = ref.watch(taskListProvider.provider);
-    EventEmitter eventEmitter = ref.watch(timesheetEventProvider.provider);
-    eventEmitter.once(
-        TimesheetRebuildEvent.kSubmitButtonRebuild,
-        (TimesheetStatus value) => setState(() {
-              status = value;
-            }));
+    List<TaskEntity> tasks = ref.watch(taskListProvider);
+    EventEmitter eventEmitter = ref.watch(timesheetEventProvider);
+    eventEmitter.once(TimesheetRebuildEvent.kSubmitButtonRebuild,
+        (TimesheetStatus value) {
+      if (mounted) {
+        setState(() {
+          status = value;
+        });
+      }
+    });
     return Visibility(
         visible:
             [TimesheetStatus.active, TimesheetStatus.reject].contains(status) &&

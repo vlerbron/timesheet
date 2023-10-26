@@ -6,7 +6,7 @@ import 'package:timesheet/data/datasources/dummies/dummy_select_issue.dart';
 import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/presentation/pages/timesheet/select_issue_page.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/state/task_list_notifier.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/task_list_provider.dart';
 import 'package:timesheet/presentation/utils/date_time_mixin.dart';
 import 'package:timesheet/presentation/widgets/common/button/save_button.dart';
 import 'package:timesheet/presentation/widgets/common/button/short_cancel_button.dart';
@@ -47,20 +47,20 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
         isUtc: true);
     _taskDuration =
         Duration(hours: int.parse(_hour), minutes: int.parse(_minute));
-    TaskEntity taskEntity = ref.watch(taskProvider.provider).taskEntity!;
+    TaskEntity taskEntity = ref.watch(taskProvider).taskEntity!;
     taskEntity.setTask(
         dayOfWeek: DateFormat('EEEE').format(_taskDate!),
         issue: _issueEntity!,
         taskDetail: _taskDetail,
         taskDate: _taskDate ??= DateTime.now(),
         duration: _taskDuration);
-    final TaskListNotifier taskListNotifier =
-        ref.read(taskListProvider.provider.notifier);
+    final TaskListProvider taskListNotifier =
+        ref.read(taskListProvider.notifier);
     taskListNotifier.addTask(taskEntity);
-    final EventEmitter events = ref.watch(timesheetEventProvider.provider);
+    final EventEmitter events = ref.watch(timesheetEventProvider);
     events.emit(TimesheetRebuildEvent.kTaskListRebuild, taskEntity.taskDate);
     events.emit(TimesheetRebuildEvent.kSubmitButtonRebuild,
-        ref.watch(timesheetProvider.provider).timesheetStatus);
+        ref.watch(timesheetProvider).timesheetStatus);
     Navigator.of(context).pop();
   }
 
@@ -94,7 +94,7 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _taskEntity = ref.watch(taskProvider.provider).taskEntity!;
+    _taskEntity = ref.watch(taskProvider).taskEntity!;
     _issueEntity = _taskEntity!.issue;
     _selectedDate = _taskEntity!.taskDate;
     _hour = _taskEntity!.duration.inHours.toString();

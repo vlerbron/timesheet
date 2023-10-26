@@ -8,7 +8,7 @@ class AccountPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var loginNotifier = ref.watch(loginProvider.provider.notifier);
+    var loginNotifier = ref.watch(loginProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Account'),

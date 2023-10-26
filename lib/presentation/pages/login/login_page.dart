@@ -29,7 +29,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     setState(() {
       ref
-          .read(loginProvider.provider.notifier)
+          .read(loginProvider.notifier)
           .login(username: _enteredUserName, password: _enteredPassword);
     });
   }
@@ -37,9 +37,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final LoginState state = ref.watch(loginProvider.provider);
+    final LoginState state = ref.watch(loginProvider);
     ref.listen(
-      loginProvider.provider.select((value) => value),
+      loginProvider.select((value) => value),
       ((previous, next) {
         //show Snackbar on failure
         if (next is Failure) {

@@ -55,7 +55,7 @@ class _SelectIssuePageState extends ConsumerState<SelectIssuePage> {
               itemBuilder: (context, index) => IssueItem(
                 selectIssueEntity: widget.selectIssueModels[index],
                 onTap: (SelectIssueEntity entity) {
-                  ref.read(taskProvider.provider.notifier).setSelectedIssueEntity(entity);
+                  ref.read(taskProvider.notifier).setSelectedIssueEntity(entity);
                   Navigator.of(context).pop();
                 },
               ),

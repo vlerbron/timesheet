@@ -22,7 +22,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color primaryColor = colorScheme.primary;
     final Color secondaryColor = colorScheme.secondary;
-    TimesheetState state = ref.watch(timesheetProvider.provider);
+    TimesheetState state = ref.watch(timesheetProvider);
     TimesheetEntity timesheetEntity = state.timesheetEntity;
     TimesheetStatus status = state.timesheetStatus;
     DateTime selectedDate = timesheetEntity.selectedDate;

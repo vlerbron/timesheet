@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/state/task_notifier.dart';
-import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_notifier.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/task_provider.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
 import 'package:timesheet/presentation/routes/route.dart';
 import 'package:timesheet/presentation/widgets/timesheet/task_item.dart';
 import 'package:timesheet/provider_container.dart';
@@ -24,7 +24,7 @@ class DayItem extends ConsumerStatefulWidget {
 class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
   @override
   Widget build(BuildContext context) {
-    final TimesheetEntity timesheetEntity = ref.watch(timesheetProvider.provider).timesheetEntity;
+    final TimesheetEntity timesheetEntity = ref.watch(timesheetProvider).timesheetEntity;
     bool isShowTasks = timesheetEntity.isShowTasksMap[widget.dayOfWeek]!;
     DateTime selectedDate = widget.selectedDate;
     final firstDateOfWeek = findFirstDateOfTheWeek(selectedDate);
@@ -33,12 +33,12 @@ class _DayItemState extends ConsumerState<DayItem> with DateTimeMixin {
         .indexOf(widget.dayOfWeek);
     final widgetDate = firstDateOfWeek.add(Duration(days: dayIndex));
     final List<TaskEntity> taskList = ref
-        .read(taskListProvider.provider.notifier)
+        .read(taskListProvider.notifier)
         .getTaskListbyDayOfWeek(widget.dayOfWeek, firstDateOfWeek,
             findLastDateOfTheWeek(selectedDate));
-    final TimesheetNotifier timesheetNotifier =
-        ref.read(timesheetProvider.provider.notifier);
-    final TaskNotifier taskNotifier = ref.read(taskProvider.provider.notifier);
+    final TimesheetProvider timesheetNotifier =
+        ref.read(timesheetProvider.notifier);
+    final TaskProvider taskNotifier = ref.read(taskProvider.notifier);
     final TextTheme textTheme = Theme.of(context).textTheme;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
