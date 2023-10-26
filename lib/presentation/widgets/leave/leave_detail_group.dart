@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
-import 'package:timesheet/models/leave_model.dart';
-import 'package:timesheet/widgets/leave_tabs/leave_detail_item.dart';
+import 'package:timesheet/domain/leave/leave_entity.dart';
+import 'package:timesheet/presentation/widgets/leave/leave_detail_item.dart';
 
 class LeaveDetailGroup extends StatelessWidget {
   const LeaveDetailGroup(
       {super.key, required this.leaveHour, required this.leaves});
   final LeaveHours leaveHour;
-  final List<Leave> leaves;
+  final List<LeaveEntity> leaves;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class LeaveDetailGroup extends StatelessWidget {
                   .titleMedium!
                   .copyWith(color: Theme.of(context).colorScheme.onBackground),
             ),
-            for (Leave leave in leaves) LeaveDetailItem(leave: leave)
+            for (LeaveEntity leave in leaves) LeaveDetailItem(leave: leave)
           ],
         ),
       ),

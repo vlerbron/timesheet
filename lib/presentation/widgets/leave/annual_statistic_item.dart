@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/models/leave_model.dart';
+import 'package:timesheet/domain/leave/leave_entity.dart';
 
 class AnnualStatisticItem extends StatelessWidget {
   const AnnualStatisticItem(

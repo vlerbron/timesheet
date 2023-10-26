@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timesheet/presentation/routes/route.dart';
 import 'package:timesheet/presentation/widgets/common/button/floating_add_button.dart';
-import 'package:timesheet/widgets/leave_tabs/leave_record_item.dart';
-import 'package:timesheet/widgets/leave_tabs/new_leave_request.dart';
-import 'package:timesheet/providers/leaves_provider.dart';
+import 'package:timesheet/provider_container.dart';
+import 'package:timesheet/presentation/widgets/leave/leave_record_item.dart';
 
 class LeaveRecords extends ConsumerWidget {
   const LeaveRecords({super.key});
@@ -22,14 +22,7 @@ class LeaveRecords extends ConsumerWidget {
             );
           }),
       FloatingAddButton(onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (ctx) => const NewLeaveRequest(
-              isNew: true,
-            ),
-          ),
-        );
+        Navigator.of(context).pushNamed(Routes.newLeavePage);
       }),
     ]);
   }

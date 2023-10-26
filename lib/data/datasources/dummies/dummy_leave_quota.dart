@@ -1,7 +1,7 @@
-import 'package:timesheet/models/leave_quota_model.dart';
+import 'package:timesheet/domain/leave/leave_quota_entity.dart';
 
 final dummyLeaveQuota = [
-  LeaveQuota(
+  LeaveQuotaEntity(
     sickDay: 30,
     sickUsed: 1,
     sickRemain: 29,
@@ -28,7 +28,7 @@ final dummyLeaveQuota = [
       )
     ],
   ),
-  LeaveQuota(
+  LeaveQuotaEntity(
       sickDay: 30,
       sickUsed: 1,
       sickRemain: 29,
@@ -48,7 +48,7 @@ final dummyLeaveQuota = [
       periodWork: '',
       additionalLeaveDay: 0,
       renderYear: 2023),
-  LeaveQuota(
+  LeaveQuotaEntity(
     sickDay: 30,
     sickUsed: 1,
     sickRemain: 29,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/models/leave_model.dart';
-import 'package:timesheet/widgets/leave_tabs/new_leave_request.dart';
-import 'package:timesheet/providers/leave_request_provider.dart';
+import 'package:timesheet/domain/leave/leave_entity.dart';
+import 'package:timesheet/presentation/routes/route.dart';
+import 'package:timesheet/provider_container.dart';
 
-import '../../presentation/utils/const.dart';
+import '../../utils/const.dart';
 
 class LeaveRecordItem extends ConsumerWidget {
   const LeaveRecordItem({
@@ -12,7 +12,7 @@ class LeaveRecordItem extends ConsumerWidget {
     required this.leave,
   });
 
-  final Leave leave;
+  final LeaveEntity leave;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,14 +42,7 @@ class LeaveRecordItem extends ConsumerWidget {
                       ref
                           .read(leaveRequestProvider.notifier)
                           .onEditLeave(leave);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (ctx) => const NewLeaveRequest(
-                            isNew: false,
-                          ),
-                        ),
-                      );
+                      Navigator.of(context).pushNamed(Routes.newLeavePage);
                     },
                     child: const Icon(
                       Icons.chevron_right_rounded,

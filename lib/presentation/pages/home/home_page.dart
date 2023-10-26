@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:timesheet/providers/leave_quota_provider.dart';
-import 'package:timesheet/widgets/leave_tabs/annual_statistic_box.dart';
+import 'package:timesheet/provider_container.dart';
+import 'package:timesheet/presentation/widgets/leave/annual_statistic_box.dart';
 import 'package:timesheet/presentation/widgets/common/tabs.dart';
 
 final formatter = DateFormat('EEEE, dd MMMM yyyy');

@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 //ignore: must_be_immutable
-class Employee extends Equatable {
-  Employee(
+class EmployeeEntity extends Equatable {
+  EmployeeEntity(
       {required this.firstName,
       this.lastName,
       required this.nickname,

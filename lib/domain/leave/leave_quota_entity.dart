@@ -1,4 +1,4 @@
-class LeaveQuota {
+class LeaveQuotaEntity {
   double sickDay;
   double sickUsed = 0;
   double sickRemain = 0;
@@ -21,7 +21,7 @@ class LeaveQuota {
   int renderYear;
   List<AdditionalAnnualLeave>? additionalAnnualLeaves;
 
-  LeaveQuota({
+  LeaveQuotaEntity({
     this.sickDay = 0,
     this.sickUsed = 0,
     this.sickRemain = 0,

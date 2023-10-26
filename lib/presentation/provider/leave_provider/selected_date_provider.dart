@@ -11,7 +11,3 @@ class SelectedDateNotifier extends StateNotifier<DateTime> {
     state = selectedDate.subtract(Duration(days: selectedDate.weekday - 1));
   }
 }
-
-final selectedDateProvider =
-    StateNotifierProvider<SelectedDateNotifier, DateTime>(
-        (ref) => SelectedDateNotifier());

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:timesheet/models/employee_model.dart';
+import 'package:timesheet/domain/leave/employee_entity.dart';
 import 'package:timesheet/presentation/utils/const.dart';
 
 enum LeaveTypes { sick, annual, personal, special, withoutPay, holiday }
@@ -101,8 +101,8 @@ String getLeaveStatusDisplayText(LeaveStatus leaveStatus) {
   return leaveStatusDisplayText;
 }
 
-class Leave {
-  Leave(
+class LeaveEntity {
+  LeaveEntity(
       {required this.startDate,
       required this.endDate,
       required this.leaveHour,
@@ -112,7 +112,8 @@ class Leave {
       this.attachment,
       this.taskDetails,
       this.leaveAction,
-      this.leaveStatus}) {
+      this.leaveStatus,
+      this.isNew}) {
     if (leaveType != null) {
       if (leaveHour == LeaveHours.allday) {
         totalLeaveDays = (endDate.difference(startDate).inDays + 1) * 1.0;
@@ -127,6 +128,7 @@ class Leave {
     leaveAction ??= LeaveActions.request;
     leaveStatus ??= LeaveStatus.waitforpreapproval;
     isUrgent ??= false;
+    isNew ??= true;
   }
 
   DateTime startDate;
@@ -136,10 +138,11 @@ class Leave {
   LeaveHours? leaveHour;
   String? taskDetails;
   List<Map<File, Widget>>? attachment;
-  Employee? employee;
+  EmployeeEntity? employee;
   double? totalLeaveDays;
   LeaveActions? leaveAction;
   LeaveStatus? leaveStatus;
+  bool? isNew = true;
 
   bool isCurrentDateAlldayLeave(DateTime currentDate) {
     return (leaveHour == LeaveHours.allday &&
@@ -159,7 +162,7 @@ class Leave {
         startDate.isAtSameMomentAs(currentDate));
   }
 
-  Leave copywith(
+  LeaveEntity copywith(
       {DateTime? startDate,
       DateTime? endDate,
       LeaveTypes? leaveType,
@@ -167,10 +170,11 @@ class Leave {
       LeaveHours? leaveHour,
       String? taskDetails,
       List<Map<File, Widget>>? attachment,
-      Employee? employee,
+      EmployeeEntity? employee,
       LeaveActions? leaveAction,
-      LeaveStatus? leaveStatus}) {
-    return Leave(
+      LeaveStatus? leaveStatus,
+      bool? isNew}) {
+    return LeaveEntity(
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate,
         leaveHour: leaveHour ?? this.leaveHour,
@@ -180,6 +184,7 @@ class Leave {
         attachment: attachment ?? this.attachment,
         taskDetails: taskDetails ?? this.taskDetails,
         leaveAction: leaveAction ?? this.leaveAction,
-        leaveStatus: leaveStatus ?? this.leaveStatus);
+        leaveStatus: leaveStatus ?? this.leaveStatus,
+        isNew: isNew ?? this.isNew);
   }
 }

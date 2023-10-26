@@ -24,17 +24,17 @@ class Tabs extends StatelessWidget {
         fontSize: Theme.of(context).textTheme.labelMedium?.fontSize,
       ),
       onTap: (index) {
-        String routeName = '/home';
+        String routeName = Routes.homePage;
         if (index == 0) {
-          routeName = '/home';
+          routeName = Routes.homePage;
         } else if (index == 1) {
-          routeName = '/timesheet';
+          routeName = Routes.timesheetPage;
         } else if (index == 2) {
-          routeName = '/project';
+          routeName = Routes.projectPage;
         } else if (index == 3) {
-          routeName = '/leave';
+          routeName = Routes.leavePage;
         } else if (index == 4) {
-          routeName = '/account';
+          routeName = Routes.accountPage;
         }
         // Navigator.pushReplacementNamed(context, routeName);
 

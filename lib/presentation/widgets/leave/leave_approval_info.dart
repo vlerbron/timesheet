@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/models/leave_model.dart';
+import 'package:timesheet/domain/leave/leave_entity.dart';
 import 'package:timesheet/presentation/utils/const.dart';
 
 class LeaveApprovalInfo extends StatelessWidget {
@@ -8,7 +8,7 @@ class LeaveApprovalInfo extends StatelessWidget {
     required this.leave,
   });
 
-  final Leave leave;
+  final LeaveEntity leave;
 
   @override
   Widget build(BuildContext context) {

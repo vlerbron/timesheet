@@ -9,9 +9,14 @@ import 'package:timesheet/data/helpers/dio_interceptor_config.dart';
 import 'package:timesheet/data/repositories/login_repository_impl.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
+import 'package:timesheet/domain/leave/leave_entity.dart';
+import 'package:timesheet/domain/leave/leave_quota_entity.dart';
 import 'package:timesheet/domain/repositories/login_repository.dart';
 import 'package:timesheet/domain/use_case/login_use_case/login_use_case_adapter.dart';
 import 'package:timesheet/domain/use_case/login_use_case/remote_use_case/login_use_case.dart';
+
+import 'package:timesheet/presentation/provider/leave_provider/leaves_provider.dart';
+import 'package:timesheet/presentation/provider/leave_provider/selected_date_provider.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/login_provider.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/state/login_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_provider.dart';
@@ -21,6 +26,9 @@ import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_eve
 import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_state.dart';
 import 'package:timesheet/presentation/utils/const.dart';
+
+import 'package:timesheet/presentation/provider/leave_provider/leave_quota_provider.dart';
+import 'package:timesheet/presentation/provider/leave_provider/leave_request_provider.dart';
 
 final locator = GetIt.instance;
 
@@ -34,6 +42,23 @@ init() async {
   locator.registerFactory(() => TaskListProvider());
   locator.registerFactory(() => TimesheetEventProvider());
   locator.registerFactory(() => TaskProvider());
+
+//* Leave
+  locator.registerFactory(() =>
+      StateNotifierProvider<LeaveRequestNotifier, LeaveEntity>(
+          (ref) => locator()));
+  locator.registerFactory(() =>
+      StateNotifierProvider<LeaveNotifier, List<LeaveEntity>>(
+          (ref) => locator()));
+  locator.registerFactory(() =>
+      StateNotifierProvider<SelectedDateNotifier, DateTime>(
+          (ref) => locator()));
+  locator.registerFactory(() =>
+      StateNotifierProvider<LeaveQuotaNotifier, List<LeaveQuotaEntity>>(
+          (ref) => locator()));
+  locator.registerFactory(() =>
+      StateNotifierProvider<CurrentLeaveIndexNotifier, int>(
+          (ref) => locator()));
 
   // ================ Section : Notifier ================
   //* Login
@@ -52,6 +77,13 @@ init() async {
           (ref) => locator()));
   locator.registerLazySingleton(
       () => StateNotifierProvider<TaskProvider, TaskState>((ref) => locator()));
+
+  //* Leave
+  locator.registerFactory(() => LeaveRequestNotifier());
+  locator.registerFactory(() => LeaveNotifier());
+  locator.registerFactory(() => SelectedDateNotifier());
+  locator.registerFactory(() => CurrentLeaveIndexNotifier());
+  locator.registerFactory(() => LeaveQuotaNotifier());
 
   // ================ Section : Use Case ================
   locator.registerLazySingleton(() => LoginUseCase(locator()));

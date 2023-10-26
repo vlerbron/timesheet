@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:timesheet/models/employee_model.dart';
-import 'package:timesheet/models/leave_model.dart';
+import 'package:timesheet/domain/leave/employee_entity.dart';
+import 'package:timesheet/domain/leave/leave_entity.dart';
+
 import 'package:timesheet/presentation/widgets/common/button/circle_grey_closepage_button.dart';
 import 'package:timesheet/presentation/widgets/common/button/save_button.dart';
 import 'package:timesheet/presentation/widgets/common/button/short_cancel_button.dart';
-import 'package:timesheet/widgets/leave_tabs/attachment_input.dart';
-import 'package:timesheet/widgets/leave_tabs/bottomsheet_input.dart';
-import 'package:timesheet/widgets/leave_tabs/checkbox_input.dart';
-import 'package:timesheet/widgets/leave_tabs/date_input.dart';
-import 'package:timesheet/widgets/leave_tabs/detail_input.dart';
-import 'package:timesheet/widgets/leave_tabs/leave_approval_info.dart';
-import 'package:timesheet/providers/leave_request_provider.dart';
-import 'package:timesheet/providers/leaves_provider.dart';
+import 'package:timesheet/provider_container.dart';
+import 'package:timesheet/presentation/widgets/leave/attachment_input.dart';
+import 'package:timesheet/presentation/widgets/leave/bottomsheet_input.dart';
+import 'package:timesheet/presentation/widgets/leave/checkbox_input.dart';
+import 'package:timesheet/presentation/widgets/leave/date_input.dart';
+import 'package:timesheet/presentation/widgets/leave/detail_input.dart';
+import 'package:timesheet/presentation/widgets/leave/leave_approval_info.dart';
 
-class NewLeaveRequest extends ConsumerStatefulWidget {
-  const NewLeaveRequest({super.key, required this.isNew});
-
-  final bool isNew;
+class NewLeaveRequestPage extends ConsumerStatefulWidget {
+  const NewLeaveRequestPage({super.key});
 
   @override
-  ConsumerState<NewLeaveRequest> createState() => _NewLeaveRequestState();
+  ConsumerState<NewLeaveRequestPage> createState() => _NewLeaveRequestState();
 }
 
-class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
+class _NewLeaveRequestState extends ConsumerState<NewLeaveRequestPage> {
   List<Widget> filePreviews = [];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -51,13 +49,13 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.isNew ? 'New request leave' : 'Edit request leave',
+          leave.isNew! ? 'New request leave' : 'Edit request leave',
         ),
         centerTitle: true,
         automaticallyImplyLeading: false,
         actions: [
           Visibility(
-            visible: widget.isNew,
+            visible: leave.isNew!,
             child: const CircleGreyClosePageButton(),
           ),
         ],
@@ -176,7 +174,8 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
             //TODO: Stamp current user as employee
             ref.read(leavesProvider.notifier).leaveAdded(
                   leave.copywith(
-                    employee: Employee(
+                    isNew: false,
+                    employee: EmployeeEntity(
                       firstName: 'Nuntuch',
                       nickname: 'Nan',
                       employeeStartDate: DateTime(2023, 01, 16),
@@ -258,7 +257,7 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
 
   List<ListTile> _getLeaveTypeItems() {
     final List<ListTile> tileList = [];
-    Leave leave = ref.read(leaveRequestProvider);
+    LeaveEntity leave = ref.read(leaveRequestProvider);
     if (leave.leaveType == null) {
       leaveTypeController.text = '';
     } else {
@@ -286,7 +285,7 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequest> {
 
   List<ListTile> _getLeaveHourItems() {
     final List<ListTile> tileList = [];
-    Leave leave = ref.read(leaveRequestProvider);
+    LeaveEntity leave = ref.read(leaveRequestProvider);
     leaveHourController.text =
         getLeaveHourDisplayText(leave.leaveHour ?? LeaveHours.allday);
     for (var leaveHour in LeaveHours.values) {

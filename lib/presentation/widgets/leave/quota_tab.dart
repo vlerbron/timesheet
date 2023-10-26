@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/widgets/leave_tabs/additional_annual_leave.dart';
-import 'package:timesheet/widgets/leave_tabs/annual_leave_info_box.dart';
-import 'package:timesheet/widgets/leave_tabs/annual_statistics.dart';
-import 'package:timesheet/widgets/leave_tabs/leave_quota_header.dart';
-import 'package:timesheet/providers/leave_quota_provider.dart';
+import 'package:timesheet/provider_container.dart';
+import 'package:timesheet/presentation/widgets/leave/additional_annual_leave.dart';
+import 'package:timesheet/presentation/widgets/leave/annual_leave_info_box.dart';
+import 'package:timesheet/presentation/widgets/leave/annual_statistics.dart';
+import 'package:timesheet/presentation/widgets/leave/leave_quota_header.dart';
 
 class QuotaTab extends ConsumerStatefulWidget {
   const QuotaTab({super.key});
@@ -14,6 +14,12 @@ class QuotaTab extends ConsumerStatefulWidget {
 }
 
 class _QuotaTabState extends ConsumerState<QuotaTab> {
+  @override
+  void dispose() {
+    ref.invalidate(leaveIndexProvider);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final leaveQuota = ref.watch(currentLeaveQuotaProvider);

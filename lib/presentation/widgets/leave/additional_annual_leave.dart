@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/models/leave_quota_model.dart';
+import 'package:timesheet/domain/leave/leave_quota_entity.dart';
 
 import 'package:timesheet/presentation/utils/const.dart';
 

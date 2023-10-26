@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:file_previewer/file_previewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:timesheet/models/leave_model.dart';
+import 'package:timesheet/domain/leave/leave_entity.dart';
 
-class LeaveRequestNotifier extends StateNotifier<Leave> {
+class LeaveRequestNotifier extends StateNotifier<LeaveEntity> {
   LeaveRequestNotifier()
-      : super(Leave(
+      : super(LeaveEntity(
           startDate: DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day),
           endDate: DateTime(
@@ -66,7 +66,7 @@ class LeaveRequestNotifier extends StateNotifier<Leave> {
     state = state.copywith(attachment: state.attachment);
   }
 
-  void onEditLeave(Leave leave) {
+  void onEditLeave(LeaveEntity leave) {
     state = leave.copywith(
       attachment: leave.attachment,
       employee: leave.employee,
@@ -81,6 +81,3 @@ class LeaveRequestNotifier extends StateNotifier<Leave> {
     );
   }
 }
-
-final leaveRequestProvider = StateNotifierProvider<LeaveRequestNotifier, Leave>(
-    (ref) => LeaveRequestNotifier());

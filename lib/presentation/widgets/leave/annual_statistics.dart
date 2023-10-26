@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:timesheet/widgets/leave_tabs/annual_statistic_box.dart';
-import 'package:timesheet/providers/leave_quota_provider.dart';
+import 'package:timesheet/provider_container.dart';
+import 'package:timesheet/presentation/widgets/leave/annual_statistic_box.dart';
 
 class AnnualStatistics extends ConsumerStatefulWidget {
   const AnnualStatistics({super.key});
@@ -19,6 +19,7 @@ class _AnnualStatisticsState extends ConsumerState<AnnualStatistics> {
   @override
   Widget build(BuildContext context) {
     final leaveQuotaList = ref.watch(leaveQuotaProvider);
+
     return SizedBox(
       height: 200,
       child: ScrollablePositionedList.builder(

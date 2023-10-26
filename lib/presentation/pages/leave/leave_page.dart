@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/presentation/widgets/common/button/custom_tab_bar.dart';
 import 'package:timesheet/presentation/widgets/common/tabs.dart';
-import 'package:timesheet/widgets/leave_tabs/calendar_tab.dart';
-import 'package:timesheet/widgets/leave_tabs/records_tab.dart';
-import 'package:timesheet/widgets/leave_tabs/quota_tab.dart';
+import 'package:timesheet/presentation/widgets/leave/calendar_tab.dart';
+import 'package:timesheet/presentation/widgets/leave/quota_tab.dart';
+import 'package:timesheet/presentation/widgets/leave/records_tab.dart';
 
 class LeavePage extends StatelessWidget {
   const LeavePage({super.key});

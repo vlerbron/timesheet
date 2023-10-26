@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/models/leave_quota_model.dart';
-import 'package:timesheet/widgets/leave_tabs/annual_info_item.dart';
-import 'package:timesheet/widgets/leave_tabs/annual_leave_info.dart';
-import 'package:timesheet/widgets/leave_tabs/annual_leave_info_banner.dart';
+import 'package:timesheet/domain/leave/leave_quota_entity.dart';
+import 'package:timesheet/presentation/widgets/leave/annual_info_item.dart';
+import 'package:timesheet/presentation/widgets/leave/annual_leave_info.dart';
+import 'package:timesheet/presentation/widgets/leave/annual_leave_info_banner.dart';
 import 'package:timesheet/presentation/utils/const.dart';
 
 class AnnualLeaveInfoBox extends StatelessWidget {
@@ -11,7 +11,7 @@ class AnnualLeaveInfoBox extends StatelessWidget {
     required this.leaveQuota,
   });
 
-  final LeaveQuota leaveQuota;
+  final LeaveQuotaEntity leaveQuota;
 
   @override
   Widget build(BuildContext context) {

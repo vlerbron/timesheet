@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/models/leave_model.dart';
+import 'package:timesheet/domain/leave/leave_entity.dart';
 import 'package:timesheet/presentation/utils/const.dart';
 import 'package:timesheet/presentation/widgets/common/name_avatar.dart';
 
@@ -11,7 +11,7 @@ class LeaveHourRow extends StatelessWidget {
       required this.currentDate});
 
   final LeaveHours leaveHours;
-  final List<Leave> leaves;
+  final List<LeaveEntity> leaves;
   final DateTime currentDate;
 
   @override
@@ -44,9 +44,9 @@ class LeaveHourRow extends StatelessWidget {
     );
   }
 
-  List<Widget> _getDisplayAvatar(List<Leave> leaves) {
+  List<Widget> _getDisplayAvatar(List<LeaveEntity> leaves) {
     List<Widget> displayAvatar = [];
-    for (Leave leave in leaves) {
+    for (LeaveEntity leave in leaves) {
       if (displayAvatar.length == 5) {
         displayAvatar.add(
           NameAvatar(

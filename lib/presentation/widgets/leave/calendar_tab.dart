@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timesheet/presentation/routes/route.dart';
 import 'package:timesheet/presentation/widgets/common/button/floating_add_button.dart';
-import 'package:timesheet/widgets/leave_tabs/new_leave_request.dart';
-import 'package:timesheet/providers/selected_date_provider.dart';
+import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/presentation/widgets/common/custom_calendar_date_picker.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:timesheet/widgets/leave/leave_listview.dart';
+import 'package:timesheet/presentation/widgets/leave/leave_listview.dart';
 
 class CalendarTab extends ConsumerStatefulWidget {
   const CalendarTab({super.key});
@@ -40,12 +40,7 @@ class _CalendarTabState extends ConsumerState<CalendarTab> {
         ],
       ),
       FloatingAddButton(onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (ctx) => const NewLeaveRequest(
-                      isNew: true,
-                    )));
+        Navigator.of(context).pushNamed(Routes.newLeavePage);
       }),
     ]);
   }
