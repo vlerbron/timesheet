@@ -8,4 +8,14 @@ class LeaveNotifier extends StateNotifier<List<LeaveEntity>> {
   void leaveAdded(LeaveEntity leave) {
     state = [...state, leave];
   }
+
+  void leaveSaved(LeaveEntity leave) {
+    final int index = state.indexWhere((l) => l.id == leave.id);
+    if (index < 0) {
+      leaveAdded(leave);
+    } else {
+      state.setRange(index, index + 1, [leave]);
+      state = [...state];
+    }
+  }
 }

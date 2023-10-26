@@ -68,16 +68,17 @@ class LeaveRequestNotifier extends StateNotifier<LeaveEntity> {
 
   void onEditLeave(LeaveEntity leave) {
     state = leave.copywith(
-      attachment: leave.attachment,
-      employee: leave.employee,
-      endDate: leave.endDate,
-      isUrgent: leave.isUrgent,
-      leaveAction: leave.leaveAction,
-      leaveHour: leave.leaveHour,
-      leaveStatus: leave.leaveStatus,
-      leaveType: leave.leaveType,
-      startDate: leave.startDate,
-      taskDetails: leave.taskDetails,
-    );
+        // attachment: leave.attachment,
+        // employee: leave.employee,
+        // endDate: leave.endDate,
+        // isUrgent: leave.isUrgent,
+        // leaveAction: leave.leaveAction,
+        // leaveHour: leave.leaveHour,
+        // leaveStatus: leave.leaveStatus,
+        // leaveType: leave.leaveType,
+        // startDate: leave.startDate,
+        // taskDetails: leave.taskDetails,
+        // id: leave.id
+        );
   }
 }

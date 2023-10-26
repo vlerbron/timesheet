@@ -172,7 +172,7 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequestPage> {
         onSave: () {
           if (_formKey.currentState!.validate()) {
             //TODO: Stamp current user as employee
-            ref.read(leavesProvider.notifier).leaveAdded(
+            ref.read(leavesProvider.notifier).leaveSaved(
                   leave.copywith(
                     isNew: false,
                     employee: EmployeeEntity(

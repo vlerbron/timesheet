@@ -22,7 +22,7 @@ class _QuotaTabState extends ConsumerState<QuotaTab> {
 
   @override
   Widget build(BuildContext context) {
-    final leaveQuota = ref.watch(currentLeaveQuotaProvider);
+    final leaveQuota = ref.watch(currentLeaveQuotaProvider.provider);
 
     return SingleChildScrollView(
       child: Column(

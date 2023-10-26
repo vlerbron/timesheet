@@ -14,9 +14,12 @@ import 'package:timesheet/domain/leave/leave_quota_entity.dart';
 import 'package:timesheet/domain/repositories/login_repository.dart';
 import 'package:timesheet/domain/use_case/login_use_case/login_use_case_adapter.dart';
 import 'package:timesheet/domain/use_case/login_use_case/remote_use_case/login_use_case.dart';
+import 'package:timesheet/presentation/provider/leave_provider/provider/current_leave_quota_provider.dart';
+import 'package:timesheet/presentation/provider/leave_provider/provider/filtered_leave_provider.dart';
 
-import 'package:timesheet/presentation/provider/leave_provider/leaves_provider.dart';
-import 'package:timesheet/presentation/provider/leave_provider/selected_date_provider.dart';
+import 'package:timesheet/presentation/provider/leave_provider/notifier/leaves_notifier.dart';
+import 'package:timesheet/presentation/provider/leave_provider/provider/my_leave_provider.dart';
+import 'package:timesheet/presentation/provider/leave_provider/notifier/selected_date_notifier.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/login_provider.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/state/login_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_provider.dart';
@@ -27,8 +30,8 @@ import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_pro
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_state.dart';
 import 'package:timesheet/presentation/utils/const.dart';
 
-import 'package:timesheet/presentation/provider/leave_provider/leave_quota_provider.dart';
-import 'package:timesheet/presentation/provider/leave_provider/leave_request_provider.dart';
+import 'package:timesheet/presentation/provider/leave_provider/notifier/leave_quota_notifier.dart';
+import 'package:timesheet/presentation/provider/leave_provider/notifier/leave_request_notifier.dart';
 
 final locator = GetIt.instance;
 
@@ -59,6 +62,9 @@ init() async {
   locator.registerFactory(() =>
       StateNotifierProvider<CurrentLeaveIndexNotifier, int>(
           (ref) => locator()));
+  locator.registerFactory(() => FilteredLeaveProvider());
+  locator.registerFactory(() => MyLeaveProvider());
+  locator.registerFactory(() => CurrentLeaveQuotaProvider());
 
   // ================ Section : Notifier ================
   //* Login

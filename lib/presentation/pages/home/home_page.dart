@@ -13,7 +13,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentLeaveQuota = ref.read(currentLeaveQuotaProvider);
+    final currentLeaveQuota = ref.read(currentLeaveQuotaProvider.provider);
     // Eakarath comment
     return Scaffold(
       appBar: AppBar(

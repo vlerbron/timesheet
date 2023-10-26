@@ -14,7 +14,7 @@ class LeaveDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final leaveOfThisWeek = ref.watch(filteredLeaveProvider);
+    final leaveOfThisWeek = ref.watch(filteredLeaveProvider.provider);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 246, 248),
       appBar: AppBar(

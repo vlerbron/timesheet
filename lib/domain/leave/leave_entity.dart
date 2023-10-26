@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:timesheet/domain/leave/employee_entity.dart';
 import 'package:timesheet/presentation/utils/const.dart';
+import 'package:uuid/uuid.dart';
 
 enum LeaveTypes { sick, annual, personal, special, withoutPay, holiday }
 
@@ -103,7 +104,8 @@ String getLeaveStatusDisplayText(LeaveStatus leaveStatus) {
 
 class LeaveEntity {
   LeaveEntity(
-      {required this.startDate,
+      {String? id,
+      required this.startDate,
       required this.endDate,
       required this.leaveHour,
       this.leaveType,
@@ -129,8 +131,10 @@ class LeaveEntity {
     leaveStatus ??= LeaveStatus.waitforpreapproval;
     isUrgent ??= false;
     isNew ??= true;
+    this.id = id ?? const Uuid().v4();
   }
 
+  late String id;
   DateTime startDate;
   DateTime endDate;
   LeaveTypes? leaveType;
@@ -163,7 +167,8 @@ class LeaveEntity {
   }
 
   LeaveEntity copywith(
-      {DateTime? startDate,
+      {String? id,
+      DateTime? startDate,
       DateTime? endDate,
       LeaveTypes? leaveType,
       bool? isUrgent,
@@ -175,6 +180,7 @@ class LeaveEntity {
       LeaveStatus? leaveStatus,
       bool? isNew}) {
     return LeaveEntity(
+        id: id ?? this.id,
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate,
         leaveHour: leaveHour ?? this.leaveHour,

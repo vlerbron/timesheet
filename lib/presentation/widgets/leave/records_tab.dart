@@ -10,7 +10,7 @@ class LeaveRecords extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var leaves = ref.watch(myLeaveProvider).toList();
+    var leaves = ref.watch(myLeaveProvider.provider).toList();
     return Stack(alignment: Alignment.bottomRight, children: [
       ListView.builder(
           itemCount: leaves.length,

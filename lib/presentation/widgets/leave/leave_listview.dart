@@ -39,7 +39,7 @@ class _LeaveListViewState extends ConsumerState<LeaveListView> {
 
   @override
   Widget build(BuildContext context) {
-    final leaveOfThisWeek = ref.watch(filteredLeaveProvider);
+    final leaveOfThisWeek = ref.watch(filteredLeaveProvider.provider);
     final mondayOfTheweek = ref.watch(selectedDateProvider);
     return Expanded(
       child: ScrollablePositionedList.builder(
