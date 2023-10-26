@@ -6,6 +6,7 @@ import 'package:timesheet/data/datasources/dummies/dummy_select_issue.dart';
 import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/presentation/pages/timesheet/select_issue_page.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/state/task_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_list_provider.dart';
 import 'package:timesheet/presentation/utils/date_time_mixin.dart';
 import 'package:timesheet/presentation/widgets/common/button/save_button.dart';
@@ -47,7 +48,7 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
         isUtc: true);
     _taskDuration =
         Duration(hours: int.parse(_hour), minutes: int.parse(_minute));
-    TaskEntity taskEntity = ref.watch(taskProvider).taskEntity!;
+    TaskEntity taskEntity = ref.watch(taskProvider).taskEntity!.copyWith();
     taskEntity.setTask(
         dayOfWeek: DateFormat('EEEE').format(_taskDate!),
         issue: _issueEntity!,
@@ -56,7 +57,9 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
         duration: _taskDuration);
     final TaskListProvider taskListNotifier =
         ref.read(taskListProvider.notifier);
-    taskListNotifier.addTask(taskEntity);
+    (ref.watch(taskProvider).taskStatus == TaskStatus.add)
+        ? taskListNotifier.addTask(taskEntity)
+        : taskListNotifier.editTask(taskEntity);
     final EventEmitter events = ref.watch(timesheetEventProvider);
     events.emit(TimesheetRebuildEvent.kTaskListRebuild, taskEntity.taskDate);
     events.emit(TimesheetRebuildEvent.kSubmitButtonRebuild,
@@ -67,8 +70,10 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
   void _issue() {
     Navigator.of(context).push(
       MaterialPageRoute(
-          builder: (context) =>
-              SelectIssuePage(selectIssueModels: dummySelectIssue)),
+          builder: (context) => SelectIssuePage(
+                selectIssueModels: dummySelectIssue,
+                fnCallBack: setStateCallBack,
+              )),
     );
   }
 
@@ -81,14 +86,14 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
       firstDate: firstDate,
       lastDate: now,
     );
-    setState(() {
-      _selectedDate = pickedDate;
-    });
+    ref.read(taskProvider.notifier).setTaskDate(pickedDate!);
+    setStateCallBack();
   }
 
-  @override
-  void initState() {
-    super.initState();
+  void setStateCallBack() {
+    setState(() {
+      didChangeDependencies();
+    });
   }
 
   @override

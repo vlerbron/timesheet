@@ -7,9 +7,10 @@ import 'package:timesheet/presentation/widgets/timesheet/issue_item.dart';
 import 'package:timesheet/provider_container.dart';
 
 class SelectIssuePage extends ConsumerStatefulWidget {
-  const SelectIssuePage({super.key, required this.selectIssueModels});
+  const SelectIssuePage({super.key, required this.selectIssueModels, required this.fnCallBack});
 
   final List<SelectIssueEntity> selectIssueModels;
+  final void Function() fnCallBack;
 
   @override
   ConsumerState<SelectIssuePage> createState() => _SelectIssuePageState();
@@ -57,6 +58,7 @@ class _SelectIssuePageState extends ConsumerState<SelectIssuePage> {
                 onTap: (SelectIssueEntity entity) {
                   ref.read(taskProvider.notifier).setSelectedIssueEntity(entity);
                   Navigator.of(context).pop();
+                  widget.fnCallBack();
                 },
               ),
             ),

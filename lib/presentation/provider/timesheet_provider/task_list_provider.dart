@@ -26,6 +26,11 @@ class TaskListProvider extends StateNotifier<List<TaskEntity>> {
     state.add(task);
   }
 
+  void editTask(TaskEntity task){
+    TaskEntity taskEntity = state.firstWhere((element) => element == task);
+    taskEntity.setTaskByObj(task: task);
+  }
+
   void deleteTask(TaskEntity task) {
     state.remove(task);
   }

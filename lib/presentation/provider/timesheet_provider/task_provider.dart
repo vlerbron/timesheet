@@ -48,4 +48,8 @@ class TaskProvider extends StateNotifier<TaskState> {
   void setSelectedIssueEntity(SelectIssueEntity issue) {
     state.taskEntity!.issue = issue;
   }
+
+  void setTaskDate(DateTime dateTime){
+    state.taskEntity!.taskDate = dateTime;
+  }
 }
