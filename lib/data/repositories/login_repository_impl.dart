@@ -34,7 +34,13 @@ class LoginRepositoryImpl extends LoginRepository {
         return Left(AppException(message: 'Service failure'));
       }
     } on DioException catch (e) {
-      return Left(AppException(message: e.response?.data?['Description'] ?? 'Server Exception'));
+      String message = '';
+      try {
+        message = e.response?.data?['Description'] ?? 'Server Exception';
+      } catch (error) {
+        message = e.response?.statusMessage ?? e.message ?? 'Server Exception';
+      }
+      return Left(AppException(message: message));
     }
   }
 

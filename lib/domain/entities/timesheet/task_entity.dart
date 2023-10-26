@@ -36,10 +36,28 @@ class TaskEntity extends Equatable {
     required DateTime taskDate,
     required Duration duration,
   }) {
-    dayOfWeek = dayOfWeek;
-    issue = issue;
-    taskDetail = taskDetail;
-    taskDate = taskDate;
-    duration = duration;
+    this.dayOfWeek = dayOfWeek;
+    this.issue = issue;
+    this.taskDetail = taskDetail;
+    this.taskDate = taskDate;
+    this.duration = duration;
+  }
+
+  void setTaskByObj({required TaskEntity task}) {
+    dayOfWeek = task.dayOfWeek;
+    issue = task.issue;
+    taskDetail = task.taskDetail;
+    taskDate = task.taskDate;
+    duration = task.duration;
+  }
+
+  TaskEntity copyWith() {
+    return TaskEntity(
+        id: id,
+        dayOfWeek: dayOfWeek,
+        issue: issue,
+        taskDetail: taskDetail,
+        taskDate: taskDate,
+        duration: duration);
   }
 }

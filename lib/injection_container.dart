@@ -62,20 +62,20 @@ init() async {
 
   // ================ Section : Notifier ================
   //* Login
-  locator.registerLazySingleton(() =>
+  locator.registerFactory(() =>
       StateNotifierProvider<LoginProvider, LoginState>((ref) => locator()));
 
   //* Timesheet
-  locator.registerLazySingleton(() =>
+  locator.registerFactory(() =>
       StateNotifierProvider<TimesheetProvider, TimesheetState>(
           (ref) => locator()));
-  locator.registerLazySingleton(() =>
+  locator.registerFactory(() =>
       StateNotifierProvider<TaskListProvider, List<TaskEntity>>(
           (ref) => locator()));
-  locator.registerLazySingleton(() =>
+  locator.registerFactory(() =>
       StateNotifierProvider<TimesheetEventProvider, EventEmitter>(
           (ref) => locator()));
-  locator.registerLazySingleton(
+  locator.registerFactory(
       () => StateNotifierProvider<TaskProvider, TaskState>((ref) => locator()));
 
   //* Leave
