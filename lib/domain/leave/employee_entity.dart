@@ -6,13 +6,15 @@ class EmployeeEntity extends Equatable {
       {required this.firstName,
       this.lastName,
       required this.nickname,
-      required this.employeeStartDate})
+      required this.employeeStartDate,
+      required this.position})
       : actualWorkPeriod = DateTime.now().difference(employeeStartDate);
   String firstName;
   String? lastName;
   String nickname;
   DateTime employeeStartDate;
   Duration actualWorkPeriod;
+  String position;
 
   String get avatarText {
     String displayText = firstName[0].toUpperCase();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timesheet/pages/account_page.dart';
+import 'package:timesheet/presentation/pages/account/account_page.dart';
 import 'package:timesheet/presentation/pages/home/home_page.dart';
 import 'package:timesheet/presentation/pages/leave/leave_page.dart';
 import 'package:timesheet/presentation/pages/leave/new_leave_request_page.dart';

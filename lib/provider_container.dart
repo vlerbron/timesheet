@@ -1,9 +1,11 @@
 import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
+import 'package:timesheet/domain/leave/employee_entity.dart';
 import 'package:timesheet/domain/leave/leave_entity.dart';
 import 'package:timesheet/domain/leave/leave_quota_entity.dart';
 import 'package:timesheet/injection_container.dart';
+import 'package:timesheet/presentation/provider/account_provider/my_account_notifier.dart';
 import 'package:timesheet/presentation/provider/leave_provider/provider/current_leave_quota_provider.dart';
 import 'package:timesheet/presentation/provider/leave_provider/provider/filtered_leave_provider.dart';
 import 'package:timesheet/presentation/provider/leave_provider/notifier/leaves_notifier.dart';
@@ -33,7 +35,6 @@ var timesheetEventProvider =
 var taskProvider = locator<StateNotifierProvider<TaskProvider, TaskState>>();
 
 //*leave
-
 final leaveRequestProvider =
     locator<StateNotifierProvider<LeaveRequestNotifier, LeaveEntity>>();
 
@@ -53,3 +54,7 @@ final currentLeaveQuotaProvider = locator<CurrentLeaveQuotaProvider>();
 final myLeaveProvider = locator<MyLeaveProvider>();
 
 final filteredLeaveProvider = locator<FilteredLeaveProvider>();
+
+//*account
+final myAccountProvider =
+    locator<StateNotifierProvider<MyAccountNotifier, EmployeeEntity>>();

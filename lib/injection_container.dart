@@ -9,11 +9,13 @@ import 'package:timesheet/data/helpers/dio_interceptor_config.dart';
 import 'package:timesheet/data/repositories/login_repository_impl.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
+import 'package:timesheet/domain/leave/employee_entity.dart';
 import 'package:timesheet/domain/leave/leave_entity.dart';
 import 'package:timesheet/domain/leave/leave_quota_entity.dart';
 import 'package:timesheet/domain/repositories/login_repository.dart';
 import 'package:timesheet/domain/use_case/login_use_case/login_use_case_adapter.dart';
 import 'package:timesheet/domain/use_case/login_use_case/remote_use_case/login_use_case.dart';
+import 'package:timesheet/presentation/provider/account_provider/my_account_notifier.dart';
 import 'package:timesheet/presentation/provider/leave_provider/provider/current_leave_quota_provider.dart';
 import 'package:timesheet/presentation/provider/leave_provider/provider/filtered_leave_provider.dart';
 
@@ -66,6 +68,11 @@ init() async {
   locator.registerFactory(() => MyLeaveProvider());
   locator.registerFactory(() => CurrentLeaveQuotaProvider());
 
+  //* Account
+  locator.registerFactory(() =>
+      StateNotifierProvider<MyAccountNotifier, EmployeeEntity>(
+          (ref) => locator()));
+
   // ================ Section : Notifier ================
   //* Login
   locator.registerFactory(() =>
@@ -90,6 +97,9 @@ init() async {
   locator.registerFactory(() => SelectedDateNotifier());
   locator.registerFactory(() => CurrentLeaveIndexNotifier());
   locator.registerFactory(() => LeaveQuotaNotifier());
+
+  //* Account
+  locator.registerFactory(() => MyAccountNotifier());
 
   // ================ Section : Use Case ================
   locator.registerLazySingleton(() => LoginUseCase(locator()));

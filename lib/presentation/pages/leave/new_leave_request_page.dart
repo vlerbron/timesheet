@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:timesheet/domain/leave/employee_entity.dart';
 import 'package:timesheet/domain/leave/leave_entity.dart';
 
 import 'package:timesheet/presentation/widgets/common/button/circle_grey_closepage_button.dart';
@@ -46,6 +45,7 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequestPage> {
   @override
   Widget build(BuildContext context) {
     final leave = ref.watch(leaveRequestProvider);
+    final myAccount = ref.watch(myAccountProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -171,15 +171,10 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequestPage> {
         },
         onSave: () {
           if (_formKey.currentState!.validate()) {
-            //TODO: Stamp current user as employee
             ref.read(leavesProvider.notifier).leaveSaved(
                   leave.copywith(
                     isNew: false,
-                    employee: EmployeeEntity(
-                      firstName: 'Nuntuch',
-                      nickname: 'Nan',
-                      employeeStartDate: DateTime(2023, 01, 16),
-                    ),
+                    employee: myAccount,
                   ),
                 );
 
