@@ -9,6 +9,7 @@ import 'package:timesheet/presentation/pages/timesheet/select_issue_page.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_list_provider.dart';
 import 'package:timesheet/presentation/utils/date_time_mixin.dart';
+import 'package:timesheet/presentation/utils/form_validator.dart';
 import 'package:timesheet/presentation/widgets/common/button/save_button.dart';
 import 'package:timesheet/presentation/widgets/common/button/short_cancel_button.dart';
 import 'package:timesheet/provider_container.dart';
@@ -29,8 +30,8 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
   SelectIssueEntity? _issueEntity;
   String _taskDetail = '';
   DateTime? _taskDate;
-  String _hour = '0';
-  String _minute = '00';
+  String _hour = '';
+  String _minute = '';
   late Duration _taskDuration;
 
   //int _selectHours = 1;
@@ -38,6 +39,7 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
   DateTime? _selectedDate;
 
   void _save() {
+    if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
     _taskDate = _selectedDate?.copyWith(
         hour: 0,
@@ -86,8 +88,10 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
       firstDate: firstDate,
       lastDate: now,
     );
-    ref.read(taskProvider.notifier).setTaskDate(pickedDate!);
-    setStateCallBack();
+    if (pickedDate != null) {
+      ref.read(taskProvider.notifier).setTaskDate(pickedDate);
+      setStateCallBack();
+    }
   }
 
   void setStateCallBack() {
@@ -103,7 +107,9 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
     _issueEntity = _taskEntity!.issue;
     _selectedDate = _taskEntity!.taskDate;
     _hour = _taskEntity!.duration.inHours.toString();
+    _hour = (int.parse(_hour) == 0) ? '' : _hour;
     _minute = twoDigits(_taskEntity!.duration.inMinutes.remainder(60));
+    _minute = (int.parse(_minute) == 0) ? '' : _minute;
   }
 
   @override
@@ -141,7 +147,20 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(_issueEntity!.projectCode),
+                          Expanded(
+                            child: TextFormField(
+                              initialValue: _issueEntity!.projectCode,
+                              validator: (value) =>
+                                  FormValidator.validatedEmpty(
+                                      value: value,
+                                      validatedText:
+                                          'Please select project issue.'),
+                              readOnly: true,
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none),
+                              textAlign: TextAlign.right,
+                            ),
+                          ),
                           IconButton(
                             onPressed: _issue,
                             icon: const Icon(
@@ -196,10 +215,20 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            _selectedDate == null
-                                ? ''
-                                : formatter.format(_selectedDate!),
+                          Expanded(
+                            child: TextFormField(
+                              initialValue: _selectedDate == null
+                                  ? ''
+                                  : formatter.format(_selectedDate!),
+                              readOnly: true,
+                              validator: (value) =>
+                                  FormValidator.validatedEmpty(
+                                      value: value,
+                                      validatedText: 'Please select date.'),
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none),
+                              textAlign: TextAlign.right,
+                            ),
                           ),
                           IconButton(
                             onPressed: _presentDatePicker,
@@ -243,8 +272,13 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                                   color: Colors.grey,
                                 ),
                               ),
+                              errorStyle: const TextStyle(
+                                fontSize: 10.0,
+                              ),
                             ),
                             onSaved: (value) => _hour = value ??= '00',
+                            validator: (value) => FormValidator.validatedEmpty(
+                                value: value, validatedText: 'Empty!'),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -268,8 +302,13 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                                   color: Colors.grey,
                                 ),
                               ),
+                              errorStyle: const TextStyle(
+                                fontSize: 10.0,
+                              ),
                             ),
                             onSaved: (value) => _minute = value ??= '00',
+                            validator: (value) => FormValidator.validatedEmpty(
+                                value: value, validatedText: 'Empty!'),
                           ),
                         ),
                       ],
