@@ -49,7 +49,24 @@ class TaskProvider extends StateNotifier<TaskState> {
     state.taskEntity!.issue = issue;
   }
 
-  void setTaskDate(DateTime dateTime){
+  void setTaskDate(DateTime dateTime) {
     state.taskEntity!.taskDate = dateTime;
+  }
+
+  void setTaskDetail(String taskDetail) {
+    state.taskEntity!.taskDetail = taskDetail;
+  }
+
+  void setTaskDuration(String hour, String minute) {
+    late Duration taskDuration;
+    try {
+    taskDuration = Duration(
+        hours: int.parse(hour == '' ? '0' : hour),
+        minutes: int.parse(minute == '' ? '0' : minute));
+      
+    } catch (e) {
+      taskDuration = const Duration();
+    }
+    state.taskEntity!.duration = taskDuration;
   }
 }

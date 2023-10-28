@@ -25,7 +25,7 @@ List<TaskEntity> dummyTasks = [
     taskDetail: 'Basketball',
     duration: const Duration(hours: 2, minutes: 30),
     issue: dummySelectIssue[0],
-    taskDate: DateTime.utc(2023, 10, 9),
+    taskDate: DateTime.utc(2023, 10, 10),
   ),
   TaskEntity(
     id: const Uuid().v4(),
@@ -33,7 +33,7 @@ List<TaskEntity> dummyTasks = [
     taskDetail: 'Reading',
     duration: const Duration(hours: 8, minutes: 0),
     issue: dummySelectIssue[5],
-    taskDate: DateTime.utc(2023, 10, 9),
+    taskDate: DateTime.utc(2023, 10, 11),
   ),
   TaskEntity(
     id: const Uuid().v4(),

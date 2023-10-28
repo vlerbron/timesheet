@@ -8,6 +8,7 @@ import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/presentation/pages/timesheet/select_issue_page.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_list_provider.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/task_provider.dart';
 import 'package:timesheet/presentation/utils/date_time_mixin.dart';
 import 'package:timesheet/presentation/utils/form_validator.dart';
 import 'package:timesheet/presentation/widgets/common/button/save_button.dart';
@@ -25,6 +26,12 @@ class NewEditTaskPage extends ConsumerStatefulWidget {
 class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
     with DateTimeMixin {
   final _formKey = GlobalKey<FormState>();
+
+  final _issueController = TextEditingController();
+  final _dateController = TextEditingController();
+  final _hourController = TextEditingController();
+  final _minuteController = TextEditingController();
+  final _taskDetailController = TextEditingController();
 
   TaskEntity? _taskEntity;
   SelectIssueEntity? _issueEntity;
@@ -48,8 +55,9 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
         millisecond: 0,
         microsecond: 0,
         isUtc: true);
-    _taskDuration =
-        Duration(hours: int.parse(_hour), minutes: int.parse(_minute));
+    _taskDuration = Duration(
+        hours: int.parse(_hour == '' ? '0' : _hour),
+        minutes: int.parse(_minute == '' ? '0' : _minute));
     TaskEntity taskEntity = ref.watch(taskProvider).taskEntity!.copyWith();
     taskEntity.setTask(
         dayOfWeek: DateFormat('EEEE').format(_taskDate!),
@@ -79,14 +87,14 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
     );
   }
 
-  void _presentDatePicker() async {
+  void _presentDatePicker(
+      {required DateTime lastDate, required DateTime selectDate}) async {
     final now = DateTime.now();
-    final firstDate = DateTime(now.year - 1, now.month, now.day);
     final pickedDate = await showDatePicker(
       context: context,
-      initialDate: now,
-      firstDate: firstDate,
-      lastDate: now,
+      initialDate: selectDate,
+      firstDate: DateTime(now.year - 1, now.month, now.day),
+      lastDate: lastDate,
     );
     if (pickedDate != null) {
       ref.read(taskProvider.notifier).setTaskDate(pickedDate);
@@ -96,6 +104,12 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
 
   void setStateCallBack() {
     setState(() {
+      _formKey.currentState!.save();
+      final TaskProvider taskNotifier = ref.read(taskProvider.notifier);
+      taskNotifier.setTaskDetail(_taskDetail);
+      taskNotifier.setTaskDuration(_hour, _minute);
+
+      _formKey.currentState?.reset();
       didChangeDependencies();
     });
   }
@@ -105,11 +119,19 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
     super.didChangeDependencies();
     _taskEntity = ref.watch(taskProvider).taskEntity!;
     _issueEntity = _taskEntity!.issue;
+    _issueController.text = _issueEntity!.projectCode;
     _selectedDate = _taskEntity!.taskDate;
+    _dateController.text =
+        _selectedDate == null ? '' : formatter.format(_selectedDate!);
     _hour = _taskEntity!.duration.inHours.toString();
-    _hour = (int.parse(_hour) == 0) ? '' : _hour;
     _minute = twoDigits(_taskEntity!.duration.inMinutes.remainder(60));
-    _minute = (int.parse(_minute) == 0) ? '' : _minute;
+    if (FormValidator.isTimeEqualZero(hour: _hour, minute: _minute)) {
+      _hour = '';
+      _minute = '';
+    }
+    _hourController.text = _hour;
+    _minuteController.text = _minute;
+    _taskDetailController.text = _taskEntity!.taskDetail;
   }
 
   @override
@@ -149,7 +171,7 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                         children: [
                           Expanded(
                             child: TextFormField(
-                              initialValue: _issueEntity!.projectCode,
+                              controller: _issueController,
                               validator: (value) =>
                                   FormValidator.validatedEmpty(
                                       value: value,
@@ -186,10 +208,10 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                 Padding(
                   padding: const EdgeInsets.all(3.0),
                   child: TextFormField(
+                    controller: _taskDetailController,
                     minLines: 3,
                     maxLines: 3,
                     keyboardType: TextInputType.multiline,
-                    initialValue: _taskEntity!.taskDetail,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -217,9 +239,7 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                         children: [
                           Expanded(
                             child: TextFormField(
-                              initialValue: _selectedDate == null
-                                  ? ''
-                                  : formatter.format(_selectedDate!),
+                              controller: _dateController,
                               readOnly: true,
                               validator: (value) =>
                                   FormValidator.validatedEmpty(
@@ -231,7 +251,9 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                             ),
                           ),
                           IconButton(
-                            onPressed: _presentDatePicker,
+                            onPressed: () => _presentDatePicker(
+                                lastDate: findLastDateOfTheWeek(DateTime.now()),
+                                selectDate: _taskEntity!.taskDate),
                             icon: const Icon(
                               Icons.calendar_month,
                             ),
@@ -258,9 +280,9 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                           width: 60,
                           height: 50,
                           child: TextFormField(
+                            controller: _hourController,
                             autofocus: false,
                             keyboardType: TextInputType.number,
-                            initialValue: _hour,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor:
@@ -277,8 +299,11 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                               ),
                             ),
                             onSaved: (value) => _hour = value ??= '00',
-                            validator: (value) => FormValidator.validatedEmpty(
-                                value: value, validatedText: 'Empty!'),
+                            validator: (value) =>
+                                FormValidator.validatedTimeEmpty(
+                                    hour: value,
+                                    minute: _minuteController.text,
+                                    validatedText: 'Empty!'),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -288,9 +313,9 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                           width: 60,
                           height: 50,
                           child: TextFormField(
+                            controller: _minuteController,
                             autofocus: false,
                             keyboardType: TextInputType.number,
-                            initialValue: _minute,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor:
@@ -307,8 +332,11 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
                               ),
                             ),
                             onSaved: (value) => _minute = value ??= '00',
-                            validator: (value) => FormValidator.validatedEmpty(
-                                value: value, validatedText: 'Empty!'),
+                            validator: (value) =>
+                                FormValidator.validatedTimeEmpty(
+                                    hour: _hourController.text,
+                                    minute: value,
+                                    validatedText: 'Empty!'),
                           ),
                         ),
                       ],
