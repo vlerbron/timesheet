@@ -26,8 +26,12 @@ class TaskItem extends ConsumerWidget with DateTimeMixin {
       taskListNotifier.deleteTask(taskEntity);
       final EventEmitter events = ref.watch(timesheetEventProvider);
       events.emit(TimesheetRebuildEvent.kTaskListRebuild, taskEntity.taskDate);
-      events.emit(TimesheetRebuildEvent.kSubmitButtonRebuild,
-          ref.watch(timesheetProvider).timesheetStatus);
+      events.emit(
+          TimesheetRebuildEvent.kSubmitButtonRebuild,
+          ref
+              .watch(timesheetProvider)
+              .timesheetStateMap[findFirstDateOfTheWeek(taskEntity.taskDate)]!
+              .status);
       Navigator.of(context).pop();
     });
     return Column(

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_state_entity.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_state.dart';
+import 'package:timesheet/presentation/utils/const.dart';
+import 'package:timesheet/presentation/utils/date_time_mixin.dart';
 import 'package:timesheet/presentation/widgets/timesheet/date_picker_timesheet.dart';
+import 'package:timesheet/presentation/widgets/timesheet/status_notification.dart';
 import 'package:timesheet/presentation/widgets/timesheet/tasks_of_days.dart';
 import 'package:timesheet/presentation/widgets/timesheet/visibility_submit_button.dart';
 import 'package:timesheet/provider_container.dart';
@@ -15,7 +19,8 @@ class TimesheetPage extends ConsumerStatefulWidget {
   ConsumerState<TimesheetPage> createState() => _TimesheetPageState();
 }
 
-class _TimesheetPageState extends ConsumerState<TimesheetPage> {
+class _TimesheetPageState extends ConsumerState<TimesheetPage>
+    with DateTimeMixin {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -24,7 +29,16 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
     final Color secondaryColor = colorScheme.secondary;
     TimesheetState state = ref.watch(timesheetProvider);
     TimesheetEntity timesheetEntity = state.timesheetEntity;
-    TimesheetStatus status = state.timesheetStatus;
+    Map<DateTime, TimesheetStateEntity> timesheetStateMap =
+        state.timesheetStateMap;
+    DateTime firstDay = findFirstDateOfTheWeek(timesheetEntity.selectedDate);
+    TimesheetStateEntity? stateEntity = timesheetStateMap[firstDay];
+    if (stateEntity == null) {
+      TimesheetStateEntity timesheetStateEntity = TimesheetStateEntity(
+          status: TimesheetStatus.active, txDateTime: DateTime.now());
+      timesheetStateMap.addAll({firstDay: timesheetStateEntity});
+      stateEntity = timesheetStateEntity;
+    }
     DateTime selectedDate = timesheetEntity.selectedDate;
 
     return Scaffold(
@@ -41,7 +55,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
               });
             },
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: kWidgetLineSpace),
           Container(
             color: secondaryColor,
             height: 50,
@@ -49,7 +63,8 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    padding: const EdgeInsets.only(
+                        left: kWidgetPadding, right: kWidgetPadding),
                     child: Row(
                       children: [
                         Text(
@@ -69,8 +84,17 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage> {
               ],
             ),
           ),
+          if (stateEntity.status != TimesheetStatus.active)
+            StatusNotification(selectedDate),
           TasksOfDays(selectedDate),
-          VisibilitySubmitButton(status),
+          VisibilitySubmitButton(
+            selectedDate,
+            onSubmitChanged: (dateTime) {
+              setState(() {
+                selectedDate = dateTime;
+              });
+            },
+          ),
         ],
       ),
       bottomNavigationBar: const Tabs(selectedIndex: 1),

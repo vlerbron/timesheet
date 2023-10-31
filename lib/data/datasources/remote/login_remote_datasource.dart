@@ -1,7 +1,6 @@
 // Package imports:
 import 'package:dio/dio.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
-import 'package:timesheet/data/exception.dart';
 import 'package:timesheet/data/model/login/login_model.dart';
 import 'package:timesheet/data/model/login/user_profile_model.dart';
 import 'package:timesheet/presentation/utils/const.dart';
@@ -47,7 +46,7 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
 
   @override
   Future<UserProfileModel> getUserProfile() async {
-    final response = await dio.post(_baseUrl + HostPath.login, data: {});
+    /* final response = await dio.post(_baseUrl + HostPath.login, data: {});
 
     if (response.statusCode == 200) {
       final res =
@@ -56,6 +55,15 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
       return result;
     } else {
       throw AppException(message: 'Server Error!');
-    }
+    } */
+    //TODO: delete below later.
+    return const UserProfileModel(
+        responseCode: '000',
+        description: 'success',
+        username: 'test',
+        password: 'abc',
+        email: 'test@test.com',
+        firstName: 'Pornnipa',
+        lastName: 'Poolklay');
   }
 }

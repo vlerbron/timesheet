@@ -36,7 +36,7 @@ class _TasksOfDays extends ConsumerState<TasksOfDays> {
 
     return Expanded(
       child: ListView.builder(
-        padding: const EdgeInsets.only(top: kWidgetPadding),
+        padding: const EdgeInsets.only(top: kWidgetLineSpace),
         itemCount: dayList.length,
         itemBuilder: (ctx, index) => DayItem(
           dayList[index],

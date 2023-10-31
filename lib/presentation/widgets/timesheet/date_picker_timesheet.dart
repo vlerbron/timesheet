@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_state_entity.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/timesheet_provider.dart';
 import 'package:timesheet/presentation/widgets/timesheet/custom_date_picker_popup.dart';
 import 'package:timesheet/provider_container.dart';
@@ -32,13 +33,27 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet>
     });
   }
 
+  setStateMap(Map<DateTime, TimesheetStateEntity> map) {
+    DateTime firstDay = findFirstDateOfTheWeek(selectedDate);
+    TimesheetStateEntity? stateEntity = map[firstDay];
+    if (stateEntity == null) {
+      map.addAll({
+        firstDay: TimesheetStateEntity(
+            status: TimesheetStatus.active, txDateTime: DateTime.now())
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color primaryColor = colorScheme.primary;
     final Color secondaryColor = colorScheme.secondary;
-    final TimesheetEntity timesheetEntity = ref.watch(timesheetProvider).timesheetEntity;
+    final TimesheetEntity timesheetEntity =
+        ref.watch(timesheetProvider).timesheetEntity;
+    final Map<DateTime, TimesheetStateEntity> timesheetStateMap =
+        ref.watch(timesheetProvider).timesheetStateMap;
     final TimesheetProvider timesheetNotifier =
         ref.read(timesheetProvider.notifier);
     selectedDate = timesheetEntity.selectedDate;
@@ -54,6 +69,7 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet>
             icon: const Icon(Icons.chevron_left),
             color: primaryColor,
             onPressed: () {
+              setStateMap(timesheetStateMap);
               timesheetNotifier.setSelectedDate(is7Days: true);
               setSelectedDate(timesheetEntity.selectedDate);
             },
@@ -90,6 +106,7 @@ class _DatePickerTimesheetState extends ConsumerState<DatePickerTimesheet>
             icon: const Icon(Icons.chevron_right),
             color: primaryColor,
             onPressed: () {
+              setStateMap(timesheetStateMap);
               DateTime nextWeekDay =
                   timesheetEntity.selectedDate.add(const Duration(days: 7));
               if (nextWeekDay

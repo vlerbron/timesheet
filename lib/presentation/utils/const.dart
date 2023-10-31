@@ -24,6 +24,7 @@ const kRequiredTextStyle = TextStyle(
 const double kWidgetCircularRadius = 8;
 
 const double kWidgetPadding = 16;
+const double kWidgetLineSpace = 10;
 
 ////// Date formatter
 /////

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:timesheet/data/datasources/dummies/dummy_select_issue.dart';
 import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_state_entity.dart';
 import 'package:timesheet/presentation/pages/timesheet/select_issue_page.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_list_provider.dart';
@@ -16,7 +17,7 @@ import 'package:timesheet/presentation/widgets/common/button/short_cancel_button
 import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/presentation/utils/const.dart';
 
-class NewEditTaskPage extends ConsumerStatefulWidget {
+class NewEditTaskPage extends ConsumerStatefulWidget with DateTimeMixin {
   const NewEditTaskPage({super.key});
 
   @override
@@ -70,10 +71,16 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
     (ref.watch(taskProvider).taskStatus == TaskStatus.add)
         ? taskListNotifier.addTask(taskEntity)
         : taskListNotifier.editTask(taskEntity);
+    
     final EventEmitter events = ref.watch(timesheetEventProvider);
     events.emit(TimesheetRebuildEvent.kTaskListRebuild, taskEntity.taskDate);
-    events.emit(TimesheetRebuildEvent.kSubmitButtonRebuild,
-        ref.watch(timesheetProvider).timesheetStatus);
+
+    DateTime firstDayOfWeek = findFirstDateOfTheWeek(taskEntity.taskDate);
+    Map<DateTime, TimesheetStateEntity> timesheetStateMap =
+        ref.watch(timesheetProvider).timesheetStateMap;
+    TimesheetStateEntity stateEntity = timesheetStateMap[firstDayOfWeek]!;
+    events.emit(TimesheetRebuildEvent.kSubmitButtonRebuild, stateEntity.status);
+
     Navigator.of(context).pop();
   }
 

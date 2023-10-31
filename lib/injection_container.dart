@@ -9,6 +9,7 @@ import 'package:timesheet/data/helpers/dio_interceptor_config.dart';
 import 'package:timesheet/data/repositories/login_repository_impl.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
+import 'package:timesheet/domain/entities/timesheet/timesheet_state_entity.dart';
 import 'package:timesheet/domain/leave/employee_entity.dart';
 import 'package:timesheet/domain/leave/leave_entity.dart';
 import 'package:timesheet/domain/leave/leave_quota_entity.dart';
@@ -43,7 +44,8 @@ init() async {
   locator.registerFactory(() => LoginProvider(locator()));
 
   //* Timesheet
-  locator.registerFactory(() => TimesheetProvider(locator()));
+  locator.registerFactory(
+      () => TimesheetProvider(locator(), locator(), locator()));
   locator.registerFactory(() => TaskListProvider());
   locator.registerFactory(() => TimesheetEventProvider());
   locator.registerFactory(() => TaskProvider());
@@ -150,4 +152,5 @@ init() async {
             isUtc: true),
         timeRemaining: const Duration(),
       ));
+  locator.registerLazySingleton(() => <DateTime, TimesheetStateEntity>{});
 }

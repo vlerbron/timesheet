@@ -7,11 +7,11 @@ class TaskListProvider extends StateNotifier<List<TaskEntity>> {
 
   List<TaskEntity> getTaskListbyDayOfWeek(
       String dayOfWeek, DateTime startDate, DateTime endDate) {
-    List<TaskEntity> tasks = _getTaskListbyDateDuration(startDate, endDate);
+    List<TaskEntity> tasks = getTaskListbyDateDuration(startDate, endDate);
     return tasks.where((task) => task.dayOfWeek == dayOfWeek).toList();
   }
 
-  List<TaskEntity> _getTaskListbyDateDuration(
+  List<TaskEntity> getTaskListbyDateDuration(
       DateTime startDate, DateTime endDate) {
     return state
         .where((task) =>

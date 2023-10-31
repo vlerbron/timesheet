@@ -29,5 +29,5 @@ class TimesheetEntity{
     required this.selectedDate,
     required this.timeRemaining,
   });
-  
+
 }

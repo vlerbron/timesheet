@@ -36,9 +36,9 @@ class LoginProvider extends StateNotifier<LoginState> {
     state = const LoginState.loading();
     await loginUseCaseAdapter.loginUseCase
         .execute(ParamLogin(username: username, password: password))
-        .then((result) => state = result.fold(
-            (failure) => LoginState.failure(failure),
-            (data) => const LoginState.success()));
+        .then((result) => result.fold(
+            (failure) => state = LoginState.failure(failure),
+            (data) => getUserProfile()));
   }
 
   Future<void> logout() async {
