@@ -36,19 +36,11 @@ class StatusNotification extends ConsumerWidget with DateTimeMixin {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Text(
-                        String.fromCharCode(
-                            CupertinoIcons.info_circle_fill.codePoint),
-                        style: TextStyle(
-                          inherit: false,
-                          color: timesheetState.statusColor,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w700,
-                          fontFamily:
-                              CupertinoIcons.info_circle_fill.fontFamily,
-                          package: CupertinoIcons.info_circle_fill.fontPackage,
-                        ),
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Icon(
+                        Icons.info_rounded,
+                        color: timesheetState.statusColor,
+                        size: 20,
                       ),
                     ),
                     const SizedBox(
@@ -68,7 +60,7 @@ class StatusNotification extends ConsumerWidget with DateTimeMixin {
                             Text(
                               timesheetState.detail,
                               style: textTheme.bodySmall
-                                  ?.copyWith(color: timesheetState.userColor),
+                                  ?.copyWith(color: timesheetState.statusColor),
                             ),
                           if ([TimesheetStatus.approve, TimesheetStatus.reject]
                               .contains(timesheetState.status))

@@ -51,7 +51,7 @@ class _VisibilitySubmitButton extends ConsumerState<VisibilitySubmitButton>
           setState(() {
             ref
                 .read(timesheetProvider.notifier)
-                .submitTimesheetState(firstDay, rejectedTimesheetState);
+                .submitTimesheetState(firstDay, approvedTimesheetState);
           });
           widget.onSubmitChanged(widget.selectedDate);
         }));

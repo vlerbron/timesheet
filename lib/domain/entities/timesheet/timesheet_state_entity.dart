@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:timesheet/domain/entities/login/user_profile_entity.dart';
 
 enum TimesheetStatus {
@@ -19,15 +18,15 @@ class TimesheetStateEntity {
   Color bgColor, statusColor, userColor;
   DateTime txDateTime;
 
-  TimesheetStateEntity(
-      {this.status = TimesheetStatus.active,
-      this.detail = '',
-      this.operator = const UserProfileEntity(),
-      this.bgColor = Colors.brown,
-      this.statusColor = Colors.pink,
-      this.userColor = Colors.black,
-      required this.txDateTime,
-      });
+  TimesheetStateEntity({
+    this.status = TimesheetStatus.active,
+    this.detail = '',
+    this.operator = const UserProfileEntity(),
+    this.bgColor = Colors.brown,
+    this.userColor = Colors.black,
+    this.statusColor = const Color.fromARGB(255, 30, 128, 184),
+    required this.txDateTime,
+  });
 
   setTimesheetStateEntity(TimesheetStateEntity state) {
     status = state.status;
