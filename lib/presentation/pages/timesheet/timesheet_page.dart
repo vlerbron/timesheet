@@ -1,3 +1,4 @@
+import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
@@ -21,6 +22,21 @@ class TimesheetPage extends ConsumerStatefulWidget {
 
 class _TimesheetPageState extends ConsumerState<TimesheetPage>
     with DateTimeMixin {
+  late DateTime _selectedDate;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final EventEmitter events = ref.watch(timesheetEventProvider);
+    events.on(TimesheetRebuildEvent.kTimesheetRebuild, (DateTime dateTime) {
+      if (mounted) {
+        setState(() {
+          _selectedDate = dateTime;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -39,7 +55,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage>
       timesheetStateMap.addAll({firstDay: timesheetStateEntity});
       stateEntity = timesheetStateEntity;
     }
-    DateTime selectedDate = timesheetEntity.selectedDate;
+    _selectedDate = timesheetEntity.selectedDate;
 
     return Scaffold(
       appBar: AppBar(
@@ -51,7 +67,7 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage>
           DatePickerTimesheet(
             onSelectedDateChanged: (dateTime) {
               setState(() {
-                selectedDate = dateTime;
+                _selectedDate = dateTime;
               });
             },
           ),
@@ -85,15 +101,10 @@ class _TimesheetPageState extends ConsumerState<TimesheetPage>
             ),
           ),
           if (stateEntity.status != TimesheetStatus.active)
-            StatusNotification(selectedDate),
-          TasksOfDays(selectedDate),
+            StatusNotification(_selectedDate),
+          TasksOfDays(_selectedDate),
           VisibilitySubmitButton(
-            selectedDate,
-            onSubmitChanged: (dateTime) {
-              setState(() {
-                selectedDate = dateTime;
-              });
-            },
+            _selectedDate,
           ),
         ],
       ),

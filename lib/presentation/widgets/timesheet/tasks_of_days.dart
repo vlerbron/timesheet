@@ -1,4 +1,3 @@
-import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
@@ -23,16 +22,6 @@ class _TasksOfDays extends ConsumerState<TasksOfDays> {
     final List<String> dayList = allDayOfWeek.keys.toList();
     final List<Color> colorList = allDayOfWeek.values.toList();
     DateTime selectedDate = widget.selectedDate;
-
-    //*for add new task
-    final EventEmitter events = ref.watch(timesheetEventProvider);
-    events.once(TimesheetRebuildEvent.kTaskListRebuild, (DateTime dateTime) {
-      if (mounted) {
-        setState(() {
-          selectedDate = dateTime;
-        });
-      }
-    });
 
     return Expanded(
       child: ListView.builder(

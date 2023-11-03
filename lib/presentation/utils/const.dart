@@ -44,8 +44,7 @@ const String kSunday = 'Sunday';
 
 //Timesheet
 class TimesheetRebuildEvent {
-  static const String kTaskListRebuild = 'taskListRebuild';
-  static const String kSubmitButtonRebuild = 'submitButtonRebuild';
+  static const String kTimesheetRebuild = 'timesheetRebuild';
 }
 
 class ConstantConfig {
