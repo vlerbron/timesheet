@@ -21,7 +21,7 @@ class AnnualStatisticBox extends StatelessWidget {
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: kColorLighttGrey,
+          color: kColorLightGrey,
           boxShadow: const [
             BoxShadow(
                 color: Color.fromRGBO(0, 0, 0, 0.12),

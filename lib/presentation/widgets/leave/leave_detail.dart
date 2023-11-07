@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:timesheet/domain/leave/leave_entity.dart';
+import 'package:timesheet/presentation/utils/const.dart';
 import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/presentation/widgets/leave/leave_detail_group.dart';
-
-final leaveDetailDateFormatter = DateFormat('dd EEEE yyyy');
 
 class LeaveDetail extends ConsumerWidget {
   const LeaveDetail({super.key, required this.currentDate});
@@ -19,7 +17,7 @@ class LeaveDetail extends ConsumerWidget {
       backgroundColor: const Color.fromARGB(255, 245, 246, 248),
       appBar: AppBar(
         centerTitle: true,
-        title: Text(leaveDetailDateFormatter.format(currentDate)),
+        title: Text(dateFormatterddEEEEyyyy.format(currentDate)),
       ),
       body: SingleChildScrollView(
         child: Column(children: [

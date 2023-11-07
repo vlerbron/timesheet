@@ -64,34 +64,43 @@ class AccountPage extends ConsumerWidget {
                   ),
                 ],
               ),
-              const Expanded(
-                child: TabBarView(
-                    children: [AccountDashboard(), AccountExpense()]),
+              Expanded(
+                child: TabBarView(children: [
+                  AccountDashboard(
+                    employeeEntity: myAccount,
+                  ),
+                  const AccountExpense(),
+                ]),
               ),
-              Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Container(
+                margin: const EdgeInsets.only(bottom: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
+                    OutlinedButton(
                       onPressed: () {
                         loginNotifier.logout();
                         Navigator.pushReplacementNamed(context, '/');
                       },
-                      style: ElevatedButton.styleFrom(
+                      style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 100,
+                          // horizontal: 100,
                           vertical: 15,
                         ),
-                        backgroundColor:
-                            const Color.fromARGB(255, 30, 128, 184),
-                        foregroundColor: Colors.white,
+                        foregroundColor: Theme.of(context).colorScheme.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
+                        side: BorderSide(
+                            width: 1.0,
+                            color: Theme.of(context).colorScheme.primary),
                       ),
                       child: const Text('Log out'),
                     )
-                  ]),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

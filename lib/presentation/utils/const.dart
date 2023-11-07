@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 /////
 const kColorDarkGrey = Color.fromARGB(255, 128, 128, 128);
 const kColorMidtGrey = Color.fromARGB(255, 240, 240, 240);
-const kColorLighttGrey = Color.fromARGB(255, 250, 250, 250);
+const kColorLightGrey = Color.fromARGB(255, 250, 250, 250);
 
 const kColorGreyText = Color(0xFF616161);
 const kColorDarkGreyText = Color(0xFF242424);
@@ -13,6 +13,7 @@ const kColorLightBlue = Color.fromARGB(255, 245, 248, 253);
 
 const kColorLightGreen = Color.fromRGBO(139, 195, 74, 1);
 
+const kColorGreyBackground = Color.fromARGB(255, 245, 246, 248);
 ///// Text Style
 /////
 const kRequiredTextStyle = TextStyle(
@@ -30,6 +31,8 @@ const double kWidgetLineSpace = 10;
 /////
 final dateFormatterddMMyyyy = DateFormat('dd/MM/yyyy');
 final dateFormatterddMMyyyyhhmm = DateFormat('dd/MM/yyyy hh:mm');
+final dateFormatterddEEEEyyyy = DateFormat('dd EEEE yyyy');
+final dateFormatterddMMMyyyy = DateFormat('dd MMM yyyy');
 
 const String kBaseURL = 'BASE_URL';
 
