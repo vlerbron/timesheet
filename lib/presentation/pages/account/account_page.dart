@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timesheet/presentation/routes/route.dart';
 import 'package:timesheet/presentation/widgets/account/account_dashboard.dart';
 import 'package:timesheet/presentation/widgets/account/account_expense.dart';
 import 'package:timesheet/presentation/widgets/common/button/custom_tab_bar.dart';
@@ -24,6 +25,7 @@ class AccountPage extends ConsumerWidget {
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 children: [
@@ -49,7 +51,8 @@ class AccountPage extends ConsumerWidget {
                   ),
                   const Spacer(),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.of(context)
+                          .pushNamed(Routes.editAccountPage),
                       icon: const Icon(Icons.chevron_right_rounded))
                 ],
               ),

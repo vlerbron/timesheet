@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timesheet/presentation/pages/account/account_page.dart';
+import 'package:timesheet/presentation/pages/account/edit_account_page.dart';
 import 'package:timesheet/presentation/pages/home/home_page.dart';
 import 'package:timesheet/presentation/pages/leave/leave_page.dart';
 import 'package:timesheet/presentation/pages/leave/new_leave_request_page.dart';
@@ -19,6 +20,7 @@ class Routes {
   static const String newLeavePage = '/new-leave';
   static const String accountPage = '/account';
   static const String newEditTaskPage = '/new-task';
+  static const String editAccountPage = '/edit-account';
 
   static Map<String, Widget Function(BuildContext)> routes = {
     Routes.rootPage: (context) => const SplashPage(),
@@ -30,5 +32,6 @@ class Routes {
     Routes.newLeavePage: (context) => const NewLeaveRequestPage(),
     Routes.accountPage: (context) => const AccountPage(),
     Routes.newEditTaskPage: (context) => const NewEditTaskPage(),
+    Routes.editAccountPage: (context) => const EditAccountPage()
   };
 }

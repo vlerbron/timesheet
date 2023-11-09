@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:timesheet/domain/leave/leave_entity.dart';
+import 'package:timesheet/presentation/widgets/common/bottom_buttons_bar.dart';
 
 import 'package:timesheet/presentation/widgets/common/button/circle_grey_closepage_button.dart';
-import 'package:timesheet/presentation/widgets/common/button/save_button.dart';
-import 'package:timesheet/presentation/widgets/common/button/short_cancel_button.dart';
 import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/presentation/widgets/leave/attachment_input.dart';
 import 'package:timesheet/presentation/widgets/leave/bottomsheet_input.dart';
@@ -165,7 +164,7 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequestPage> {
           ),
         ),
       ),
-      bottomNavigationBar: LeaveRequestBottomBar(
+      bottomNavigationBar: BottomButtonBar(
         onCancel: () {
           Navigator.pop(context);
         },
@@ -300,39 +299,5 @@ class _NewLeaveRequestState extends ConsumerState<NewLeaveRequestPage> {
       );
     }
     return tileList;
-  }
-}
-
-class LeaveRequestBottomBar extends StatelessWidget {
-  const LeaveRequestBottomBar({
-    super.key,
-    required this.onCancel,
-    required this.onSave,
-  });
-
-  final void Function() onCancel;
-  final void Function() onSave;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 80,
-      child: Column(
-        children: [
-          const Divider(),
-          Row(
-            children: [
-              const Spacer(),
-              ShortCancelButton(
-                onTap: onCancel,
-              ),
-              const Spacer(),
-              SaveButton(onTap: onSave),
-              const Spacer(),
-            ],
-          ),
-        ],
-      ),
-    );
   }
 }
