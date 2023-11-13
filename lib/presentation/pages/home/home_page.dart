@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/presentation/utils/const.dart';
+import 'package:timesheet/presentation/widgets/timesheet/today_tasks.dart';
 import 'package:timesheet/provider_container.dart';
 import 'package:timesheet/presentation/widgets/leave/annual_statistic_box.dart';
 import 'package:timesheet/presentation/widgets/common/tabs.dart';
@@ -13,6 +14,7 @@ class HomePage extends ConsumerWidget {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
     final currentLeaveQuota = ref.read(currentLeaveQuotaProvider.provider);
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -111,6 +113,7 @@ class HomePage extends ConsumerWidget {
                 ],
               ),
             ),
+            const TodayTasks(),
           ],
         ),
       ),
