@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/presentation/utils/const.dart';
+import 'package:timesheet/presentation/widgets/timesheet/task_item.dart';
+import 'package:timesheet/provider_container.dart';
 
 class TodayTasks extends ConsumerStatefulWidget {
-  const TodayTasks({super.key});
+  const TodayTasks(this.todayDate, {super.key});
+  final DateTime todayDate;
 
   @override
   ConsumerState<TodayTasks> createState() => _TodayTasksState();
@@ -16,6 +20,8 @@ class _TodayTasksState extends ConsumerState<TodayTasks> {
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final List<TaskEntity> taskList =
+        ref.read(taskListProvider.notifier).getTaskListbyDate(widget.todayDate);
 
     return Container(
       margin: const EdgeInsets.only(
@@ -48,7 +54,8 @@ class _TodayTasksState extends ConsumerState<TodayTasks> {
                 Row(
                   children: [
                     Text(
-                      String.fromCharCode(CupertinoIcons.circle_filled.codePoint),
+                      String.fromCharCode(
+                          CupertinoIcons.circle_filled.codePoint),
                       style: TextStyle(
                         inherit: false,
                         color: colorScheme.primary,
@@ -97,15 +104,17 @@ class _TodayTasksState extends ConsumerState<TodayTasks> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Padding(
-                  //   padding:
-                  //       const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                  //   child: ListView.builder(
-                  //     itemCount: taskList.length,
-                  //     shrinkWrap: true,
-                  //     itemBuilder: (ctx, index) => TaskItem(taskList[index]),
-                  //   ),
-                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: ListView.builder(
+                      itemCount: taskList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (ctx, index) => TaskItem(
+                        taskList[index],
+                        isShowDeleteTask: false,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

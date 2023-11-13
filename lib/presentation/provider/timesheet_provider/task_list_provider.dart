@@ -22,11 +22,15 @@ class TaskListProvider extends StateNotifier<List<TaskEntity>> {
         .toList();
   }
 
+  List<TaskEntity> getTaskListbyDate(DateTime date) {
+    return state.where((task) => task.taskDate.isAtSameMomentAs(date)).toList();
+  }
+
   void addTask(TaskEntity task) {
     state.add(task);
   }
 
-  void editTask(TaskEntity task){
+  void editTask(TaskEntity task) {
     TaskEntity taskEntity = state.firstWhere((element) => element == task);
     taskEntity.setTaskByObj(task: task);
   }

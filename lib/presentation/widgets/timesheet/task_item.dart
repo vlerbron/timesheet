@@ -11,8 +11,9 @@ import 'package:timesheet/presentation/utils/const.dart';
 import 'package:timesheet/presentation/utils/date_time_mixin.dart';
 
 class TaskItem extends ConsumerWidget with DateTimeMixin {
-  const TaskItem(this.taskEntity, {super.key});
+  const TaskItem(this.taskEntity, {super.key, this.isShowDeleteTask = true});
   final TaskEntity taskEntity;
+  final bool isShowDeleteTask;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,22 +46,28 @@ class TaskItem extends ConsumerWidget with DateTimeMixin {
             ),
             const Spacer(),
             Text('$hour.${minute}h'),
-            const SizedBox(
-              width: 5,
-            ),
-            InkWell(
-              onTap: () => dialog.showAlertDialog(context),
-              child: Text(
-                String.fromCharCode(CupertinoIcons.minus_circle.codePoint),
-                style: TextStyle(
-                  inherit: false,
-                  color: Colors.red,
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: CupertinoIcons.circle.fontFamily,
-                  package: CupertinoIcons.circle.fontPackage,
+            if(isShowDeleteTask)
+            Row(
+              children: [
+                const SizedBox(
+                  width: 5,
                 ),
-              ),
+            InkWell(
+                    onTap: () => dialog.showAlertDialog(context),
+                    child: Text(
+                      String.fromCharCode(
+                          CupertinoIcons.minus_circle.codePoint),
+                      style: TextStyle(
+                        inherit: false,
+                        color: Colors.red,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: CupertinoIcons.circle.fontFamily,
+                        package: CupertinoIcons.circle.fontPackage,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ],
         )

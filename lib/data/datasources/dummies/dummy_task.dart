@@ -9,7 +9,7 @@ List<TaskEntity> dummyTasks = [
     taskDetail: 'Flutter Self Learning',
     duration: const Duration(hours: 8, minutes: 30),
     issue: dummySelectIssue[0],
-    taskDate: DateTime.utc(2023, 10, 9),
+    taskDate: DateTime.utc(2023, 11, 13),
   ),
   TaskEntity(
     id: const Uuid().v4(),
@@ -17,7 +17,7 @@ List<TaskEntity> dummyTasks = [
     taskDetail: 'Drawing',
     duration: const Duration(hours: 3, minutes: 15),
     issue: dummySelectIssue[1],
-    taskDate: DateTime.utc(2023, 10, 9),
+    taskDate: DateTime.utc(2023, 11, 13),
   ),
   TaskEntity(
     id: const Uuid().v4(),
@@ -25,7 +25,7 @@ List<TaskEntity> dummyTasks = [
     taskDetail: 'Basketball',
     duration: const Duration(hours: 2, minutes: 30),
     issue: dummySelectIssue[0],
-    taskDate: DateTime.utc(2023, 10, 10),
+    taskDate: DateTime.utc(2023, 11, 10),
   ),
   TaskEntity(
     id: const Uuid().v4(),
@@ -33,7 +33,7 @@ List<TaskEntity> dummyTasks = [
     taskDetail: 'Reading',
     duration: const Duration(hours: 8, minutes: 0),
     issue: dummySelectIssue[5],
-    taskDate: DateTime.utc(2023, 10, 11),
+    taskDate: DateTime.utc(2023, 11, 11),
   ),
   TaskEntity(
     id: const Uuid().v4(),
@@ -41,7 +41,7 @@ List<TaskEntity> dummyTasks = [
     taskDetail: 'Gaming',
     duration: const Duration(hours: 7, minutes: 30),
     issue: dummySelectIssue[3],
-    taskDate: DateTime.utc(2023, 10, 5),
+    taskDate: DateTime.utc(2023, 11, 5),
   ),
   TaskEntity(
     id: const Uuid().v4(),
@@ -49,7 +49,7 @@ List<TaskEntity> dummyTasks = [
     taskDetail: 'Slam Dunk',
     duration: const Duration(hours: 5, minutes: 0),
     issue: dummySelectIssue[1],
-    taskDate: DateTime.utc(2023, 9, 28),
+    taskDate: DateTime.utc(2023, 10, 28),
   ),
   TaskEntity(
     id: const Uuid().v4(),
@@ -57,7 +57,7 @@ List<TaskEntity> dummyTasks = [
     taskDetail: 'Lay Up',
     duration: const Duration(hours: 9, minutes: 30),
     issue: dummySelectIssue[3],
-    taskDate: DateTime.utc(2023, 9, 29),
+    taskDate: DateTime.utc(2023, 10, 29),
   ),
   TaskEntity(
     id: const Uuid().v4(),
