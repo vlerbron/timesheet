@@ -33,6 +33,7 @@ final dateFormatterddMMyyyy = DateFormat('dd/MM/yyyy');
 final dateFormatterddMMyyyyhhmm = DateFormat('dd/MM/yyyy hh:mm');
 final dateFormatterddEEEEyyyy = DateFormat('dd EEEE yyyy');
 final dateFormatterddMMMyyyy = DateFormat('dd MMM yyyy');
+final dateFormatterEEEEddMMMMyyyy = DateFormat('EEEE, dd MMMM yyyy');
 
 const String kBaseURL = 'BASE_URL';
 
