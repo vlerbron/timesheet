@@ -16,6 +16,7 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               height: MediaQuery.of(context).size.height / 7,
@@ -73,11 +74,41 @@ class HomePage extends ConsumerWidget {
             ),
             Container(
               padding: const EdgeInsets.all(kWidgetPadding),
+              decoration: BoxDecoration(
+                color: colorScheme.primaryContainer,
+              ),
               child: AnnualStatisticData(
                 leaveQuota: currentLeaveQuota,
                 showHeader: false,
                 showHoliday: true,
                 textColor: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(kWidgetPadding),
+              child: Row(
+                children: [
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(kWidgetCircularRadius),
+                      color: const Color(0xFFCFE4FA),
+                    ),
+                    child: Image.asset('assets/icons/icon-sheet.png'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: kWidgetLineSpace),
+                    child: Text(
+                      'Timesheet',
+                      style: textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground,
+                        fontSize: 19,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

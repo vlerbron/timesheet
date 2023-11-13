@@ -13,6 +13,7 @@ final colorScheme = ColorScheme.fromSeed(
   background: const Color.fromARGB(255, 255, 255, 255),
   primary: const Color.fromARGB(255, 30, 128, 184),
   secondary: const Color(0xffF0F0F0),
+  primaryContainer: kColorLightGrey,
 );
 
 final theme = ThemeData().copyWith(
