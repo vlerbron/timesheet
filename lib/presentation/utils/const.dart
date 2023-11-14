@@ -16,6 +16,7 @@ const kColorLightGreen = Color.fromRGBO(139, 195, 74, 1);
 const kColorGreyBackground = Color.fromARGB(255, 245, 246, 248);
 
 const kColorIconBGBlue = Color(0xFFCFE4FA);
+const kColorIconBGGray = Color(0xFFE7E6E6);
 ///// Text Style
 /////
 const kRequiredTextStyle = TextStyle(

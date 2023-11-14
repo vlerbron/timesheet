@@ -63,7 +63,7 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
         dayOfWeek: DateFormat('EEEE').format(_taskDate!),
         issue: _issueEntity!,
         taskDetail: _taskDetail,
-        taskDate: _taskDate ??= DateTime.now(),
+        taskDate: _taskDate ??= DateTime.now().toUtc(),
         duration: _taskDuration);
     final TaskListProvider taskListNotifier =
         ref.read(taskListProvider.notifier);

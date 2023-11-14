@@ -15,7 +15,7 @@ class TodayTasks extends ConsumerStatefulWidget {
 }
 
 class _TodayTasksState extends ConsumerState<TodayTasks> {
-  bool _isShowTasks = false;
+  bool _isShowTasks = true;
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -25,7 +25,9 @@ class _TodayTasksState extends ConsumerState<TodayTasks> {
 
     return Container(
       margin: const EdgeInsets.only(
-          bottom: kWidgetPadding, left: kWidgetPadding, right: kWidgetPadding),
+          bottom: kWidgetPadding,
+          left: kWidgetPadding,
+          right: kWidgetPadding),
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(color: colorScheme.secondary),
@@ -99,22 +101,66 @@ class _TodayTasksState extends ConsumerState<TodayTasks> {
             visible: _isShowTasks,
             child: Container(
               decoration: BoxDecoration(
-                border: Border(top: BorderSide(color: colorScheme.secondary)),
+                border:
+                    Border(top: BorderSide(color: colorScheme.secondary)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: ListView.builder(
-                      itemCount: taskList.length,
-                      shrinkWrap: true,
-                      itemBuilder: (ctx, index) => TaskItem(
-                        taskList[index],
-                        isShowDeleteTask: false,
+                  if (taskList.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: taskList.length,
+                        shrinkWrap: true,
+                        itemBuilder: (ctx, index) => TaskItem(
+                          taskList[index],
+                          isShowDeleteTask: false,
+                        ),
                       ),
                     ),
-                  ),
+                  if (taskList.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: kWidgetPadding,
+                          left: kWidgetLineSpace,
+                          right: kWidgetLineSpace,
+                          bottom: kWidgetPadding),
+                      child: Container(
+                        height: 120,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(kWidgetCircularRadius),
+                          color: colorScheme.secondary,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: kColorIconBGGray,
+                              ),
+                              child: Image.asset(
+                                  'assets/icons/icon-no-todo.png'),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: kWidgetLineSpace),
+                              child: Text(
+                                'No completed to do yet',
+                                style: textTheme.titleMedium!
+                                    .copyWith(color: kColorDarkGrey),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
