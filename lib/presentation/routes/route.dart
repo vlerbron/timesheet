@@ -5,7 +5,7 @@ import 'package:timesheet/presentation/pages/home/home_page.dart';
 import 'package:timesheet/presentation/pages/leave/leave_page.dart';
 import 'package:timesheet/presentation/pages/leave/new_leave_request_page.dart';
 import 'package:timesheet/presentation/pages/timesheet/new_edit_task_page.dart';
-import 'package:timesheet/pages/project_page.dart';
+import 'package:timesheet/presentation/project/project_page.dart';
 import 'package:timesheet/presentation/pages/timesheet/timesheet_page.dart';
 import 'package:timesheet/presentation/pages/login/login_page.dart';
 import 'package:timesheet/presentation/pages/login/splash_page.dart';

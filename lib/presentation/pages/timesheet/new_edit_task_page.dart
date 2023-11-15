@@ -70,7 +70,7 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
     (ref.watch(taskProvider).taskStatus == TaskStatus.add)
         ? taskListNotifier.addTask(taskEntity)
         : taskListNotifier.editTask(taskEntity);
-    
+
     final EventEmitter events = ref.watch(timesheetEventProvider);
     events.emit(TimesheetRebuildEvent.kTimesheetRebuild, taskEntity.taskDate);
 
@@ -138,7 +138,9 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New task'),
+        title: Text((ref.watch(taskProvider).taskStatus == TaskStatus.add)
+            ? 'New task'
+            : 'Edit task'),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),

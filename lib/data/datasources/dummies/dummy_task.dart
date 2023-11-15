@@ -9,7 +9,7 @@ List<TaskEntity> dummyTasks = [
     taskDetail: 'Flutter Self Learning',
     duration: const Duration(hours: 8, minutes: 30),
     issue: dummySelectIssue[0],
-    taskDate: DateTime.utc(2023, 11, 13),
+    taskDate: DateTime.utc(2023, 11, 15),
   ),
   TaskEntity(
     id: const Uuid().v4(),
@@ -17,7 +17,7 @@ List<TaskEntity> dummyTasks = [
     taskDetail: 'Drawing',
     duration: const Duration(hours: 3, minutes: 15),
     issue: dummySelectIssue[1],
-    taskDate: DateTime.utc(2023, 11, 13),
+    taskDate: DateTime.utc(2023, 11, 15),
   ),
   TaskEntity(
     id: const Uuid().v4(),

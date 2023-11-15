@@ -1,3 +1,4 @@
+import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +18,15 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final EventEmitter events = ref.watch(timesheetEventProvider);
+    events.on(TimesheetRebuildEvent.kTimesheetRebuild, (_) {
+      if (mounted) setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -105,12 +115,76 @@ class _HomePageState extends ConsumerState<HomePage> {
                       decoration: BoxDecoration(
                         color: colorScheme.primaryContainer,
                       ),
-                      child: AnnualStatisticData(
-                        leaveQuota: currentLeaveQuota,
-                        showHeader: false,
-                        showHoliday: true,
-                        textColor:
-                            Theme.of(context).colorScheme.onPrimaryContainer,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      kWidgetCircularRadius),
+                                  color: const Color(0xFFCFE4FA),
+                                ),
+                                child: Image.asset(
+                                    'assets/icons/icon-remain-leave-quota.png'),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: kWidgetLineSpace),
+                                child: Text(
+                                  'Remain leave quota',
+                                  style: textTheme.titleLarge!.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontSize: 19,
+                                  ),
+                                ),
+                              ),
+                              const Spacer(),
+                              OutlinedButton(
+                                onPressed: () {},
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        kWidgetCircularRadius),
+                                    side: BorderSide(
+                                        width: 1, color: colorScheme.primary),
+                                  ),
+                                ),
+                                child: const Text('New Request'),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: kWidgetLineSpace),
+                            child: AnnualStatisticData(
+                              leaveQuota: currentLeaveQuota,
+                              showHeader: false,
+                              showHoliday: true,
+                              textColor: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'View more',
+                                style: textTheme.titleMedium!
+                                    .copyWith(color: colorScheme.primary),
+                              ),
+                              IconButton(
+                                  icon: const Icon(Icons.arrow_forward),
+                                  color: colorScheme.primary,
+                                  onPressed: () {}),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                     Padding(
@@ -152,9 +226,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 onPressed: () {
                   ref.read(taskProvider.notifier).setNewTaskState(
                       DateFormat('EEEE').format(todayDate), todayDate);
-                  Navigator.of(context)
-                      .pushNamed(Routes.newEditTaskPage)
-                      .then((_) => setState(() {}));
+                  Navigator.of(context).pushNamed(Routes.newEditTaskPage);
                 }),
           ],
         ),
