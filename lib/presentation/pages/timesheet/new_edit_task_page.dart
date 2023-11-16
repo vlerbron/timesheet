@@ -2,19 +2,18 @@ import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:timesheet/data/datasources/dummies/dummy_select_issue.dart';
 import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/presentation/pages/timesheet/select_issue_page.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_list_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_provider.dart';
+import 'package:timesheet/presentation/utils/const.dart';
 import 'package:timesheet/presentation/utils/date_time_mixin.dart';
 import 'package:timesheet/presentation/utils/form_validator.dart';
 import 'package:timesheet/presentation/widgets/common/button/save_button.dart';
 import 'package:timesheet/presentation/widgets/common/button/short_cancel_button.dart';
 import 'package:timesheet/provider_container.dart';
-import 'package:timesheet/presentation/utils/const.dart';
 
 class NewEditTaskPage extends ConsumerStatefulWidget with DateTimeMixin {
   const NewEditTaskPage({super.key});
@@ -81,7 +80,6 @@ class _NewEditTaskState extends ConsumerState<NewEditTaskPage>
     Navigator.of(context).push(
       MaterialPageRoute(
           builder: (context) => SelectIssuePage(
-                selectIssueModels: dummySelectIssue,
                 fnCallBack: setStateCallBack,
               )),
     );

@@ -1,5 +1,6 @@
 import 'package:events_emitter/emitters/event_emitter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/domain/leave/employee_entity.dart';
 import 'package:timesheet/domain/leave/leave_entity.dart';
@@ -13,6 +14,7 @@ import 'package:timesheet/presentation/provider/leave_provider/provider/my_leave
 import 'package:timesheet/presentation/provider/leave_provider/notifier/selected_date_notifier.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/login_provider.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/state/login_state.dart';
+import 'package:timesheet/presentation/provider/timesheet_provider/select_issue_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_list_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/task_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_state.dart';
@@ -30,6 +32,8 @@ var timesheetProvider =
     locator<StateNotifierProvider<TimesheetProvider, TimesheetState>>();
 var taskListProvider =
     locator<StateNotifierProvider<TaskListProvider, List<TaskEntity>>>();
+var selectIssueProvider = locator<
+    StateNotifierProvider<SelectIssueProvider, List<SelectIssueEntity>>>();
 var timesheetEventProvider =
     locator<StateNotifierProvider<TimesheetEventProvider, EventEmitter>>();
 var taskProvider = locator<StateNotifierProvider<TaskProvider, TaskState>>();

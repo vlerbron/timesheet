@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
+import 'package:timesheet/presentation/utils/const.dart';
 import 'package:timesheet/presentation/widgets/common/button/long_cancel_button.dart';
-import 'package:timesheet/presentation/widgets/common/nav_icon.dart';
 import 'package:timesheet/presentation/widgets/timesheet/issue_item.dart';
 import 'package:timesheet/provider_container.dart';
 
 class SelectIssuePage extends ConsumerStatefulWidget {
-  const SelectIssuePage({super.key, required this.selectIssueModels, required this.fnCallBack});
+  const SelectIssuePage({super.key, required this.fnCallBack});
 
-  final List<SelectIssueEntity> selectIssueModels;
   final void Function() fnCallBack;
 
   @override
@@ -17,8 +16,20 @@ class SelectIssuePage extends ConsumerStatefulWidget {
 }
 
 class _SelectIssuePageState extends ConsumerState<SelectIssuePage> {
+  late List<SelectIssueEntity> _selectIssues;
+  final _searchController = TextEditingController();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _selectIssues = ref.watch(selectIssueProvider);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -37,26 +48,47 @@ class _SelectIssuePageState extends ConsumerState<SelectIssuePage> {
             padding: const EdgeInsets.all(12.0),
             child: TextFormField(
               autofocus: false,
+              controller: _searchController,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: const Color.fromARGB(255, 240, 240, 240),
+                fillColor: colorScheme.secondary,
                 hintText:
                     'Search from title, issue no, project code, client code',
-                suffixIcon: const NavIcon('icon-close.png'),
+                hintStyle:
+                    textTheme.bodyMedium!.copyWith(color: kColorDarkGrey),
+                suffixIcon: IconButton(
+                  icon: Image.asset('assets/icons/icon-close.png'),
+                  onPressed: () {
+                    setState(() {
+                      _searchController.clear();
+                      _selectIssues = ref.watch(selectIssueProvider);
+                    });
+                  },
+                ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(kWidgetCircularRadius),
+                  borderSide: BorderSide.none,
                 ),
               ),
+              onChanged: (val) {
+                setState(() {
+                  _selectIssues = ref
+                      .read(selectIssueProvider.notifier)
+                      .filterSelectIssues(val);
+                });
+              },
             ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: widget.selectIssueModels.length,
+              itemCount: _selectIssues.length,
               itemBuilder: (context, index) => IssueItem(
-                selectIssueEntity: widget.selectIssueModels[index],
+                selectIssueEntity: _selectIssues[index],
                 onTap: (SelectIssueEntity entity) {
-                  ref.read(taskProvider.notifier).setSelectedIssueEntity(entity);
+                  ref
+                      .read(taskProvider.notifier)
+                      .setSelectedIssueEntity(entity);
                   Navigator.of(context).pop();
                   widget.fnCallBack();
                 },
