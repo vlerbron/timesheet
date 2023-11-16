@@ -7,6 +7,7 @@ import 'package:timesheet/data/datasources/local/login_local_datasource.dart';
 import 'package:timesheet/data/datasources/remote/login_remote_datasource.dart';
 import 'package:timesheet/data/helpers/dio_interceptor_config.dart';
 import 'package:timesheet/data/repositories/login_repository_impl.dart';
+import 'package:timesheet/domain/entities/project/project_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/select_issue_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/task_entity.dart';
 import 'package:timesheet/domain/entities/timesheet/timesheet_entity.dart';
@@ -27,6 +28,7 @@ import 'package:timesheet/presentation/provider/leave_provider/provider/filtered
 import 'package:timesheet/presentation/provider/leave_provider/provider/my_leave_provider.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/login_provider.dart';
 import 'package:timesheet/presentation/provider/login_provider/login/state/login_state.dart';
+import 'package:timesheet/presentation/provider/project_provider/project_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/select_issue_provider.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/task_state.dart';
 import 'package:timesheet/presentation/provider/timesheet_provider/state/timesheet_state.dart';
@@ -76,6 +78,8 @@ init() async {
       StateNotifierProvider<MyAccountNotifier, EmployeeEntity>(
           (ref) => locator()));
 
+  //* Project
+  locator.registerFactory(() => ProjectProvider());
   // ================ Section : Notifier ================
   //* Login
   locator.registerFactory(() =>
@@ -106,6 +110,11 @@ init() async {
 
   //* Account
   locator.registerFactory(() => MyAccountNotifier());
+
+  //* Project
+  locator.registerFactory(() =>
+      StateNotifierProvider<ProjectProvider, List<ProjectEntity>>(
+          (ref) => locator()));
 
   // ================ Section : Use Case ================
   locator.registerLazySingleton(() => LoginUseCase(locator()));
