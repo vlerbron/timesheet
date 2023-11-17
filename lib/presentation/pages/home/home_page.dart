@@ -150,9 +150,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
                                         kWidgetCircularRadius),
-                                    side: BorderSide(
-                                        width: 1, color: colorScheme.primary),
                                   ),
+                                  side: BorderSide(color: colorScheme.primary),
                                 ),
                                 child: const Text('New Request'),
                               ),

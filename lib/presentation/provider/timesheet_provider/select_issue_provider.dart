@@ -6,10 +6,26 @@ class SelectIssueProvider extends StateNotifier<List<SelectIssueEntity>> {
   SelectIssueProvider() : super(dummySelectIssue);
 
   List<SelectIssueEntity> filterSelectIssues(String value) {
-    return state
+    return _filterListByValue(state, value);
+  }
+
+  List<SelectIssueEntity> selectIssuesByProjectCode(String projectCode) {
+    return state.where((issue) => issue.projectCode == projectCode).toList();
+  }
+
+  List<SelectIssueEntity> filterSelectIssuesByProjectCode(
+      String projectCode, String value) {
+    return _filterListByValue(selectIssuesByProjectCode(projectCode), value);
+  }
+
+  List<SelectIssueEntity> _filterListByValue(
+      List<SelectIssueEntity> issues, String value) {
+    return issues
         .where((issue) =>
-            issue.title.contains(value) || issue.issueNo.contains(value)
-            || issue.projectCode.contains(value) || issue.clientCode.contains(value))
+            issue.title.contains(value) ||
+            issue.issueNo.contains(value) ||
+            issue.projectCode.contains(value) ||
+            issue.clientCode.contains(value))
         .toList();
   }
 }

@@ -6,11 +6,13 @@ class ProjectEntity {
   String projectName;
   String clientCode;
   List<SelectIssueEntity> issueList;
+  int outstandingTx;
 
   ProjectEntity({
     required this.projectCode,
     required this.projectName,
     required this.clientCode,
     required this.issueList,
+    this.outstandingTx = 0,
   });
 }

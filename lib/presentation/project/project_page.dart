@@ -1,99 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timesheet/domain/entities/project/project_entity.dart';
-import 'package:timesheet/presentation/utils/const.dart';
-import 'package:timesheet/presentation/widgets/common/button/floating_add_button.dart';
 import 'package:timesheet/presentation/widgets/common/tabs.dart';
-import 'package:timesheet/presentation/widgets/project/project_item.dart';
-import 'package:timesheet/provider_container.dart';
+import 'package:timesheet/presentation/widgets/project/project_detail.dart';
+import 'package:timesheet/presentation/widgets/project/project_filter.dart';
+import 'package:timesheet/presentation/widgets/project/project_issues.dart';
 
-class ProjectPage extends ConsumerStatefulWidget {
-  const ProjectPage({super.key});
+class ProjectPage extends StatefulWidget {
+  const ProjectPage({super.key, required this.project});
+  final ProjectEntity project;
 
   @override
-  ConsumerState<ProjectPage> createState() => _ProjectPageState();
+  State<ProjectPage> createState() => _ProjectPageState();
 }
 
-class _ProjectPageState extends ConsumerState<ProjectPage> {
-  late List<ProjectEntity> _projectList;
-  final _searchController = TextEditingController();
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _projectList = ref.watch(projectProvider);
-  }
-
+class _ProjectPageState extends State<ProjectPage> {
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final TextTheme textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'My Project',
-        ),
-        centerTitle: true,
+        title: const Text('Project board'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
       ),
-      body: Stack(
-        alignment: Alignment.bottomRight,
+      body: Column(
         children: [
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: TextFormField(
-                  autofocus: false,
-                  controller: _searchController,
-                  keyboardType: TextInputType.multiline,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: colorScheme.secondary,
-                    hintText: 'Project code, project name, or client code',
-                    hintStyle:
-                        textTheme.bodyMedium!.copyWith(color: kColorDarkGrey),
-                    suffixIcon: IconButton(
-                      icon: Image.asset('assets/icons/icon-close.png'),
-                      onPressed: () {
-                        setState(() {
-                          _searchController.clear();
-                          _projectList = ref.watch(projectProvider);
-                        });
-                      },
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(kWidgetCircularRadius),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  onChanged: (val) {
-                    setState(() {
-                      _projectList = ref
-                          .read(projectProvider.notifier)
-                          .filterProjectList(val);
-                    });
-                  },
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _projectList.length,
-                  itemBuilder: (context, index) => ProjectItem(
-                    projectEntity: _projectList[index],
-                    onTap: (ProjectEntity entity) {
-                      //TODO: Set selected project to new provider.
-                      //Navigator.of(context).pushNamed(Routes.newEditTaskPage);
-                    },
-                  ),
-                ),
-              ),
-            ],
+          ProjectDetail(project: widget.project),
+          const ProjectFilter(),
+          Divider(
+            thickness: 10,
+            color: Theme.of(context).colorScheme.secondary,
           ),
-          FloatingAddButton(onPressed: () {
-            //Navigator.of(context).pushNamed(Routes.newEditTaskPage);
-          }),
+          ProjectIssues(widget.project),
         ],
       ),
       bottomNavigationBar: const Tabs(selectedIndex: 2),

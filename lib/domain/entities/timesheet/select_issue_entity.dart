@@ -8,6 +8,7 @@ class SelectIssueEntity extends Equatable {
   String issueNo;
   String title;
   String status;
+  IssuePriority priority;
 
   SelectIssueEntity({
     required this.id,
@@ -16,8 +17,16 @@ class SelectIssueEntity extends Equatable {
     required this.issueNo,
     required this.title,
     required this.status,
+    this.priority = IssuePriority.low,
   });
   
   @override
   List<Object?> get props => [id];
+}
+
+enum IssuePriority{
+  critital,
+  high,
+  medium,
+  low
 }

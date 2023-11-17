@@ -21,7 +21,7 @@ List<SelectIssueEntity> dummySelectIssue = [
   SelectIssueEntity(
     id: const Uuid().v4(),
     clientCode: 'TBN3',
-    projectCode: 'DTAC',
+    projectCode: 'PRESALES',
     issueNo: 'IS-330308-0003',
     title: 'Basketball',
     status: 'Open',

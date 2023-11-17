@@ -30,7 +30,7 @@ class Tabs extends StatelessWidget {
         } else if (index == 1) {
           routeName = Routes.timesheetPage;
         } else if (index == 2) {
-          routeName = Routes.projectPage;
+          routeName = Routes.myProjectsPage;
         } else if (index == 3) {
           routeName = Routes.leavePage;
         } else if (index == 4) {

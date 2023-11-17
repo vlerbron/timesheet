@@ -29,6 +29,7 @@ const double kWidgetCircularRadius = 8;
 
 const double kWidgetPadding = 16;
 const double kWidgetLineSpace = 10;
+const double kWidgetSpaceSmall = 5;
 
 ////// Date formatter
 /////
