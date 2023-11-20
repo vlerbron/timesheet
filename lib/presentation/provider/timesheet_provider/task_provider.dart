@@ -18,7 +18,8 @@ class TaskProvider extends StateNotifier<TaskState> {
                     projectCode: '',
                     issueNo: '',
                     title: '',
-                    status: ''),
+                    status: '',
+                    responsedPersonList: const []),
                 taskDetail: '',
                 taskDate: DateTime.now(),
                 duration: const Duration())));
@@ -34,7 +35,8 @@ class TaskProvider extends StateNotifier<TaskState> {
             projectCode: '',
             issueNo: '',
             title: '',
-            status: ''),
+            status: '',
+            responsedPersonList: const []),
         taskDetail: '',
         taskDate: taskDate,
         duration: const Duration());
@@ -60,10 +62,9 @@ class TaskProvider extends StateNotifier<TaskState> {
   void setTaskDuration(String hour, String minute) {
     late Duration taskDuration;
     try {
-    taskDuration = Duration(
-        hours: int.parse(hour == '' ? '0' : hour),
-        minutes: int.parse(minute == '' ? '0' : minute));
-      
+      taskDuration = Duration(
+          hours: int.parse(hour == '' ? '0' : hour),
+          minutes: int.parse(minute == '' ? '0' : minute));
     } catch (e) {
       taskDuration = const Duration();
     }

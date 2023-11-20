@@ -28,4 +28,9 @@ class SelectIssueProvider extends StateNotifier<List<SelectIssueEntity>> {
             issue.clientCode.contains(value))
         .toList();
   }
+
+  void sortIssues(List<SelectIssueEntity> issues) {
+    issues.sort(
+        (issue1, issue2) => issue1.title.compareTo(issue2.title));
+  }
 }

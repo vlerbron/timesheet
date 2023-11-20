@@ -34,7 +34,30 @@ class _ProjectIssuesState extends ConsumerState<ProjectIssues> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.only(
+                top: kWidgetLineSpace, right: kWidgetPadding),
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  ref
+                      .read(selectIssueProvider.notifier)
+                      .sortIssues(_selectIssueList);
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Text('Sort '),
+                  Image.asset('assets/icons/icon-sort.png'),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                top: kWidgetLineSpace,
+                left: kWidgetLineSpace,
+                right: kWidgetLineSpace),
             child: TextFormField(
               autofocus: false,
               controller: _searchController,

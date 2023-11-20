@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:timesheet/domain/leave/employee_entity.dart';
 
 // ignore: must_be_immutable
 class SelectIssueEntity extends Equatable {
@@ -9,6 +11,7 @@ class SelectIssueEntity extends Equatable {
   String title;
   String status;
   IssuePriority priority;
+  final List<EmployeeEntity> responsedPersonList;
 
   SelectIssueEntity({
     required this.id,
@@ -17,6 +20,7 @@ class SelectIssueEntity extends Equatable {
     required this.issueNo,
     required this.title,
     required this.status,
+    required this.responsedPersonList,
     this.priority = IssuePriority.low,
   });
   
@@ -25,8 +29,12 @@ class SelectIssueEntity extends Equatable {
 }
 
 enum IssuePriority{
-  critital,
-  high,
-  medium,
-  low
+  critital(Color(0xFFBD00FF)),
+  high(Color(0xFFF54551)),
+  medium(Color(0xFFFFB800)),
+  low(Color(0xFF1E80B8));
+
+  final Color color;
+
+  const IssuePriority(this.color);
 }
